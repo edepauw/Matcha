@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  database:
+    hostname: db
+    container_name: database
+    image: "mysql:latest"
+    restart: unless-stopped
+    volumes:
+      - mysql:/var/lib/mysql/
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+    ports:
+      - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+  api:
+    container_name: api
+    depends_on:
+      - database
+    build: ./api/
+    restart: unless-stopped
+    environment:
+      - SECRET_KEY=RXCT34ZE5GFDSFD756
+      - DB_HOST=$MYSQL_HOST
+      - DB_USER=$MYSQL_USER
+      - DB_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - DB_NAME=$MYSQL_DATABASE
+      - DB_PORT=$MYSQL_DOCKER_PORT
+    volumes:
+      - ./api/:/usr/src/app
+    ports:
+      - 667:667
+  client:
+    container_name: client
+    build: ./client/
+    volumes:
+      - ./client/:/usr/src/app
+    command: npm start
+    ports:
+      - 3000:3000
+
+volumes:
+  mysql:

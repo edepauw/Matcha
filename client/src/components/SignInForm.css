@@ -1,0 +1,109 @@
+.LoginForm {
+	background-color: #77B5EE;
+	border-radius: 1vw;
+	width: 20%;
+	min-width: 350px;
+	aspect-ratio: 5/4;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+
+.LoginFormInputEMail {
+	width: 70%;
+	border: 0 black;
+	text-align: center;
+	border-radius: 2vw;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10%;
+	aspect-ratio: 16/3;
+}
+.LoginFormHide{
+	visibility: hidden;
+	opacity: 0;
+	color:#00000000;
+	width: 0%;
+	font-size: 0;
+	margin-top: 0%;
+	text-align: center;
+	aspect-ratio: 16/3;
+	border: 0 black;
+	margin-right: auto;
+	border-radius: 2vw;
+	margin-left: auto;
+	transition:all 600ms , opacity 300ms, color 300ms;
+
+}
+.LoginFormAgain {
+	visibility: visible;
+	opacity: 100%;
+	width: 70%;
+	color:#000000ff;
+	border: 0 black;
+	border-radius: 2vw;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	aspect-ratio: 16/3;
+	transition:all 600ms , opacity 600ms, color 300ms;
+}
+
+.LoginFormPseudo {
+	visibility: visible;
+	opacity: 100%;
+	width: 70%;
+	color:#000000ff;
+	border: 0 black;
+	border-radius: 2vw;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10%;
+	aspect-ratio: 16/3;
+	transition:all 600ms , opacity 600ms, color 300ms;
+}
+.LoginFormInputPassword {
+	visibility: visible;
+	opacity: 100%;
+	width: 70%;
+	border: 0 black;
+	border-radius: 2vw;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10%;
+	aspect-ratio: 16/3;
+}
+
+.LoginFormSignIn {
+	width: 50%;
+	border: 0 black;
+	text-align: center;
+	border-radius: 2vw;
+	margin-right: auto;
+	margin-left: auto;
+	aspect-ratio: 16/3;
+}
+
+.LoginFormSignUp {
+	width: 50%;
+	border: 0 black;
+	text-align: center;
+	border-radius: 2vw;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 2%;
+	aspect-ratio: 16/3;
+}
+
+.LoginFormForget {
+	width: 80%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 10%;
+	aspect-ratio: 16/3;
+}
