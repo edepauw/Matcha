@@ -29,8 +29,8 @@ const users = {
 const signUp = async (req, res) => {
 	// Get credentials from JSON body
 	console.log(req.body);
-	var { email, username, password } = req.body
-	if (!email || !username || !password) {
+	var { email, username, password, repassword } = req.body
+	if (!email || !username || !password || repassword !== password) {
 		res.status(400).json({
 			error: 'Bad Request',
 			message: 'Please provide email, username and password'

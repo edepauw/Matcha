@@ -33,7 +33,6 @@ db.connect(function(err) {
 		PRIMARY KEY (`id`));"
 	db.query(sql, function (err, result) {
 		if (err) throw err;
-		console.log("Table Users créée!");
 	});
 });
 

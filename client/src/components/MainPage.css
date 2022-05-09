@@ -3,6 +3,7 @@
 	background-color: black;
 	display: grid;
 	height: 100%;
+	width: 100%;
 	grid-template-columns: 200px auto;
 	grid-template-rows: 50px auto;
 	grid-auto-columns: 1fr;

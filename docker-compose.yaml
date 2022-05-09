@@ -4,8 +4,10 @@ services:
   database:
     hostname: db
     container_name: database
-    image: "mysql:latest"
+    image: "mysql:5.7.38"
     restart: unless-stopped
+    healthcheck:
+      test: mysql ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_ROOT_PASSWORD
     volumes:
       - mysql:/var/lib/mysql/
     environment:
@@ -16,7 +18,8 @@ services:
   api:
     container_name: api
     depends_on:
-      - database
+      database:
+        condition: service_completed_successfully
     build: ./api/
     restart: unless-stopped
     environment:

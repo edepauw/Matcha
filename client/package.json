@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "awesome-react-icons": "^1.4.8",
     "axios": "^0.27.2",
     "finalhandler": "^1.2.0",
     "js-cookie": "^3.0.1",
@@ -10,6 +11,7 @@
     "react": "^16.14.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^16.14.0",
+    "react-minimal-side-navigation": "^1.9.2",
     "react-password-strength-bar": "^0.4.0",
     "react-scripts": "5.0.1",
     "safe-buffer": "*",

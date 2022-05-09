@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import axios from 'axios';
-import PasswordStrengthBar from 'react-password-strength-bar';
+import SideMenu from './sideMenu';
 import "./MainPage.css";
 
 function MainPage () {
+	const [menuSelect, setMenuSelect] = useState('home');
 	const handleConnect = () => {
 		if(SignUp)
 		{
@@ -22,7 +23,9 @@ function MainPage () {
 	}
 	return (
 		<div className={"MainPageGrid"}>
-			<div class="menu"></div>
+			<div className="menu">
+				<SideMenu/>
+			</div>
 			<div class="header"></div>
 			<div class="main"></div>
 		</div>
