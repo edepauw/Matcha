@@ -1,24 +1,29 @@
 .LoginForm {
-	background-color: #77B5EE;
-	border-radius: 1vw;
-	width: 20%;
-	min-width: 350px;
-	aspect-ratio: 5/4;
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-direction: column;
-	flex-direction: column;
+    background-color: #77B5EE0f;
+    border-radius: 20px;
+    width: 8%;
+    min-width: 288px;
+    aspect-ratio: 5/4;
+    display: flex;
+    flex-direction: column;
+}
+.LoginForm>h1{
+	color: #fff;
+    text-shadow: 0 0 5px #000;
+	margin: 0 auto 0 auto;
 }
 
 .LoginFormInputEMail {
 	width: 70%;
+	background-color: #0000000f;
+	box-shadow: 0 0 5px #000;
 	border: 0 black;
 	text-align: center;
-	border-radius: 2vw;
+	border-radius: 999px;
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 10%;
-	aspect-ratio: 16/3;
+	aspect-ratio: 16/2;
 }
 .LoginFormHide{
 	visibility: hidden;
@@ -27,11 +32,12 @@
 	width: 0%;
 	font-size: 0;
 	margin-top: 0%;
+	box-shadow: 0 0 5px #000;
 	text-align: center;
-	aspect-ratio: 16/3;
+	aspect-ratio: 16/2;
 	border: 0 black;
 	margin-right: auto;
-	border-radius: 2vw;
+	border-radius: 999px;
 	margin-left: auto;
 	transition:all 600ms , opacity 300ms, color 300ms;
 
@@ -41,14 +47,15 @@
 	opacity: 100%;
 	width: 70%;
 	color:#000000ff;
+	border-radius: 999px;
 	border: 0 black;
-	border-radius: 2vw;
 	text-align: center;
+	box-shadow: 0 0 5px #000;
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 10%;
 	margin-bottom: 10%;
-	aspect-ratio: 16/3;
+	aspect-ratio: 16/2;
 	transition:all 600ms , opacity 600ms, color 300ms;
 }
 
@@ -57,47 +64,51 @@
 	opacity: 100%;
 	width: 70%;
 	color:#000000ff;
+	border-radius: 999px;
 	border: 0 black;
-	border-radius: 2vw;
+	box-shadow: 0 0 5px #000;
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 10%;
-	aspect-ratio: 16/3;
+	aspect-ratio: 16/2;
 	transition:all 600ms , opacity 600ms, color 300ms;
 }
 .LoginFormInputPassword {
 	visibility: visible;
 	opacity: 100%;
 	width: 70%;
+	border-radius: 999px;
 	border: 0 black;
-	border-radius: 2vw;
 	text-align: center;
+	box-shadow: 0 0 5px #000;
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 10%;
-	aspect-ratio: 16/3;
+	aspect-ratio: 16/2;
 }
 
 .LoginFormSignIn {
 	width: 50%;
 	border: 0 black;
+	border-radius: 999px;
 	text-align: center;
-	border-radius: 2vw;
+	box-shadow: 0 0 5px #000;
 	margin-right: auto;
 	margin-left: auto;
-	aspect-ratio: 16/3;
+	aspect-ratio: 16/2;
 }
 
 .LoginFormSignUp {
 	width: 50%;
 	border: 0 black;
+	border-radius: 999px;
 	text-align: center;
-	border-radius: 2vw;
+	box-shadow: 0 0 5px #000;
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 2%;
-	aspect-ratio: 16/3;
+	aspect-ratio: 16/2;
 }
 
 .LoginFormForget {
@@ -105,5 +116,5 @@
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 10%;
-	aspect-ratio: 16/3;
+	aspect-ratio: 16/2;
 }

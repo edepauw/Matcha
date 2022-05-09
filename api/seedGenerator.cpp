@@ -253,7 +253,7 @@ int main(void)
 					users[i].userMatchsJson += "\"" + *it + "\"";
 			}
 			users[i].userMatchsJson += "]";
-			std::cout << "INSERT INTO MatchaBDD.Users (id, username, email, password, genre, orientation, description, age, locationX, locationY, tags, image, meLikeUsers, userLikesMe, recentProfile, recentVisit, matchs) VALUES ("<< i <<",\"" << users[i].username << "\",\"" << users[i].userEmail << "\",\"" << users[i].userPassword << "\",\"" << users[i].userGenre << "\",\"" << users[i].userOrientation << "\",\"" << users[i].userDescription << "\"," << users[i].userAge << "," << users[i].userLocationX << "," << users[i].userLocationY << ",'" << users[i].userTagsJson << "','[\"" << users[i].userImage << "\"]','" << users[i].userILikeJson << "','" << users[i].userLikeMeJson << "','" << users[i].userRecentProfileJson << "','" << users[i].userRecentVisitJson << "','" << users[i].userMatchsJson << "');" << std::endl;
+			std::cout << "INSERT INTO MatchaBDD.Users (username, email, password, genre, orientation, description, age, locationX, locationY, tags, image, meLikeUsers, userLikesMe, recentProfile, recentVisit, matchs) VALUES (\"" << users[i].username << "\",\"" << users[i].userEmail << "\",\"" << users[i].userPassword << "\",\"" << users[i].userGenre << "\",\"" << users[i].userOrientation << "\",\"" << users[i].userDescription << "\"," << users[i].userAge << "," << users[i].userLocationX << "," << users[i].userLocationY << ",'" << users[i].userTagsJson << "','[\"" << users[i].userImage << "\"]','" << users[i].userILikeJson << "','" << users[i].userLikeMeJson << "','" << users[i].userRecentProfileJson << "','" << users[i].userRecentVisitJson << "','" << users[i].userMatchsJson << "');" << std::endl;
 		}
 }
 

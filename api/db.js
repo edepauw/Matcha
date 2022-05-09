@@ -13,7 +13,7 @@ db.connect(function(err) {
 	console.log("Connecté à la base de données MySQL!");
 
 	var sql = "CREATE TABLE IF NOT EXISTS MatchaBDD.Users (\
-		`id` INT NOT NULL,\
+		`id` INT NOT NULL AUTO_INCREMENT,\
 		`username` VARCHAR(15) NULL,\
 		`email` VARCHAR(100) NULL,\
 		`password` VARCHAR(100) NULL,\

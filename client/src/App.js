@@ -10,10 +10,16 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            token: Cookies.get('token')?true:false,
+            token: window.localStorage.getItem('token')?true:false,
             apiResponse: ""
         }
         console.log(this.state.token);
+        if(window.localStorage.getItem('expires') && window.localStorage.getItem('expires') < Date.now())
+        {
+            window.localStorage.removeItem('token');
+            window.localStorage.removeItem('expires');
+            window.localStorage.removeItem('username');
+        }
     }
 
     callAPI() {
