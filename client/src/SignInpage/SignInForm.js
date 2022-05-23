@@ -1,11 +1,10 @@
 import React, { useRef, useState } from "react";
 import Cookies from 'js-cookie'
 import axios from 'axios';
-import PasswordStrengthBar from 'react-password-strength-bar';
 import "./SignInForm.css";
-import avatar from './avatarUnknow.png';
 
-function SignInForm () {
+
+function SignInForm (props) {
 	const EMailRef = useRef(null);
 	const PassRef = useRef(null);
 	const AgainRef = useRef(null);
@@ -18,9 +17,6 @@ function SignInForm () {
 		PseudoRef.current.className = !SignUp ? "LoginFormPseudo" : "LoginFormHide";
 		EMailRef.current.placeholder = !SignUp ? "Email" : "Email/Username";
 		setSignUp(!SignUp);
-	}
-	const test = () => {
-		axios.get('http://localhost:667/users/test')
 	}
 
 	const handleConnect =  () => {
@@ -37,14 +33,9 @@ function SignInForm () {
 				repassword: AgainRef.current.value,
 				username: PseudoRef.current.value
 			},{withCredentials: true}).then(res => {
-				if(res.data.token)
-				{
-					window.localStorage.setItem('token', res.data.token);
-					window.localStorage.setItem('expires', res.data.expires);
-					window.localStorage.setItem('username', res.data.username);
-				}}).catch(err => {
-					console.log(err)
-				})
+				const {xsrfToken} = res.data;
+				localStorage.setItem('xsrfToken', JSON.stringify(xsrfToken));
+			})
 		}
 		else
 		{
@@ -53,9 +44,13 @@ function SignInForm () {
 				console.log('toastify')//toastify
 				return
 			}
-			axios.post('http://127.0.0.1:667/auth/login', {
+			axios.post('http://localhost:667/auth/login', {
 				email: EMailRef.current.value??Cookies.get('pseudo'),
 				password: PassRef.current.value
+			},{withCredentials: true}).then(res => {
+				console.log(res.data);
+				const {xsrfToken} = res.data;
+				localStorage.setItem('xsrfToken', JSON.stringify(xsrfToken));
 			})
 		}
 	}
@@ -69,7 +64,7 @@ function SignInForm () {
 				<input ref={PassRef} onKeyDown={e => {console.log(e.key); e.key === 'Enter' && handleConnect()}} type='password' className="LoginFormInputPassword" placeholder="password"/>
 				<input ref={AgainRef} onKeyDown={e => e.key === 'Enter' && handleConnect()} type='password' className={"LoginFormHide"} placeholder="Confirm password"/>
 				<button onClick={changeStyle} className="LoginFormSignUp">{SignUp?'SignIn':'SignUp'}</button>
-				<div onClick={test} className="LoginFormForget">Forget password?</div>
+				<div className="LoginFormForget">Forget password?</div>
 		</div>
 	);
 }

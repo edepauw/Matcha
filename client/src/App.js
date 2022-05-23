@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import Cookies from 'js-cookie'
-import LoginForm from "./components/SignInForm";
-import axios from "axios";
+import LoginForm from "./SignInpage/SignInForm";
 import MainPage from "./components/MainPage";
 
 class App extends Component {
@@ -13,12 +10,16 @@ class App extends Component {
             token: window.localStorage.getItem('token')?true:false,
             apiResponse: ""
         }
+    }
+    componentDidMount(){
         console.log(this.state.token);
-        if(window.localStorage.getItem('expires') && window.localStorage.getItem('expires') < Date.now())
+        console.log(localStorage.getItem('expires' + "<" + Date.now()));
+        if(localStorage.getItem('expires') &&localStorage.getItem('expires') < Date.now())
         {
-            window.localStorage.removeItem('token');
-            window.localStorage.removeItem('expires');
-            window.localStorage.removeItem('username');
+            console.log('token expired')
+            localStorage.removeItem('token');
+            localStorage.removeItem('expires');
+            localStorage.removeItem('username');
         }
     }
 
@@ -29,7 +30,7 @@ class App extends Component {
                 {this.state.token ?
                     <MainPage token={this.state.token}/>
                     :
-                    <LoginForm />
+                    <LoginForm onChange={(token) => {this.setState({token: token})}}/>
                 }
             </div>
         );

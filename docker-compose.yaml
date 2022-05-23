@@ -5,9 +5,6 @@ services:
     hostname: db
     container_name: database
     image: "mysql:5.7.38"
-    restart: unless-stopped
-    healthcheck:
-      test: mysql ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_ROOT_PASSWORD
     volumes:
       - mysql:/var/lib/mysql/
     environment:
@@ -18,10 +15,9 @@ services:
   api:
     container_name: api
     depends_on:
-      database:
-        condition: service_completed_successfully
+      - database
     build: ./api/
-    restart: unless-stopped
+    restart: on-failure
     environment:
       - SECRET_KEY=RXCT34ZE5GFDSFD756
       - DB_HOST=$MYSQL_HOST

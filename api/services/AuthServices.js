@@ -1,9 +1,11 @@
 const jwt = require('jsonwebtoken')
-const { getUserByPseudo, getUserByEMail, createUser } = require('../services/UsersServices')
-const jwtKey = 'my_secret_key'
-const jwtExpirySeconds = 3 * 60 * 60
+const crypto = require('crypto')
+const { getUserByPseudo, getUserByEMail, createUser, CreateRefresh } = require('../services/UsersServices')
+var fs = require('fs');
+const jwtKey = fs.readFileSync(__dirname + '/../config/private.pem');
+const jwtExpirySeconds = 5 * 60 * 60
 var bcrypt = require('bcrypt');
-let ts = Date.now()
+const db = require('../db');
 const cryptPassword = function (password, callback) {
 	bcrypt.genSalt(10, function (err, salt) {
 		if (err)
@@ -18,9 +20,21 @@ const comparePassword = function (plainPass, hashword, callback) {
 	bcrypt.compare(plainPass, hashword, function (err, isPasswordMatch) {
 		return err == null ?
 			callback(null, isPasswordMatch) :
-			callback(err);
+			callback(err, false);
 	});
 };
+
+const authenticate = async (username,email, password, callback) => {
+	const user = await getUserByPseudo(username ?? email) ?? await getUserByEMail(email) ?? null
+	if (!user)
+		return callback(null)
+	comparePassword(password, user.password, (err, Valid) => {
+		if (err || !Valid)
+			return callback(null)
+		else
+			return callback(user)
+	});
+}
 
 const users = {
 	user1: 'password1',
@@ -41,7 +55,7 @@ const signUp = async (req, res) => {
 		if (err) {
 			res.status(400).json({
 				error: 'Bad Request',
-				message: 'Please provide email, username and password'
+				message: 'error'
 			})
 			return
 		} else {
@@ -50,130 +64,175 @@ const signUp = async (req, res) => {
 			if (await getUserByPseudo(username)) {
 				res.status(400).json({
 					error: 'Username already exists',
-					message: 'Change your username'
+					message: 'Please choose another username'
 				})
 				return
 			}
 			if (await getUserByEMail(email)) {
 				res.status(400).json({
 					error: 'Email already exists',
-					message: 'Change your email'
+					message: 'Please choose another email'
 				})
 				return
 			}
-			const token = jwt.sign({ email }, jwtKey, {
-				algorithm: 'HS256',
-				expiresIn: jwtExpirySeconds
-			})
-			createUser(username, email, password)
-			console.log('token:', token)
-			res.json({ token: token, expires: ts + jwtExpirySeconds * 1000, username: username })
-			res.end()
+			await createUser(username, email, password);
+			await signIn(req, res)
 		}
 	});
 }
 
-const signIn = (req, res) => {
+const signIn = async (req, res) => {
+
+
 	// Get credentials from JSON body
+	//get cookie
+	console.log(req.cookies);
 	console.log(req.body);
+	const { email, password } = req.body
+	authenticate(req.body.username , email, password, (user) => {
+		if (!user) {
+			res.status(400).json({
+				error: 'Bad Request',
+				message: 'Invalid username or password'
+			})
+			res.end()
+			return
+		}
+		//user found
+		const xsrfToken = crypto.randomBytes(64).toString('hex');
+		/* On créer le JWT avec le token CSRF dans le payload */
+		const expires = Math.floor(Date.now() / 1000) + jwtExpirySeconds;
+		const accessToken = jwt.sign(
+		{ userId: user.id, xsrfToken },
+		jwtKey,
+		{
+			algorithm: "ES256",
+			subject: user.username,
+			expiresIn: expires
+		}
+		);
 
-	const { username, password } = req.body
-	const user = getUserByPseudo(username) ?? getUserByEMail(username) ?? null
-	if (!user) {
-		res.status(400).json({
-			error: 'User not found',
-			message: 'Please check your username and password'
-		})
-		comparePassword(password, user.password, (err, isMatch) => {
-			if (err) {
-				res.status(400).json({
-					error: 'Bad Request',
-					message: 'Please provide email, username and password'
-				})
-			}
-			else {
-				if (isMatch) {
-					const retToken = jwt.sign({ username }, jwtKey, {
-						algorithm: 'HS256',
-						expiresIn: jwtExpirySeconds
-					})
-					res.json({ token: retToken, expires: jwtExpirySeconds * 1000, username: username })
-				}
-				else {
-					res.status(400).json({
-						error: 'Wrong',
-						message: 'Please check your username and password'
-					})
-					res.end()
-				}
-			}
+		/* On créer le refresh token et on le stocke en BDD */
+		const refreshToken = crypto.randomBytes(128).toString('base64');
+		CreateRefresh(user.id, refreshToken, expires);
+
+		/* On créer le cookie contenant le JWT */
+		res.cookie('access_token', accessToken, {
+		httpOnly: true,
+		maxAge: 30 * 60 * 60 * 1000,
 		});
-	}
-	else {
-		res.status(400).json({
-			error: 'Bad Request',
-			message: 'Please provide email, username and password'
-		})
+
+		/* On créer le cookie contenant le refresh token */
+		res.cookie('refresh_token', refreshToken, {
+		httpOnly: true,
+		maxAge: 24 * 60 * 60 * 1000,
+		path: '/auth/token'
+		});
+
+		/* On envoie une reponse JSON contenant les durées de vie des tokens et le token CSRF */
+		res.json({
+		accessTokenExpiresIn: jwtExpirySeconds,
+		refreshTokenExpiresIn: jwtExpirySeconds,
+		xsrfToken
+		});
 		res.end()
-	}
+	});
 }
 
-const verify = (token) => {
-	if (!token)
-		return null
-	var payload
+const auth =  async (req, res, next) => {
 	try {
-		payload = jwt.verify(token, jwtKey)
-	} catch (e) {
-		if (e instanceof jwt.JsonWebTokenError) {
-			return null
-		}
-		return null
+	  const { cookies, headers } = req;
+
+	  /* On vérifie que le JWT est présent dans les cookies de la requête */
+	  if (!cookies || !cookies.access_token) {
+		return res.status(401).json({ message: 'Missing token in cookie' });
+	  }
+
+	  const accessToken = cookies.access_token;
+
+	  /* On vérifie que le token CSRF est présent dans les en-têtes de la requête */
+	  if (!headers || !headers['x-xsrf-token']) {
+		return res.status(401).json({ message: 'Missing XSRF token in headers' });
+	  }
+
+	  const xsrfToken = headers['x-xsrf-token'];
+
+	  /* On vérifie et décode le JWT à l'aide du secret et de l'algorithme utilisé pour le générer */
+	  const decodedToken = jwt.verify(accessToken, secret, {
+		algorithms: algorithm
+	  });
+
+	  /* On vérifie que le token CSRF correspond à celui présent dans le JWT  */
+	  if (xsrfToken !== decodedToken.xsrfToken) {
+		return res.status(401).json({ message: 'Bad xsrf token' });
+	  }
+
+	  /* On vérifie que l'utilisateur existe bien dans notre base de données */
+	  const user = await getUserByPseudo(decodedToken.username);
+
+	  /* On passe l'utilisateur dans notre requête afin que celui-ci soit disponible pour les prochains middlewares */
+	  req.user = user;
+
+	  /* On appelle le prochain middleware */
+	  if(user)
+	  	return next();
+	  else
+	  	return res.status(401).json({ message: 'User not found' });
+	} catch (err) {
+	  return res.status(500).json({ message: 'Internal error' });
 	}
-	return (payload)
+  }
+
+  const token =  async (req, res, next) => {
+	const {cookies } = req;
+	if (!cookies || !cookies.refresh_token) {
+	  return res.status(401).json({ message: 'Missing token in cookie' });
+	}
+	const user = await getUserByPseudo();
+	const xsrfToken = crypto.randomBytes(64).toString('hex');
+		/* On créer le JWT avec le token CSRF dans le payload */
+		const expires = Math.floor(Date.now() / 1000) + jwtExpirySeconds;
+		const accessToken = jwt.sign(
+		{ userId: user.id, xsrfToken },
+		jwtKey,
+		{
+			algorithm: "ES256",
+			subject: user.username,
+			expiresIn: expires
+		}
+		);
+
+		/* On créer le refresh token et on le stocke en BDD */
+		const refreshToken = crypto.randomBytes(128).toString('base64');
+		CreateRefresh(user.id, refreshToken, 24 * 60 * 60 * 1000);
+
+		/* On créer le cookie contenant le JWT */
+		res.cookie('access_token', accessToken, {
+		httpOnly: true,
+		maxAge: 30 * 60 * 1000,
+		});
+
+		/* On créer le cookie contenant le refresh token */
+		res.cookie('refresh_token', refreshToken, {
+		httpOnly: true,
+		maxAge: 24 * 60 * 60 * 1000,
+		path: '/auth/token'
+		});
+
+		/* On envoie une reponse JSON contenant les durées de vie des tokens et le token CSRF */
+		res.json({
+		accessTokenExpiresIn: jwtExpirySeconds,
+		refreshTokenExpiresIn: jwtExpirySeconds,
+		xsrfToken
+		});
+		res.end()
+
 }
 
-const refresh = (req, res) => {
-	// (BEGIN) The code uptil this point is the same as the first part of the `welcome` route
-	const token = req.cookies.token
-
-	if (!token) {
-		return res.status(401).end()
-	}
-
-	var payload
-	try {
-		payload = jwt.verify(token, jwtKey)
-	} catch (e) {
-		if (e instanceof jwt.JsonWebTokenError) {
-			return res.status(401).end()
-		}
-		return res.status(400).end()
-	}
-	// (END) The code uptil this point is the same as the first part of the `welcome` route
-
-	// We ensure that a new token is not issued until enough time has elapsed
-	// In this case, a new token will only be issued if the old token is within
-	// 30 seconds of expiry. Otherwise, return a bad request status
-	const nowUnixSeconds = Math.round(Number(new Date()) / 1000)
-	if (payload.exp - nowUnixSeconds > 30) {
-		return res.status(400).end()
-	}
-
-	// Now, create a new token for the current user, with a renewed expiration time
-	const newToken = jwt.sign({ username: payload.username }, jwtKey, {
-		algorithm: 'HS256',
-		expiresIn: jwtExpirySeconds
-	})
-
-	// Set the new token as the users `token` cookie
-	res.cookie('token', newToken, { maxAge: jwtExpirySeconds * 1000 })
-	res.end()
-}
 
 module.exports = {
 	signUp,
 	signIn,
-	verify,
-	refresh
+	auth,
+	token
 }

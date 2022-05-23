@@ -5,7 +5,7 @@ html, body,#root, .App {
 
 .App{
   height:100%;
-  background-image:url('../public/dark.png');
+  background-color: #FFADD5;
   background-repeat:no-repeat;
   -webkit-background-size:cover;
   -moz-background-size:cover;
