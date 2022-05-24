@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "./MainPage.css";
+import "../styles/MainPage.css";
 
 
 function MainPage (props) {

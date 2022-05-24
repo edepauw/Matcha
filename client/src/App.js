@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import LoginForm from "./SignInpage/SignInForm";
-import MainPage from "./components/MainPage";
+import LoginForm from "./page/SignInForm";
+import MainPage from "./page/MainPage";
 
 class App extends Component {
     constructor(props) {
