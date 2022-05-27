@@ -9,14 +9,24 @@ const getUserByPseudo = async (username) => {
 	const user = await db.promise().query('SELECT * FROM MatchaBDD.Users WHERE username = ?', [username])
 	return user[0][0]
 }
+
+const getUserBySubToken = async (subToken) => {
+	const user = await db.promise().query('SELECT * FROM MatchaBDD.Users WHERE subToken = ?', [subToken])
+	return user[0][0]
+}
+
+const delSubToken = async (user) => {
+	await db.promise().query('UPDATE MatchaBDD.Users SET subToken=false WHERE id=?', [user.id])
+}
+
 const getUserByEMail = async (email) => {
 	const user = await db.promise().query('SELECT * FROM MatchaBDD.Users WHERE email = ?', [email])
 	return user[0][0]
 }
 
-const createUser = async (pseudo, lastname, firstname, email, password) => {
-	const user = await db.promise().query("INSERT INTO MatchaBDD.Users (username, lastname, firstname, email ,password) VALUES\
-	(?, ?, ?, ? ,?);", [pseudo, lastname, firstname, email, password]);
+const createUser = async (pseudo, lastname, firstname, email, password, tokenSub) => {
+	const user = await db.promise().query("INSERT INTO MatchaBDD.Users (username, lastname, firstname, email, password, subToken) VALUES\
+	(?, ?, ?, ? ,?, ?);", [pseudo, lastname, firstname, email, password, tokenSub]);
 }
 
 const CreateRefresh = async (userId, token, expiresAt) => {
@@ -81,5 +91,7 @@ module.exports = {
 	getUserByPseudo,
 	getUserByEMail,
 	createUser,
+	delSubToken,
+	getUserBySubToken,
 	CreateRefresh
 }

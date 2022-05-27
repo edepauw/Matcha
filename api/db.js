@@ -48,6 +48,7 @@ const initTables = async () => {
 		`meLikeUsers` JSON NULL,\
 		`userLikesMe` JSON NULL,\
 		`matchs` JSON NULL,\
+		`subToken` VARCHAR(255) DEFAULT NULL,\
 		PRIMARY KEY (`id`));"
 //INSERT INTO `MatchaBDD`.`Users` (`username`, `lastname`, `firstname`, `email`, `password`, `orientationId`, `bio`, `dms`, `age`, `locationX`, `locationY`, `tags`, `image`, `score`, `meLikeUsers`, `userLikesMe`) VALUES ('ede', 'dede', 'dede', 'dedde', 'ddd', '4', 'ddddfdfddd', '\"[]\"', '0', '4', '55', '\"[]\"', '\"[]\"', '54', '\"[]\"', '\"[]\"');
 //INSERT INTO MatchaBDD.Users (username, lastname, firstname, email ,password, orientationId, bio, dms, age, locationX, locationY, tags, image, score, meLikeUsers, userLikesMe, matchs) VALUES ("Charlotte","Charlotte","Charlotte","Charlotte@gmail.com","Charlottepasswd",7,"This is a third description","[]",21,1.51441,46.3118,"["day","sport","savage","food","summer"]","http://localhost:667/uploads/edepauw0.jpg",65,"["Claudelle","Norval","Shontal"]","["Norval","Shontal"]","["Norval","Shontal"]");
@@ -59,6 +60,11 @@ const initTables = async () => {
 			`userId` INT NOT NULL,\
 			`token` TEXT NULL,\
 			`expiresAt` VARCHAR(10) NULL );"
+		await db.promise().query(refresh);
+		const sublink = "CREATE TABLE IF NOT EXISTS MatchaBDD.Sublink (\
+			`userId` INT NOT NULL,\
+			`token` TEXT NULL,\
+			);"
 		await db.promise().query(refresh);
 		console.log("Table Refresh crée!");
 }

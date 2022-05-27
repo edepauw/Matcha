@@ -21,7 +21,10 @@
     "line-reader": "^0.4.0",
     "morgan": "~1.9.0",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.5",
     "nodemon": "^2.0.15",
-    "react-toastify": "^8.2.0"
+    "react-toastify": "^8.2.0",
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.13"
   }
 }

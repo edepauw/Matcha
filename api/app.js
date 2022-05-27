@@ -16,6 +16,7 @@ initTables();
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
+var redirectRouter = require("./routes/redirect");
 
 var app = express()
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, "uploads")));
 app.use("/", indexRouter);
 app.use("/users", (req,res) => auth(req,res,usersRouter));
 app.use("/auth", authRouter);
+app.use("/redirect", redirectRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

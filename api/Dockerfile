@@ -8,4 +8,4 @@ RUN npm install -g npm@latest
 
 EXPOSE 667
 
-ENTRYPOINT g++ seedGenerator.cpp && ./a.out > seed.sql && npm install && npm start
+ENTRYPOINT echo IP=$IP > .env && g++ seedGenerator.cpp && ./a.out > seed.sql && npm install && npm start

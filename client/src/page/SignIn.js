@@ -21,6 +21,10 @@ function SignIn() {
 
     const onSubmitLogin = (dataLogin) => {
         console.log(dataLogin);
+        axios.post('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/auth/signup', dataSubscription ,{withCredentials: true}).then(res => {
+				const {xsrfToken} = res.data;
+				localStorage.setItem('xsrfToken', JSON.stringify(xsrfToken));
+			})
     }
 
     const onSubmitForgetPassword = (dataForget) => {

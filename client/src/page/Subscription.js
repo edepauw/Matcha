@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+import axios from 'axios';
+
 import "../styles/Subscription.css";
 import {
 	TextField,
@@ -14,7 +16,7 @@ import {
 import { Controller, useForm } from 'react-hook-form';
 
 function Subscription() {
-
+	
 	const { control: controlSubscription, handleSubmit: handleSubmitSubscription } = useForm();
     const [transition, setTransition] = useState(undefined);
     const [open, setOpen] = useState(false);
@@ -23,11 +25,15 @@ function Subscription() {
         setOpen(false);
     };
 
-	const onSubmitSubscription = (dataSubscription) => {
+	const onSubmitSubscription = async (dataSubscription) => {
         if (dataSubscription.password != dataSubscription.confirmed_password) {
             setOpen(true);
         }
         console.log(dataSubscription);
+		axios.post('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/auth/signup', dataSubscription ,{withCredentials: true}).then(res => {
+				const {xsrfToken} = res.data;
+				localStorage.setItem('xsrfToken', JSON.stringify(xsrfToken));
+			})
     }
 
 	return (
