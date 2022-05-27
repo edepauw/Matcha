@@ -1,6 +1,13 @@
-.ButtonNext {
+.ButtonNextEnable {
     color: white!important;
     background-color: #73B0D3!important;
+    margin-right: 11em!important;
+    height: 3em;
+}
+
+.ButtonNextDisable {
+    color: white!important;
+    background-color: #a8a8a8!important;
     margin-right: 11em!important;
     height: 3em;
 }

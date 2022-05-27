@@ -14,7 +14,8 @@ import {
     Grid,
     Container,
     Checkbox,
-    Typography
+    Typography,
+    FormGroup
 }
     from '@mui/material';
 
@@ -22,16 +23,64 @@ function CreationAccountPage() {
 
     const steps = ['Informations Personnel', 'Photos', 'Tags', 'Bio'];
     const [activeStep, setActiveStep] = useState(0);
-    const user = [];
+    const [valueGender, setValueGender] = useState('');
+    const [valueDate, setValueDate] = useState('');
+    var user = {
+        gender: null,
+        birthday_date: null,
+        interessted: [],
+    };
+    const [state, setState] = useState({
+        femme: false,
+        homme: false,
+        nonBinaire: false,
+    });
+    const {femme, homme, nonBinaire} = state;
+    const error = [femme, homme, nonBinaire].filter((v) => v).length >= 1;
+
+    const handleChangeInteressted = (event) => {
+        setState({
+            ...state,
+            [event.target.name]: event.target.checked,
+        });
+    };
+
+    const handleChangeDate = (event) => {
+        setValueDate(event.target.value);
+    };
+
+    const handleChangeGender = (event) => {
+        setValueGender(event.target.value);
+    };
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
+
+    const updateProfil = () => {
+        console.log(valueGender);
+        if (activeStep === 0) {
+            user.gender = valueGender;
+            user.birthday_date = valueDate;
+            user.interessted[0] = state.femme;
+            user.interessted[1] = state.homme;
+            user.interessted[2] = state.nonBinaire;
+            if (valueGender === 'femme') {
+                user.gender = 0;
+            }
+            if (valueGender === 'homme') {
+                user.gender = 1;
+            }
+            if (valueGender === 'nonBinaire') {
+                user.gender = 2;
+            }
+        }
+        console.log(user);
+    }
 
     return (
         <Container maxWidth={false}>
@@ -43,8 +92,10 @@ function CreationAccountPage() {
                                 <Typography variant='h5' id="demo-radio-buttons-group-label" className={'TitleGenre'}>Genre</Typography>
                                 <RadioGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="female"
+                                    defaultValue=""
                                     name="radio-buttons-group"
+                                    value={valueGender}
+                                    onChange={handleChangeGender}
                                 >
                                     <FormControlLabel value="femme" control={<Radio />} label="Femme" />
                                     <FormControlLabel value="homme" control={<Radio />} label="Homme" />
@@ -53,30 +104,36 @@ function CreationAccountPage() {
                             </Grid>
                             <Grid item xs={6} sm={6} md={6}>
                                 <Typography variant='h5' id="demo-radio-buttons-group-label" className={'TitleInteressePar'}>Interessé par</Typography>
-                                <RadioGroup
+                                <FormGroup
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="female"
+                                    defaultValue=""
                                     name="radio-buttons-group"
                                 >
-                                    <FormControlLabel control={<Checkbox />} label="Femme" />
-                                    <FormControlLabel control={<Checkbox />} label="Homme" />
-                                    <FormControlLabel control={<Checkbox />} label="Non Binaire" />
-                                </RadioGroup>
+                                    <FormControlLabel control={<Checkbox checked={femme} onChange={handleChangeInteressted} name="femme" />} label="Femme" />
+                                    <FormControlLabel control={<Checkbox checked={homme} onChange={handleChangeInteressted} name="homme" />} label="Homme" />
+                                    <FormControlLabel control={<Checkbox checked={nonBinaire} onChange={handleChangeInteressted} name="nonBinaire" />} label="Non Binaire" />
+                                </FormGroup>
                             </Grid>
                         </Grid>
                         <Grid item xs={12} sm={12} md={12} className={'BirthdayDate'}>
                             <FormLabel id="demo-radio-buttons-group-label" sx={{ marginRight: '1em' }}>Date de Naissance : </FormLabel>
-                            <TextField id="outlined-basic" variant="outlined" type="date" />
+                            <TextField
+                                id="outlined-basic"
+                                variant="outlined"
+                                type="date"
+                                value={valueDate}
+                                onChange={handleChangeDate}
+                            />
                         </Grid>
                     </Grid>
                     : activeStep === 1 ?
-                    
-                    <Grid container columns={12} spacing={2} className={'Photo'}> 
-                        <Grid item xs={12} sm={12} md={12} className={'Photo'}>
+
+                        <Grid container columns={12} spacing={2} className={'Photo'}>
+                            <Grid item xs={12} sm={12} md={12} className={'Photo'}>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    
-                    : <></>
+
+                        : <></>
                 }
                 <Grid className={'ButtonDiv'}>
                     {activeStep == 0 ?
@@ -95,9 +152,15 @@ function CreationAccountPage() {
                         </Grid>
                     }
                     <Grid item xs={12} sm={12} md={12} className={'ButtonNextDiv'}>
-                        <Button onClick={handleNext} className={"ButtonNext"} >
-                            {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
-                        </Button>
+                        { valueGender != '' &&  valueDate != '' && error ?
+                            <Button onClick={() => { handleNext(), updateProfil() }} className={"ButtonNextEnable"} >
+                                {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
+                            </Button>
+                        : 
+                            <Button disabled onClick={() => { handleNext(), updateProfil() }} className={"ButtonNextDisable"} >
+                                {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
+                            </Button>
+                        }
                     </Grid>
                 </Grid>
 
