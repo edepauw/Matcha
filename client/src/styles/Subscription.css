@@ -1,0 +1,55 @@
+.Title {
+    display: inherit;
+    align-items: center;
+    margin-bottom: 4em !important;
+    margin-top: 5em !important;
+    justify-content: center;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: bold;
+}
+
+.TitlePart1 {
+    color: #73B0D3 !important;
+}
+
+.TitlePart2 {
+    color: #FFADD5 !important;
+}
+
+.TitleSubscription {
+    display: flex;
+    flex-direction: column!important;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1em !important;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.TitleSubscriptionTypo{
+    color : #7A7A7A;
+}
+
+.InputForm {
+    display: flex;
+    flex-direction: column!important;
+    align-items: center;
+    justify-content: center;
+}
+
+.TextFieldSubscription {
+    width: 40vh;
+    margin-bottom: 1em!important;
+}
+
+.DivButtonSubscription {
+    display: flex;
+    flex-direction: column!important;
+    align-items: center;
+    justify-content: center;
+}
+
+.ButtonSusciption {
+    color: white!important;
+    background-color: #FFADD5!important;
+}
+

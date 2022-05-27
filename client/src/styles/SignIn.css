@@ -1,0 +1,87 @@
+.Title {
+    display: inherit;
+    align-items: center;
+    margin-bottom: 4em !important;
+    margin-top: 5em !important;
+    justify-content: center;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: bold;
+}
+
+.TitlePart1 {
+    color: #73B0D3 !important;
+}
+
+.TitlePart2 {
+    color: #FFADD5 !important;
+}
+
+.InputForm {
+    display: flex;
+    flex-direction: column!important;
+    align-items: center;
+    justify-content: center;
+}
+
+.InputFormLogin {
+    display: flex;
+    flex-direction: column!important;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3em;
+}
+
+.ConnexionInscriptionButton {
+    display: inherit;
+    align-items: center;
+    justify-content: center;
+}
+
+.ButtonConnexion {
+    color: white!important;
+    background-color: #73B0D3!important;
+    margin-right: 1em!important;
+}
+
+.ButtonInscription {
+    color: white!important;
+    background-color: #FFADD5!important;
+}
+
+.ForgetPassword, .DivButtonForgotPassword {
+    display: flex;
+    flex-direction: column!important;
+    align-items: center;
+    justify-content: center;
+}
+
+.ButtonPassword {
+    font-size: small!important;
+    color : #7A7A7A!important;
+}
+
+.ButtonForgotPassword {
+    color: white!important;
+    background-color: #73B0D3!important;
+    margin-right: 1em!important; 
+    margin-top: 1em!important; 
+}
+
+.TitlePasswordForget {
+    display: flex;
+    flex-direction: column!important;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1em !important;
+    margin-top: 3.5em !important;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.TitlePasswordForgetTypo {
+    color : #7A7A7A;
+}
+
+.LinkSubscription {
+	text-decoration: none;
+    color: white;
+}
