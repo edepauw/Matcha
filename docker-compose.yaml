@@ -25,6 +25,7 @@ services:
       - DB_PASSWORD=$MYSQL_ROOT_PASSWORD
       - DB_NAME=$MYSQL_DATABASE
       - DB_PORT=$MYSQL_DOCKER_PORT
+      - IP=$IP
     volumes:
       - ./api/:/usr/src/app
     ports:
@@ -32,6 +33,8 @@ services:
   client:
     container_name: client
     build: ./client/
+    environment:
+      - IP=$IP
     volumes:
       - ./client/:/usr/src/app
     command: npm start

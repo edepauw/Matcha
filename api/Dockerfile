@@ -8,4 +8,4 @@ RUN npm install -g npm@latest
 
 EXPOSE 667
 
-ENTRYPOINT npm install && npm start
+ENTRYPOINT g++ seedGenerator.cpp && ./a.out > seed.sql && npm install && npm start
