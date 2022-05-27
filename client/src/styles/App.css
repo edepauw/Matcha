@@ -1,6 +1,7 @@
 html, body,#root, .App {
   height: 100%;
   width:100%;
+  background-color: #F2F2F2;
 }
 
 .App{
@@ -44,7 +45,7 @@ html, body,#root, .App {
   to { transform: rotate(360deg); }
 }
 
-.Title {
+.MainTitle {
   display: inherit;
   align-items: center;
   margin-bottom: 7em!important;

@@ -1,11 +1,15 @@
 .ButtonNext {
     color: white!important;
     background-color: #73B0D3!important;
+    margin-right: 11em!important;
+    height: 3em;
 }
 
 .ButtonBack {
     color: white!important;
     background-color: #FFADD5!important;
+    margin-left: 10em!important;
+    height: 3em;
 }
 
 .Stepper {
@@ -16,7 +20,7 @@
 .GenreInteresse {
     display: inline-flex;
     justify-content: center;
-    align-items: top;
+    align-items: center;
     margin: auto;
 }
 
@@ -25,11 +29,13 @@
     justify-content: center;
     align-items: center;
     margin-top: 4em!important;
+    margin-bottom: 8em!important;
 }
 
 .ButtonNextDiv {
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 2em!important;
 }
 
 .ButtonBackDiv {
@@ -41,4 +47,31 @@
     flex-wrap: nowrap;
     flex-direction: row-reverse;
     width: 100%;
+}
+
+.TitleGenre {
+    font-size: 2em!important;
+    color : #7A7A7A;
+}
+
+.TitleInteressePar {
+    font-size: 2em!important;
+    width: 6em;
+    color : #7A7A7A;
+}
+
+.css-qivjh0-MuiStepLabel-label.Mui-completed {
+    color: #FFADD5!important;
+}
+
+.css-qivjh0-MuiStepLabel-label.Mui-active {
+    color: #73B0D3!important;
+}
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+    color: #73B0D3!important;
+}
+
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
+    color: #FFADD5!important;
 }

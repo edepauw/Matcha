@@ -43,12 +43,12 @@
     margin-right: 1em!important;
 }
 
-.ButtonInscription, .ButtonSusciption {
+.ButtonInscription {
     color: white!important;
     background-color: #FFADD5!important;
 }
 
-.ForgetPassword, .DivButtonForgotPassword, .DivButtonSubscription {
+.ForgetPassword, .DivButtonForgotPassword {
     display: flex;
     flex-direction: column!important;
     align-items: center;
@@ -77,20 +77,11 @@
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
-.TitleSubscription {
-    display: flex;
-    flex-direction: column!important;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1em !important;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-}
-
-.TitlePasswordForgetTypo, .TitleSubscriptionTypo{
+.TitlePasswordForgetTypo {
     color : #7A7A7A;
 }
 
-.TextFieldSubscription {
-    width: 40vh;
-    margin-bottom: 1em!important;
+.LinkSubscription {
+	text-decoration: none;
+    color: white;
 }
