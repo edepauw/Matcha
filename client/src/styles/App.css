@@ -43,3 +43,26 @@ html, body,#root, .App {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.Title {
+  display: inherit;
+  align-items: center;
+  margin-bottom: 7em!important;
+  margin-top: 2em!important;
+}
+
+.fakeLogo {
+  width  : 60px;
+  height : 60px;
+  background : #FFADD5;
+  margin: 0 2em 0 2em;
+}
+
+.TitlePart1 {
+  color: #73B0D3!important;
+  
+}
+
+.TitlePart2 {
+  color: #FFADD5!important;
+}

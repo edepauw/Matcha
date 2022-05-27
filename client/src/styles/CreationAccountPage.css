@@ -1,0 +1,44 @@
+.ButtonNext {
+    color: white!important;
+    background-color: #73B0D3!important;
+}
+
+.ButtonBack {
+    color: white!important;
+    background-color: #FFADD5!important;
+}
+
+.Stepper {
+    width : 70%;
+    margin: auto;
+}
+
+.GenreInteresse {
+    display: inline-flex;
+    justify-content: center;
+    align-items: top;
+    margin: auto;
+}
+
+.BirthdayDate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4em!important;
+}
+
+.ButtonNextDiv {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ButtonBackDiv {
+    display: flex;
+}
+
+.ButtonDiv {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row-reverse;
+    width: 100%;
+}

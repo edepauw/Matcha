@@ -5,6 +5,7 @@ import "../styles/MainPage.css";
 function MainPage (props) {
 	return (
 		<div className={"MainPage"}>
+			<h1>Toto</h1>
 		</div>
 	);
 }
