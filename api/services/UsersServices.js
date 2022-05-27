@@ -14,9 +14,9 @@ const getUserByEMail = async (email) => {
 	return user[0][0]
 }
 
-const createUser = async (pseudo, email, password) => {
-	const user = await db.promise().query("INSERT INTO MatchaBDD.Users (username, email, password, genre, orientation, description, age, locationX, locationY, tags, image, meLikeUsers, userLikesMe, recentProfile, recentVisit, matchs) VALUES\
-										(?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?);", [pseudo, email, password, "n/a", "n/a", "n/a", -1 , 0, 0, "[]", "[]", "[]", "[]", "[]", "[]", "[]"]);
+const createUser = async (pseudo, lastname, firstname, email, password) => {
+	const user = await db.promise().query("INSERT INTO MatchaBDD.Users (username, lastname, firstname, email ,password) VALUES\
+	(?, ?, ?, ? ,?);", [pseudo, lastname, firstname, email, password]);
 }
 
 const CreateRefresh = async (userId, token, expiresAt) => {
@@ -36,11 +36,11 @@ const getAllMatchableUsers = async (userId, token, expiresAt) => {
 	const user = await getUserById(userId);
 	if(user.genre == "Homme" && user.orientation == "Bi")
 		intone = 0;
-	if(user.userGenre == "Femme" && user.orientations == "Bi")
+	if(user.genre == "Femme" && user.orientations == "Bi")
 		intone = 1;
-	if(user.userGenre == "Homme" && user.orientations == "Hetero")
+	if(user.genre == "Homme" && user.orientations == "Hetero")
 		intone = 2;
-	if(user.userGenre == "Femme" && user.orientations == "Hetero")
+	if(user.genre == "Femme" && user.orientations == "Hetero")
 		intone = 3;
 	if(user.orientations == "Lesbian")
 		intone = 4;

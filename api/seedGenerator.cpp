@@ -8,29 +8,28 @@
 class user {
 	  public:
 		std::string username;
-		std::string userEmail;
-		std::string userPassword;
-		std::string userGenre;
-		std::string userOrientation;
-		std::string userDescription;
-		std::string userAge;
-		float userLocationX;
-		float userLocationY;
-		std::vector<std::string> userMatchs;
-		std::vector<std::string> userILike;
-		std::vector<std::string> userLikeMe;
-		std::string userMatchsJson;
-		std::string userTagsJson;
-		std::string userImage;
-		std::string userILikeJson;
-		std::string userLikeMeJson;
-		std::string userRecentProfileJson;
-		std::string userRecentVisitJson;
+		std::string firstname;
+		std::string lastname;
+		std::string email;
+		//username lastname firstname email password orientationId bio dms age locationX locationY tags image score meLikeUsers userLikesMe searchAge searchKms matchs
+		std::string password;
+		int orientationId;
+		std::string bio;
+		std::string age;
+		float locationX;
+		float locationY;
+		std::vector<std::string> Matchs;
+		std::vector<std::string> meLikeUsers;
+		std::vector<std::string> userLikesMe;
+		std::string MatchsJson;
+		std::string TagsJson;
+		std::string image;
+		std::string meLikeUsersJson;
+		std::string userLikesMeJson;
 		int sizeTags;
+		int score;
 		int sizeLiked;
 		int sizeLikes;
-		int sizeRecent;
-		int sizeVisit;
 };
 int findbyName(user *users, std::string name)
 {
@@ -53,40 +52,33 @@ float randomFloat(float min, float max) {
 	return min + r;
 }
 bool isPossible(user one, user two){
-	char MatchMap[6][7] = { "110101",
-							"111010",
-							"010100",
-							"101000",
-							"010010",
-							"100001"};
-	int intone;
-	int inttwo;
-	if(one.userGenre == "Homme" && one.userOrientation == "Bi")
-		intone = 0;
-	if(one.userGenre == "Femme" && one.userOrientation == "Bi")
-		intone = 1;
-	if(one.userGenre == "Homme" && one.userOrientation == "Hetero")
-		intone = 2;
-	if(one.userGenre == "Femme" && one.userOrientation == "Hetero")
-		intone = 3;
-	if(one.userOrientation == "Lesbian")
-		intone = 4;
-	if(one.userOrientation == "Gay")
-		intone = 5;
-	if(two.userGenre == "Homme" && two.userOrientation == "Bi")
-		inttwo = 0;
-	if(two.userGenre == "Femme" && two.userOrientation == "Bi")
-		inttwo = 1;
-	if(two.userGenre == "Homme" && two.userOrientation == "Hetero")
-		inttwo = 2;
-	if(two.userGenre == "Femme" && two.userOrientation == "Hetero")
-		inttwo = 3;
-	if(two.userOrientation == "Lesbian")
-		inttwo = 4;
-	if(two.userOrientation == "Gay")
-		inttwo = 5;
+	char MatchMap[21][22] = {	"100101100000000000000",
+								"000000010010110000000",
+								"000000000000001001011",
+								"100101110010110000000",
+								"000000010010111001011",
+								"100101100000001001011",
+								"100101110010111001011",
+								"010110100000000000000",
+								"000000001011010000000",
+								"000000000000000101101",
+								"010110101011010000000",
+								"000000001011010101101",
+								"010110100000000101101",
+								"010110101011010101101",
+								"001011100000000000000",
+								"000000000101110000000",
+								"000000000000000010111",
+								"001011100101110000000",
+								"000000000101110010111",
+								"001011100000000010111",
+								"001011100101110010111"
+							};
+
 	// std::cout << inttwo << " "<< intone << " " << (MatchMap[intone][inttwo] == '1' )<< std::endl;
-	return MatchMap[intone][inttwo] == '1';
+	return MatchMap[one.orientationId][two.orientationId] == '1';
+	//`id` INT NOT NULL AUTO_INCREMENT,\
+
 }
 
 int main(void)
@@ -101,23 +93,21 @@ int main(void)
 	for (int i = 0; i < 1000 ; i++)
 	{
 		users[i].username = names[i];
-		users[i].userEmail = names[i] + "@gmail.com";
-		users[i].userPassword = names[i] + "passwd";
-		users[i].userGenre = genre[randomInt(0, 1)];
-		users[i].userOrientation = orientation[randomInt(0, 3)];
+		users[i].firstname = names[i] ;
+		users[i].lastname = names[i] ;
+		users[i].email = names[i] + "@gmail.com";
+		users[i].password = names[i] + "passwd";
+		users[i].orientationId = randomInt(0, 20);
+		users[i].score = randomInt(0, 100);
 	}
 	for (int i = 0; i < 1000 ; i++)
 	{
-		if(users[i].userGenre == "Homme" && users[i].userOrientation == "lesbian")
-			users[i].userOrientation = "Gay";
-		if(users[i].userGenre == "Femme" && users[i].userOrientation == "gay")
-			users[i].userOrientation = "Lesbian";
-		users[i].userDescription = description[randomInt(0,4)];
-		users[i].userAge = std::to_string(randomInt(18, 50));
-		users[i].userLocationX = randomFloat(0, 5.5);
-		users[i].userLocationY = randomFloat(44, 47);
+		users[i].bio = description[randomInt(0,4)];
+		users[i].age = std::to_string(randomInt(18, 50));
+		users[i].locationX = randomFloat(0, 5.5);
+		users[i].locationY = randomFloat(44, 47);
 		users[i].sizeTags = randomInt(3, 7);
-		users[i].userImage = image[randomInt(0, 1)];
+		users[i].image = image[randomInt(0, 1)];
 		std::string userTags[users[i].sizeTags];
 		for (int j = 0; j < users[i].sizeTags; j++)
 			userTags[j] = tags[randomInt(0, 13)];
@@ -133,127 +123,76 @@ int main(void)
 				}
 			}
 		}
-		int size = randomInt(10, 20);
-		for (int j = 0; j < size; j++){
-			int newer = randomInt(0, 999);
-			if (isPossible(users[i], users[findbyName(users, names[newer])]) && std::find(users[i].userILike.begin(), users[i].userILike.end(), names[newer]) == users[i].userILike.end() )
-			{
-				users[i].userILike.push_back(names[newer]);
-				users[findbyName(users, names[newer])].userLikeMe.push_back(users[i].username);
-			}
-		}
-
-		users[i].sizeRecent = randomInt(0, 5);
-		std::string userRecentProfile[users[i].sizeRecent];
-		for (int j = 0; j < users[i].sizeRecent; j++)
-			userRecentProfile[j] = names[randomInt(0, 999)];
-		for (int j = 0; j < users[i].sizeRecent; j++)
-		{
-			for (int k = 0; k < users[i].sizeRecent; k++)
-			{
-				if (userRecentProfile[j] == userRecentProfile[k] && j != k)
-				{
-					userRecentProfile[k] = names[randomInt(0, 999)];
-					j = 0;
-				}
-			}
-		}
-		users[i].sizeVisit = randomInt(0, 5);
-		std::string userRecentVisit[users[i].sizeVisit];
-		for (int j = 0; j < users[i].sizeVisit; j++)
-			userRecentVisit[j] = names[randomInt(0, 999)];
-		for (int j = 0; j < users[i].sizeVisit; j++)
-		{
-			for (int k = 0; k < users[i].sizeVisit; k++)
-			{
-				if (userRecentVisit[j] == userRecentVisit[k] && j != k)
-				{
-					userRecentVisit[k] = names[randomInt(0, 999)];
-					j = 0;
-				}
-			}
-		}
-
-
-		users[i].userTagsJson = "[";
+		users[i].TagsJson = "[";
 		for (int j = 0; j < users[i].sizeTags; j++)
 		{
 			if (j != users[i].sizeTags - 1)
-				users[i].userTagsJson += "\"" + userTags[j] + "\"" + ",";
+				users[i].TagsJson += "\"" + userTags[j] + "\"" + ",";
 			else
-				users[i].userTagsJson += "\"" + userTags[j] + "\"";
+				users[i].TagsJson += "\"" + userTags[j] + "\"";
 		}
-		users[i].userTagsJson += "]";
+		users[i].TagsJson += "]";
+		int size = randomInt(10, 20);
+		for (int j = 0; j < size; j++){
+			int newer = randomInt(0, 999);
+			if (isPossible(users[i], users[findbyName(users, names[newer])]) && std::find(users[i].meLikeUsers.begin(), users[i].meLikeUsers.end(), names[newer]) == users[i].meLikeUsers.end() )
+			{
+
+				users[i].meLikeUsers.push_back(names[newer]);
+				users[findbyName(users, names[newer])].userLikesMe.push_back(users[i].username);
+			}
+		}
+
 		//jsonify userLikedUsers
-		users[i].userRecentProfileJson = "[";
-		for (int j = 0; j < users[i].sizeRecent; j++)
-		{
-			if (j != users[i].sizeRecent - 1)
-				users[i].userRecentProfileJson += "\"" + userRecentProfile[j] + "\"" + ",";
-			else
-				users[i].userRecentProfileJson += "\"" + userRecentProfile[j] + "\"";
-		}
-		users[i].userRecentProfileJson += "]";
+	}
+	for (int i = 0; i < 1000; i++)
+	{
+		//amis en retour pour creer plus de match au moins 1 par personne
+		int size = randomInt(1, 2);
 
-		//jsonify userRecentVisit
-		users[i].userRecentVisitJson = "[";
-		for (int j = 0; j < users[i].sizeVisit; j++)
+		for (std::vector<std::string>::iterator itu = users[i].userLikesMe.begin(); size >= 0 && itu != users[i].userLikesMe.end(); itu++)
 		{
-			if (j != users[i].sizeVisit - 1)
-				users[i].userRecentVisitJson += "\"" + userRecentVisit[j] + "\"" + ",";
+			if(std::find(users[i].meLikeUsers.begin(), users[i].meLikeUsers.end(), *itu) == users[i].meLikeUsers.end())
+			{
+				users[i].meLikeUsers.push_back(*itu);
+				users[findbyName(users, *itu)].userLikesMe.push_back(users[i].username);
+			}
+			size--;
+		}
+		users[i].meLikeUsersJson = "[";
+		for (std::vector<std::string>::iterator it = users[i].meLikeUsers.begin() ; it != users[i].meLikeUsers.end(); it++)
+		{
+			if (it != (users[i].meLikeUsers.end() - 1))
+				users[i].meLikeUsersJson += "\"" + *it + "\"" + ",";
 			else
-				users[i].userRecentVisitJson += "\"" + userRecentVisit[j] + "\"";
+				users[i].meLikeUsersJson += "\"" + *it + "\"";
 		}
-		users[i].userRecentVisitJson += "]";
-		}
-		for (int i = 0; i < 1000; i++)
+		users[i].meLikeUsersJson += "]";
+		users[i].userLikesMeJson = "[";
+		for (std::vector<std::string>::iterator it = users[i].userLikesMe.begin() ; it != users[i].userLikesMe.end(); it++)
 		{
-			//amis en retour pour creer plus de match au moins 1 par personne
-			int size = randomInt(1, 2);
-
-			for (std::vector<std::string>::iterator itu = users[i].userLikeMe.begin(); size >= 0 && itu != users[i].userLikeMe.end(); itu++)
-			{
-				if(std::find(users[i].userILike.begin(), users[i].userILike.end(), *itu) == users[i].userILike.end())
-				{
-					users[i].userILike.push_back(*itu);
-					users[findbyName(users, *itu)].userLikeMe.push_back(users[i].username);
-				}
-				size--;
-			}
-			users[i].userILikeJson = "[";
-			for (std::vector<std::string>::iterator it = users[i].userILike.begin() ; it != users[i].userILike.end(); it++)
-			{
-				if (it != (users[i].userILike.end() - 1))
-					users[i].userILikeJson += "\"" + *it + "\"" + ",";
-				else
-					users[i].userILikeJson += "\"" + *it + "\"";
-			}
-			users[i].userILikeJson += "]";
-			users[i].userLikeMeJson = "[";
-			for (std::vector<std::string>::iterator it = users[i].userLikeMe.begin() ; it != users[i].userLikeMe.end(); it++)
-			{
-				if (it != (users[i].userLikeMe.end() - 1))
-					users[i].userLikeMeJson += "\"" + *it + "\"" + ",";
-				else
-					users[i].userLikeMeJson += "\"" + *it + "\"";
-			}
-			users[i].userLikeMeJson += "]";
-			for (std::vector<std::string>::iterator itj = users[i].userILike.begin() ; itj != users[i].userILike.end(); itj++)
-			{
-				if(std::find(users[i].userLikeMe.begin(), users[i].userLikeMe.end(), *itj) != users[i].userLikeMe.end())
-					users[i].userMatchs.push_back(*itj);
-			}
-			//jsonify users[i].userMatchs
-			users[i].userMatchsJson = "[";
-			for (std::vector<std::string>::iterator it = users[i].userMatchs.begin() ; it != users[i].userMatchs.end(); it++)
-			{
-				if (it != (users[i].userMatchs.end() - 1))
-					users[i].userMatchsJson += "\"" + *it + "\"" + ",";
-				else
-					users[i].userMatchsJson += "\"" + *it + "\"";
-			}
-			users[i].userMatchsJson += "]";
-			std::cout << "INSERT INTO MatchaBDD.Users (username, email, password, genre, orientation, description, age, locationX, locationY, tags, image, meLikeUsers, userLikesMe, recentProfile, recentVisit, matchs) VALUES (\"" << users[i].username << "\",\"" << users[i].userEmail << "\",\"" << users[i].userPassword << "\",\"" << users[i].userGenre << "\",\"" << users[i].userOrientation << "\",\"" << users[i].userDescription << "\"," << users[i].userAge << "," << users[i].userLocationX << "," << users[i].userLocationY << ",'" << users[i].userTagsJson << "','[\"" << users[i].userImage << "\"]','" << users[i].userILikeJson << "','" << users[i].userLikeMeJson << "','" << users[i].userRecentProfileJson << "','" << users[i].userRecentVisitJson << "','" << users[i].userMatchsJson << "');" << std::endl;
+			if (it != (users[i].userLikesMe.end() - 1))
+				users[i].userLikesMeJson += "\"" + *it + "\"" + ",";
+			else
+				users[i].userLikesMeJson += "\"" + *it + "\"";
+		}
+		users[i].userLikesMeJson += "]";
+		for (std::vector<std::string>::iterator itj = users[i].meLikeUsers.begin() ; itj != users[i].meLikeUsers.end(); itj++)
+		{
+			if(std::find(users[i].userLikesMe.begin(), users[i].userLikesMe.end(), *itj) != users[i].userLikesMe.end())
+				users[i].Matchs.push_back(*itj);
+		}
+		//jsonify users[i].userMatchs
+		users[i].MatchsJson = "[";
+		for (std::vector<std::string>::iterator it = users[i].Matchs.begin() ; it != users[i].Matchs.end(); it++)
+		{
+			if (it != (users[i].Matchs.end() - 1))
+				users[i].MatchsJson += "\"" + *it + "\"" + ",";
+			else
+				users[i].MatchsJson += "\"" + *it + "\"";
+		}
+		users[i].MatchsJson += "]";
+		std::cout << "INSERT INTO MatchaBDD.Users (username, lastname, firstname, email ,password, orientationId, bio, dms, age, locationX, locationY, tags, image, score, meLikeUsers, userLikesMe, matchs) VALUES (\"" << users[i].username << "\",\"" << users[i].lastname << "\",\"" << users[i].firstname << "\",\"" << users[i].email << "\",\"" << users[i].password << "\"," << users[i].orientationId << ",\"" << users[i].bio << "\",\"" << "[]" << "\"," << users[i].age << "," << users[i].locationX << "," << users[i].locationY << ",\"" << users[i].TagsJson << "\",\"" << users[i].image << "\"," << users[i].score << ",\"" << users[i].meLikeUsersJson << "\",\"" << users[i].userLikesMeJson << "\",\"" << users[i].MatchsJson << "\");" << std::endl;
 		}
 }
 
