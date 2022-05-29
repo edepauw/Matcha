@@ -18,11 +18,12 @@ import {
     FormGroup
 }
     from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 function CreationAccountPage() {
 
     const steps = ['Informations Personnel', 'Photos', 'Tags', 'Bio'];
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(1);
     const [valueGender, setValueGender] = useState('');
     const [valueDate, setValueDate] = useState('');
     var user = {
@@ -129,7 +130,25 @@ function CreationAccountPage() {
                     : activeStep === 1 ?
 
                         <Grid container columns={12} spacing={2} className={'Photo'}>
-                            <Grid item xs={12} sm={12} md={12} className={'Photo'}>
+                            <Grid item xs={12} sm={12} md={12} className={'PhotoGridTitle'}>
+                                <Typography variant='h5' id="demo-radio" className={'TitlePhoto'}>Photo</Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} className={'PhotoGridTitle'}>
+                                <Grid item xs={3} sm={3} md={3} className={'PhotoGrid'}>
+                                    <Button variant="contained" className={'ButtonPhotoPP'}><AddIcon className={'AddIcon'}/></Button>
+                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                </Grid>
+                                <Grid item xs={3} sm={3} md={3} className={'PhotoGrid'}>
+                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                </Grid>
+                                <Grid item xs={3} sm={3} md={3} className={'PhotoGrid'}>
+                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                </Grid>
                             </Grid>
                         </Grid>
 

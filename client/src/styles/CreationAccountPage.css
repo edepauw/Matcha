@@ -82,3 +82,48 @@
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
     color: #FFADD5!important;
 }
+
+.TitlePhoto {
+    font-size: 3em!important;
+    color : #7A7A7A;
+}
+
+.PhotoGrid {
+    display: flex;
+    flex-direction: column!important;
+    align-items: center;
+}
+
+.Photo {
+    display: flex;
+    /* justify-content: center;
+    align-items: center;
+    margin: auto; */
+}
+
+.PhotoGridTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ButtonPhotoPP {
+    background-color: #73B0D3!important;
+    width: 120px;
+    height: 104px;
+    margin-bottom: 2em!important;
+}
+
+.ButtonPhoto {
+    background-color: #D9D9D9!important;
+    width: 120px;
+    height: 104px;
+    border: none!important;
+    margin-bottom: 2em!important;
+}
+
+.AddIcon {
+    color: white!important;
+    width: 78px!important;
+    height: 70px!important;
+}
