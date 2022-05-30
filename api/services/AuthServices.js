@@ -169,6 +169,7 @@ const signInBySubToken = async (req, res) => {
 	/* On envoie une reponse JSON contenant les durées de vie des tokens et le token CSRF */
 	res.end()
 }
+
 const auth =  async (req, res, next) => {
 	try {
 	  const { cookies, headers } = req;

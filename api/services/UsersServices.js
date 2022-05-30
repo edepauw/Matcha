@@ -1,4 +1,7 @@
+const {v4 : uuidv4} = require("uuid")
 var {db} = require('../db')
+const path = require('path');
+const uploadPath = path.join(__dirname , '/public/uploads');
 
 
 const getUserById = async (id) => {
@@ -27,6 +30,35 @@ const getUserByEMail = async (email) => {
 const createUser = async (pseudo, lastname, firstname, email, password, tokenSub) => {
 	const user = await db.promise().query("INSERT INTO MatchaBDD.Users (username, lastname, firstname, email, password, subToken) VALUES\
 	(?, ?, ?, ? ,?, ?);", [pseudo, lastname, firstname, email, password, tokenSub]);
+}
+
+const completeUser = async (req, res) => {
+	const {genre , interested, imgs, tags, bio} = req.body;
+	var orientationId = genre === 0 ? 0 : genre === 1 ? 7 : genre === 2? 14 : -1;
+	if (orientationId == -1)
+		return
+	if(interested.h && interested.f && interested.n)
+		orientationId += 6;
+	else if(interested.f && interested.h)
+		orientationId += 3;
+	else if(interested.f && interested.n)
+		orientationId += 4;
+	else if(interested.h && interested.n)
+		orientationId += 5;
+	else if(interested.h)
+		orientationId += 0;
+	else if(interested.f)
+		orientationId += 1;
+	else if(interested.n)
+		orientationId += 2;
+	var tab = []
+	imgs.forEach( async (elem) =>{
+		var id = uuidv4();
+		tab.push(id)
+		fs.writeFileSync(uploadPath+ "/" + id + ".jpg", elem);
+		await db.promise().query('INSERT INTO MatchaBDD.image (uuid, path) VALUES (?, ?)', [id, id + ".jpg"]);
+	})
+	await db.promise().query('UPDATE MatchaBDD.users SET orientationId=?, image=?, bio=? WHERE id=?', [orientatioId,  tags, bio, req.user.id])
 }
 
 const CreateRefresh = async (userId, token, expiresAt) => {

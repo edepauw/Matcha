@@ -63,9 +63,13 @@ const initTables = async () => {
 		await db.promise().query(refresh);
 		const sublink = "CREATE TABLE IF NOT EXISTS MatchaBDD.Sublink (\
 			`userId` INT NOT NULL,\
-			`token` TEXT NULL,\
+			`token` TEXT NULL\
 			);"
-		await db.promise().query(refresh);
+		await db.promise().query(sublink);
+		const images = "CREATE TABLE IF NOT EXISTS MatchaBDD.images (\
+			`uuid` INT NOT NULL,\
+			`path` TEXT NULL);"
+		await db.promise().query(images);
 		console.log("Table Refresh crée!");
 }
 
