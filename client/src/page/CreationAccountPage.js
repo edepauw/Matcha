@@ -134,20 +134,20 @@ function CreationAccountPage() {
                                 <Typography variant='h5' id="demo-radio" className={'TitlePhoto'}>Photo</Typography>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} className={'PhotoGridTitle'}>
-                                <Grid item xs={3} sm={3} md={3} className={'PhotoGrid'}>
+                                <Grid item xs={4} sm={4} md={3} className={'PhotoGrid'}>
                                     <Button variant="contained" className={'ButtonPhotoPP'}><AddIcon className={'AddIcon'}/></Button>
                                     <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
-                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                    {/* <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button> */}
                                 </Grid>
-                                <Grid item xs={3} sm={3} md={3} className={'PhotoGrid'}>
+                                <Grid item xs={4} sm={4} md={3} className={'PhotoGrid'}>
                                     <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
                                     <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
-                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                    {/* <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button> */}
                                 </Grid>
-                                <Grid item xs={3} sm={3} md={3} className={'PhotoGrid'}>
+                                <Grid item xs={3} sm={4} md={3} className={'PhotoGrid'}>
                                     <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
                                     <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
-                                    <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button>
+                                    {/* <Button variant="outlined" className={'ButtonPhoto'}><AddIcon className={'AddIcon'}/></Button> */}
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -198,7 +198,6 @@ function CreationAccountPage() {
                         </Stepper>
                     </Box>
                 </Grid>
-
             </Grid>
         </Container>
 
