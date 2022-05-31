@@ -58,8 +58,9 @@ const completeUser = async (req, res) => {
 		fs.writeFileSync(uploadPath+ "/" + id + ".jpg", elem);
 		await db.promise().query('INSERT INTO MatchaBDD.image (uuid, path) VALUES (?, ?)', [id, id + ".jpg"]);
 	})
-	await db.promise().query('UPDATE MatchaBDD.users SET orientationId=?, image=?, bio=? WHERE id=?', [orientatioId,  tags, bio, req.user.id])
+	await db.promise().query('UPDATE MatchaBDD.users SET orientationId=?, image=?, tags=?, bio=? WHERE id=?', [orientationId, JSON.stringify(tab), JSON.stringify(tags), bio, req.user.id])
 }
+
 
 const CreateRefresh = async (userId, token, expiresAt) => {
 		//update token where userId = userId
