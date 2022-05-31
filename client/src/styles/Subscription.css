@@ -4,16 +4,37 @@
     margin-bottom: 4em !important;
     margin-top: 5em !important;
     justify-content: center;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    /* font-family: "Roboto", "Helvetica", "Arial", sans-serif; */
+    font-family: 'Arial Rounded MT Bold'!important;
     font-weight: bold;
 }
 
 .TitlePart1 {
-    color: #73B0D3 !important;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 96px;
+    /* identical to box height */
+
+    letter-spacing: -0.05em;
+
+    /* color: #FFADD5; */
+    color: #FFADD5!important;
+    /* text-shadow: 0 0 3vw rgb(255, 52, 52); */
+    font-family: 'Arial Rounded MT Bold'!important;
+    /* color: #73B0D3 !important; */
 }
 
 .TitlePart2 {
-    color: #FFADD5 !important;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 96px;
+
+    letter-spacing: -0.05em;
+
+    /* color: #73B0D3; */
+    color: #73B0D3!important;
+    /* text-shadow: 0 0 3vw rgb(52, 52, 255); */
+    font-family: 'Arial Rounded MT Bold'!important;
 }
 
 .TitleSubscription {

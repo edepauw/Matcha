@@ -32,10 +32,10 @@ function SignIn() {
     }
 
     return (
-        <Container maxWidth={false}>
+        <Container maxWidth={false} >
             <Grid container columns={12} spacing={3} >
                 <Grid item xs={12} sm={12} md={12} className={'Title'}>
-                    <Typography variant="h1" className={'TitlePart1'}> Gee</Typography><Typography className={'TitlePart2'} variant="h1"> Coeur</Typography>
+                    <Typography variant="h1" className={'GeeTitlePart1'}> Gee</Typography><Typography className={'CoeurTitlePart2'} variant="h1"> Coeur</Typography>
                 </Grid>
             </Grid>
             {activeStep == 0 ?
@@ -72,10 +72,10 @@ function SignIn() {
                                     )} />
                             </FormControl>
                         </Grid>
-                        <Grid item xs={12} ms={12} md={12} className={'ForgetPassword'}>
+                        <Grid item xs={12} sm={12} md={12} className={'ForgetPassword'}>
                             <Button className={'ButtonPassword'} onClick={() => { setActiveStep(1) }}>Mot de passe oublié</Button>
                         </Grid>
-                        <Grid item xs={12} ms={12} md={12} className={'ConnexionInscriptionButton'}>
+                        <Grid item xs={12} sm={12} md={12} className={'ConnexionInscriptionButton'}>
                             <Button className={"ButtonConnexion"} type="submit">
                                 Connexion
                             </Button>

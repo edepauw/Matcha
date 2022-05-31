@@ -1,6 +1,7 @@
 html, body,#root, .App {
   height: 100%;
   width:100%;
+  /* background-color: #0B0E1D; */
   background-color: #F2F2F2;
 }
 
