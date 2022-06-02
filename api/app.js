@@ -16,6 +16,7 @@ initTables();
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRouter = require("./routes/auth");
+var tagsRouter = require("./routes/tags");
 var redirectRouter = require("./routes/redirect");
 
 var app = express()
@@ -36,6 +37,7 @@ app.use("/", indexRouter);
 app.use("/users", (req,res) => auth(req,res,usersRouter));
 app.use("/auth", authRouter);
 app.use("/redirect", redirectRouter);
+app.use("/tags", tagsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/CreationAccountPage.css";
 import {
     Radio,
@@ -17,26 +17,40 @@ import {
     Typography,
     FormGroup,
     Input,
+    Slider,
     Modal
 }
     from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useForm } from "react-hook-form";
 import AvatarEditor from 'react-avatar-editor';
+import Orientation from "./CreationAccountComp/Orientation";
+import ImageChoose from "./CreationAccountComp/ImageChoose";
+import TagChoice from "./CreationAccountComp/TagsChoice";
+import Bio from "./CreationAccountComp/Bio";
+import axios from "axios";
 
 function CreationAccountPage() {
 
     const { handleSubmit } = useForm();
     const steps = ['Informations Personnel', 'Photos', 'Tags', 'Bio'];
-    const [activeStep, setActiveStep] = useState(1);
+    const [activeStep, setActiveStep] = useState(0);
+    const [canNext, setCanNext] = useState(false);
     const [valueGender, setValueGender] = useState('');
     const [valueDate, setValueDate] = useState('');
+    const [bio, setBio] = useState('');
+    const [images, setImages] = useState('[]'); //JSON string
+    const [tagsjson, setTagsjson] = useState('[]'); //JSON string
     const [files, setFiles] = useState([]);
     const [addFiles, setAddFiles] = useState(false)
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    useEffect(() => {
+        //store in localstorage
+        localStorage.setItem('xsrf', window.location.search.split('=')[1]);
+    });
     var user = {
         gender: null,
         birthday_date: null,
@@ -50,39 +64,83 @@ function CreationAccountPage() {
     const { femme, homme, nonBinaire } = state;
     const error = [femme, homme, nonBinaire].filter((v) => v).length >= 1;
 
-    const handleChangeInteressted = (event) => {
-        setState({
-            ...state,
-            [event.target.name]: event.target.checked,
-        });
+    const handleChangeInteressted = (name, checked) => {
+        var cpy = state;
+        cpy[name] = checked;
+        setState(cpy);
     };
 
-    const handleChangeDate = (event) => {
-        setValueDate(event.target.value);
+    useEffect(() => {
+        checkCanNext();
+        console.log('salut');
+    },[activeStep, valueDate, valueGender, state, images, tagsjson, bio]);
+
+    const checkCanNext = () => {
+        if(activeStep === 0) {
+            if(valueGender != '' && valueDate != '' && error) {
+                setCanNext(true);
+            }
+            else if(canNext) {
+                setCanNext(false);
+            }
+        }
+        if(activeStep === 1) {
+            var cpy = JSON.parse(images);
+            var a = 0;
+            console.log(a);
+            if(cpy[0] != null && (cpy[1] != null || cpy[2] != null || cpy[3] != null || cpy[4] != null || cpy[5] != null)) {
+                setCanNext(true);
+            }
+            else if(canNext) {
+                setCanNext(false);
+            }
+        }
+        if(activeStep === 2) {
+            var cpy = JSON.parse(tagsjson);
+            var a = 0;
+            console.log(a);
+            if(cpy.length > 2 && cpy.length < 8) {
+                setCanNext(true);
+            }
+            else if(canNext) {
+                setCanNext(false);
+            }
+        }
+        if(activeStep === 3) {
+            if(bio.length > 4 && bio.length < 100) {
+                setCanNext(true);
+            }
+            else if(canNext) {
+                setCanNext(false);
+            }
+        }
+    }
+
+    const handleChangeDate = (value) => {
+        setValueDate(value);
     };
 
-    const handleChangeGender = (event) => {
-        setValueGender(event.target.value);
+    const handleChangeGender = (value) => {
+        setValueGender(value);
     };
 
     const handleNext = () => {
+        if(activeStep === 3) {
+            axios.post('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile',{salut: 'dada'}, { withCredentials: true , headers:{
+                'x-xsrf-token': localStorage.getItem('xsrf')
+            }})
+        }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        // setCanNext(false);
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        // setCanNext(false);
     };
 
-    const onImageUpload = (event) => {
-        if (event.target.files && event.target.files[0]) {
-            let img = event.target.files[0];
-            let tempFiles = files;
-            tempFiles.push(URL.createObjectURL(img));
-            console.log(tempFiles);
-            setFiles(tempFiles);
-            setAddFiles(true);
-        }
-        console.log(files);
+    const handleChangeImage = (value) => {
+        setImages(JSON.stringify(value));
     };
 
     const updateProfil = () => {
@@ -109,161 +167,18 @@ function CreationAccountPage() {
     return (
         <Container maxWidth={false}>
             <Grid container columns={12} spacing={3} >
-                {activeStep === 0 ?
-                    <Grid container columns={12} spacing={2} className={'GenreInteresse'}>
-                        <Grid className={'GenreInteresse'}>
-                            <Grid item xs={6} sm={6} md={6} sx={{ marginRight: '15em' }}>
-                                <Typography variant='h5' id="demo-radio-buttons-group-label" className={'TitleGenre'}>Genre</Typography>
-                                <RadioGroup
-                                    aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue=""
-                                    name="radio-buttons-group"
-                                    value={valueGender}
-                                    onChange={handleChangeGender}
-                                >
-                                    <FormControlLabel value="femme" control={<Radio />} label="Femme" />
-                                    <FormControlLabel value="homme" control={<Radio />} label="Homme" />
-                                    <FormControlLabel value="non-binaire" control={<Radio />} label="Non Binaire" />
-                                </RadioGroup>
-                            </Grid>
-                            <Grid item xs={6} sm={6} md={6}>
-                                <Typography variant='h5' id="demo-radio-buttons-group-label" className={'TitleInteressePar'}>Interessé par</Typography>
-                                <FormGroup
-                                    aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue=""
-                                    name="radio-buttons-group"
-                                >
-                                    <FormControlLabel control={<Checkbox checked={femme} onChange={handleChangeInteressted} name="femme" />} label="Femme" />
-                                    <FormControlLabel control={<Checkbox checked={homme} onChange={handleChangeInteressted} name="homme" />} label="Homme" />
-                                    <FormControlLabel control={<Checkbox checked={nonBinaire} onChange={handleChangeInteressted} name="nonBinaire" />} label="Non Binaire" />
-                                </FormGroup>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={12} className={'BirthdayDate'}>
-                            <FormLabel id="demo-radio-buttons-group-label" sx={{ marginRight: '1em' }}>Date de Naissance : </FormLabel>
-                            <TextField
-                                id="outlined-basic"
-                                variant="outlined"
-                                type="date"
-                                value={valueDate}
-                                onChange={handleChangeDate}
-                            />
-                        </Grid>
-                    </Grid>
-                    : activeStep === 1 ?
-
-                        <Grid container columns={12} spacing={7} className={'Photo'}>
-                            <Grid item xs={12} sm={8} md={8} className={'PhotoGridTitle'}>
-                                <Typography variant='h5' id="demo-radio" className={'TitlePhoto'}>Photo</Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={12} md={12} className={'PhotoGridButton'}>
-                                <Grid item xs={12} sm={3} md={2} className={'PhotoGrid'}>
-                                    <label htmlFor="contained-button-file">
-                                        <Input
-                                            accept="image/*"
-                                            id="contained-button-file"
-                                            multiple
-                                            type="file"
-                                            sx={{ display: 'none' }}
-                                            onChange={onImageUpload}
-                                        />
-                                        <Button variant="contained" className={'ButtonPhotoPP'} component="span"><AddIcon className={'AddIcon'} /></Button>
-                                        <Button onClick={handleOpen}>resize</Button>
-                                    </label>
-                                    <label htmlFor="contained-button-file1">
-                                        <Input
-                                            accept="image/*"
-                                            id="contained-button-file1"
-                                            multiple
-                                            type="file"
-                                            sx={{ display: 'none' }}
-                                            onChange={onImageUpload}
-                                        />
-                                        <Button variant="outlined" className={'ButtonPhoto'} component="span"><AddIcon className={'AddIcon'} /></Button>
-                                    </label>
-                                </Grid>
-                                <Grid item xs={12} sm={3} md={2} className={'PhotoGrid'}>
-                                    <label htmlFor="contained-button-file2">
-                                        <Input
-                                            accept="image/*"
-                                            id="contained-button-file2"
-                                            multiple
-                                            type="file"
-                                            sx={{ display: 'none' }}
-                                            onChange={(event) => {
-                                                let tempFiles = files;
-                                                tempFiles.push(event.target.files[0]);
-                                                setFiles(tempFiles);
-                                                console.log(files)
-                                            }}
-                                        />
-                                        <Button variant="outlined" className={'ButtonPhoto'} component="span"><AddIcon className={'AddIcon'} /></Button>
-                                    </label>
-                                    <label htmlFor="contained-button-file3">
-                                        <Input
-                                            accept="image/*"
-                                            id="contained-button-file3"
-                                            multiple
-                                            type="file"
-                                            sx={{ display: 'none' }}
-                                            onChange={(event) => {
-                                                let tempFiles = files;
-                                                tempFiles.push(event.target.files[0]);
-                                                setFiles(tempFiles);
-                                                console.log(files)
-                                            }}
-                                        />
-                                        <Button variant="outlined" className={'ButtonPhoto'} component="span"><AddIcon className={'AddIcon'} /></Button>
-                                    </label>
-                                </Grid>
-                                <Grid item xs={12} sm={3} md={2} className={'PhotoGrid'}>
-                                    <label htmlFor="contained-button-file4">
-                                        <Input
-                                            accept="image/*"
-                                            id="contained-button-file4"
-                                            multiple
-                                            type="file"
-                                            sx={{ display: 'none' }}
-                                            onChange={(event) => {
-                                                let tempFiles = files;
-                                                tempFiles.push(event.target.files[0]);
-                                                setFiles(tempFiles);
-                                                console.log(files)
-                                            }}
-                                        />
-                                        <Button variant="outlined" className={'ButtonPhoto'} component="span"><AddIcon className={'AddIcon'} /></Button>
-                                    </label>
-                                    <label htmlFor="contained-button-file5">
-                                        <Input
-                                            accept="image/*"
-                                            id="contained-button-file5"
-                                            multiple
-                                            type="file"
-                                            sx={{ display: 'none' }}
-                                            onChange={(event) => {
-                                                let tempFiles = files;
-                                                tempFiles.push(event.target.files[0]);
-                                                setFiles(tempFiles);
-                                                console.log(files)
-                                            }}
-                                        />
-                                        <Button variant="outlined" className={'ButtonPhoto'} component="span"><AddIcon className={'AddIcon'} /></Button>
-                                    </label>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-
-                        : activeStep === 2 ?
-
-                            <Grid container columns={12} spacing={3} className={''}>
-
-                            </Grid>
-                            : <></>
+                {activeStep === 0 &&
+                    <Orientation interesstedChange={handleChangeInteressted} genderChange={handleChangeGender} dateChange={handleChangeDate} gender={valueGender} h={state.homme} f={state.femme} n={state.nonBinaire} date={valueDate}/>}
+                {activeStep === 1 &&
+                    <ImageChoose onChange={handleChangeImage} images={JSON.parse(images)}/>}
+                {activeStep === 2 &&
+                    <TagChoice onChange={setTagsjson} />
+                }
+                {activeStep === 3 &&
+                    <Bio onChange={setBio} defaultValue={bio} />
                 }
                 <Grid className={'ButtonDiv'}>
-                    {activeStep == 0 ?
-                        <></>
-                        :
+                    {activeStep !== 0 &&
                         <Grid item xs={12} sm={12} md={12} className={'ButtonBackDiv'}>
                             <Button
                                 className={"ButtonBack"}
@@ -277,7 +192,7 @@ function CreationAccountPage() {
                         </Grid>
                     }
                     <Grid item xs={12} sm={12} md={12} className={'ButtonNextDiv'}>
-                        {valueGender != '' && valueDate != '' && error ?
+                        {canNext ?
                             <Button onClick={() => { handleNext(), updateProfil() }} className={"ButtonNextEnable"} >
                                 {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
                             </Button>
@@ -304,28 +219,6 @@ function CreationAccountPage() {
                         </Stepper>
                     </Box>
                 </Grid>
-
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box className={'ModalPhoto'}>
-                        <Grid className={'GridModal'}>
-                            <AvatarEditor
-                                sx={{margin: 'auto'}}
-                                image={files[0]}
-                                width={250}
-                                height={250}
-                                border={50}
-                                color={[255, 255, 255, 0.6]}
-                                scale={1.2}
-                                rotate={0}
-                            />
-                        </Grid>
-                    </Box>
-                </Modal>
             </Grid>
         </Container>
 

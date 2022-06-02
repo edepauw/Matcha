@@ -156,7 +156,7 @@ const signInBySubToken = async (req, res) => {
 	/* On créer le cookie contenant le JWT */
 	res.cookie('access_token', accessToken, {
 	httpOnly: true,
-	maxAge: 30 * 60 * 60 * 1000,
+	maxAge: 3 * 60 * 60 * 1000,
 	});
 
 	/* On créer le cookie contenant le refresh token */
@@ -165,7 +165,7 @@ const signInBySubToken = async (req, res) => {
 	maxAge: 24 * 60 * 60 * 1000,
 	path: '/auth/token'
 	});
-	res.redirect('http://'+ process.env.IP +':3000/create/account');
+	res.redirect('http://'+ process.env.IP +':3000/create/account?xsrf='+xsrfToken);
 	/* On envoie une reponse JSON contenant les durées de vie des tokens et le token CSRF */
 	res.end()
 }

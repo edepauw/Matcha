@@ -126,5 +126,6 @@ module.exports = {
 	createUser,
 	delSubToken,
 	getUserBySubToken,
+	completeUser,
 	CreateRefresh
 }
