@@ -3,7 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var {auth} = require('./services/AuthServices');
+var {auth} = require('./services/AuthMiddleware');
 var cors = require("cors");
 require('dotenv').config()
 const corsOptions = {

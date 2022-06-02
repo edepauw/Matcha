@@ -47,10 +47,6 @@ function CreationAccountPage() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    useEffect(() => {
-        //store in localstorage
-        localStorage.setItem('xsrf', window.location.search.split('=')[1]);
-    });
     var user = {
         gender: null,
         birthday_date: null,
@@ -126,9 +122,20 @@ function CreationAccountPage() {
 
     const handleNext = () => {
         if(activeStep === 3) {
-            axios.post('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile',{salut: 'dada'}, { withCredentials: true , headers:{
-                'x-xsrf-token': localStorage.getItem('xsrf')
-            }})
+
+        const headers = new Headers();
+        headers.append('x-xsrf-token', window.location.search.split('=')[1]);
+        
+        const options = {
+        method: 'POST',
+        mode: 'cors',
+        headers,
+        body: '{}',
+        credentials: 'include'
+        };
+        
+        /* On effectue la requête */
+        const response = fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options);
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         // setCanNext(false);
