@@ -22,6 +22,9 @@ const initTables = async () => {
 		`value` VARCHAR(32) NOT NULL,\
 		PRIMARY KEY (`id`));"
 	await db.promise().query(tags);
+	const tagsprom = await db.promise().query("SELECT COUNT(*) FROM MatchaBDD.Tags;");
+	if(tagsprom[0][0]['COUNT(*)'] == 0)
+		eachLine('tags.sql', (line) => db.query(line, function (err, result) {if (err) throw err;})).then(() => console.log('Seeding Tags done!'));
 	var dms = "CREATE TABLE IF NOT EXISTS MatchaBDD.DMs (\
 		`id` INT NOT NULL AUTO_INCREMENT,\
 		`idTwo` VARCHAR(32) NULL,\

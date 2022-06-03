@@ -1,7 +1,7 @@
 const {v4 : uuidv4} = require("uuid")
 var {db} = require('../db')
 const path = require('path');
-const uploadPath = path.join(__dirname , '/public/uploads');
+// const uploadPath = path.join(__dirname , '/public/uploads');
 
 
 const getUserById = async (id) => {
@@ -34,31 +34,34 @@ const createUser = async (pseudo, lastname, firstname, email, password, tokenSub
 
 const completeUser = async (req, res) => {
 	const {genre , interested, imgs, tags, bio} = req.body;
+	console.log(genre , interested, imgs, tags, bio);
 	var orientationId = genre === 0 ? 0 : genre === 1 ? 7 : genre === 2? 14 : -1;
-	if (orientationId == -1)
-		return
-	if(interested.h && interested.f && interested.n)
+	if(interested.homme && interested.femme && interested.nonBinaire)
 		orientationId += 6;
-	else if(interested.f && interested.h)
+	else if(interested.femme && interested.homme)
 		orientationId += 3;
-	else if(interested.f && interested.n)
+	else if(interested.femme && interested.nonBinaire)
 		orientationId += 4;
-	else if(interested.h && interested.n)
+	else if(interested.homme && interested.nonBinaire)
 		orientationId += 5;
-	else if(interested.h)
+	else if(interested.homme)
 		orientationId += 0;
-	else if(interested.f)
+	else if(interested.femme)
 		orientationId += 1;
-	else if(interested.n)
+	else if(interested.nonBinaire)
 		orientationId += 2;
 	var tab = []
-	imgs.forEach( async (elem) =>{
-		var id = uuidv4();
-		tab.push(id)
-		fs.writeFileSync(uploadPath+ "/" + id + ".jpg", elem);
-		await db.promise().query('INSERT INTO MatchaBDD.image (uuid, path) VALUES (?, ?)', [id, id + ".jpg"]);
-	})
-	await db.promise().query('UPDATE MatchaBDD.users SET orientationId=?, image=?, tags=?, bio=? WHERE id=?', [orientationId, JSON.stringify(tab), JSON.stringify(tags), bio, req.user.id])
+	console.log('fefef')
+	// imgs.forEach( async (elem) =>{
+	// console.log('fefe')
+	// // var id = uuidv4();
+	// 	tab.push(id)
+	// 	// fs.writeFileSync(uploadPath+ "/" + id + ".jpg", elem);
+	// 	await db.promise().query('INSERT INTO MatchaBDD.images (uuid, path) VALUES (?, ?);', [id, id + ".jpg"]);
+	// })
+	console.log('fefef')
+	await db.promise().query('UPDATE MatchaBDD.Users SET orientationId=?, image=?, tags=?, bio=? WHERE id=?;', [orientationId, JSON.stringify(imgs), JSON.stringify(tags), bio, req.user.id])
+	console.log('fefef')
 }
 
 
@@ -123,6 +126,7 @@ const matchableByTag = async (userId, tag) => {
 module.exports = {
 	getUserByPseudo,
 	getUserByEMail,
+	getUserById,
 	createUser,
 	delSubToken,
 	getUserBySubToken,

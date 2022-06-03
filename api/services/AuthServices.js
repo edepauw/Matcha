@@ -106,7 +106,7 @@ const signIn = async (req, res) => {
 		jwtKey,
 		{
 			algorithm: "ES256",
-			subject: user.id,
+			subject: user.username,
 			expiresIn: expires
 		}
 		);

@@ -56,7 +56,7 @@
     width: 100%;
 }
 
-.TitleGenre {
+.TitleGenre, .TitleTags {
     font-size: 2em!important;
     color : #7A7A7A;
 }
@@ -101,7 +101,7 @@
     margin: auto; */
 }
 
-.PhotoGridTitle {
+.PhotoGridTitle, .TagsGridTitle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -194,4 +194,27 @@
 .checkBoxesContainer{
     width: 60% !important;
     justify-content: center !important;
+}
+
+.TagsGridCheckbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin: auto; */
+}
+
+.CardTagsCheckBox {
+    border: solid;
+    background-color: #F2F2F2!important;
+    border-color: #BABABA!important;
+    box-shadow: none!important;
+    margin-bottom: 2em;
+    max-width: 20vh;
+}
+
+.Grid { 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+    align-items: stretch;
 }

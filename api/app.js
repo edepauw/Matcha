@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use("/", indexRouter);
-app.use("/users", (req,res) => auth(req,res,usersRouter));
+app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 app.use("/redirect", redirectRouter);
 app.use("/tags", tagsRouter);

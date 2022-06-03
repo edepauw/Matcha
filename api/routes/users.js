@@ -4,7 +4,7 @@ var router = express.Router();
 var { getUserByPseudo, completeUser} = require('../services/UsersServices');
 
 /* GET users listing. */
-router.post('/completeProfile', auth, completeUser);
+router.post('/completeProfile', (req, res) => auth(req, res, completeUser));
 
 router.get('/:pseudo', async (req, res, next) => {
   const {username, genre, orientation, description, age, locationX, locationY, tags, image, meLikeUsers, userLikesMe, recentProfile, recentVisit, matchs} = await getUserByPseudo(req.params.pseudo);
