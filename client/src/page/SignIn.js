@@ -52,7 +52,7 @@ function SignIn() {
                                 render={({ field: { onChange, value } }) => (
                                     <TextField
 										className = "textfield"
-                                        sx={{ width: '25ch' }}
+                                        sx={{ width: '25ch'}}
                                         id="username"
                                         label="Pseudo"
                                         onChange={onChange}
@@ -66,7 +66,7 @@ function SignIn() {
                                     control={controlLogin}
                                     render={({ field: { onChange, value } }) => (
                                         <TextField
-                                            sx={{ width: '25ch' }}
+                                            sx={{ width: '25ch' , marginTop: "10px"}}
                                             id="password"
                                             label="Mot de passe"
                                             type="password"

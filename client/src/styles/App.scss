@@ -1,11 +1,25 @@
 @use 'Colors.scss' as *;
 
+#big_block{
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+}
+
+html, body, #root, .App, .test {
+	height: 100%;
+	width:100%;
+	/* background-color: #0B0E1D; */
+	background-color:  $white_back;
+}
+
 .light {
 	.text{
 		color: #0B0E1D;
 	}
 	.background{
-		background-color: #F2F2F2;
+		background-color: $white_back;
 	}
 	.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
 		border-color: black!important;
@@ -16,22 +30,28 @@
 	.text{
 		color: #F2F2F2;
 	}
-	.background{
-		background-color: #0B0E1D;
+	.background {
+		background-color: $dark_back;
 	}
 	.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
-		border-color: red!important;
+		border-color: $rose_fonce!important;
+		box-shadow: 0 0 0.5vw rgb(255, 52, 52);
+	}
+	.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+		color: $white_back;
 	}
 }
 
 
-
-html, body,#root, .App {
+body{
+	background-color: $white_back;
+	overflow: hidden;
 	overflow-x: hidden;
-
-  height: 100%;
-  width:100%;
+  	height: 100%;
+  	width:100%;
 }
+
+
 
 .App{
   height:100%;

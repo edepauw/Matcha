@@ -1,7 +1,6 @@
 @import "App.scss";
 
 #Back_Anime div{
-
 	position: absolute;
 	top: -10%;
 	left: 0;
@@ -23,8 +22,8 @@
 #BackPic{
 	z-index: -1;
 	// background-image: url("edep.jpg");
-	width: 3vw;
-	height: 5.16vh;
+	height: 4vh;
+	aspect-ratio: 1/1;
 }
 
 @keyframes animate{
@@ -34,6 +33,6 @@
 	}
 	100%{
 		// top: 110%;
-		transform: translate3d(var(--left-end), 108vh, 0);
+		transform: translate3d(var(--left-end), 110vh, 0);
 	}
 }

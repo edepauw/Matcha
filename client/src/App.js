@@ -34,6 +34,7 @@ class App extends Component {
     }
 
 
+
     render() {
 		const {theme, setTheme} = this.context;
 		// console.log(theme)
@@ -47,9 +48,8 @@ class App extends Component {
             //         </Route>
             //     </Routes>
             // </BrowserRouter>
-			<nav className={theme}>
-
-            <BrowserRouter>
+			<div className={theme} id="big_block" >
+            <BrowserRouter >
             {/* { this.state.token ?  */}
                 <Grid container columns={12} spacing={3} >
                     <Grid item xs={12} sm={12} md={12} className={'MainTitle'}>
@@ -59,13 +59,13 @@ class App extends Component {
                 </Grid>
                 {/* : <></> */}
             {/* } */}
-                <nav className={theme}>
-                    <ul className="background">
+                <nav>
+                    <ul>
                         <li><Link to="/">1</Link></li>
                         <li><Link to="/create/account">2</Link></li>
                         <li><Link to="/subscription">3</Link></li>
                         <li><Link to="/signin">4</Link></li>
-						<button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>DarkMode</button>
+						<button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>{theme}_Mode</button>
                     </ul>
                 </nav>
                 <Routes>
@@ -75,7 +75,7 @@ class App extends Component {
                     <Route path="/signin" element={<SignIn />} />
                 </Routes>
             </BrowserRouter>
-			</nav>
+			</div>
         );
     }
 }
