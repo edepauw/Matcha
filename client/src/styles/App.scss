@@ -1,9 +1,36 @@
+@use 'Colors.scss' as *;
+
+.light {
+	.text{
+		color: #0B0E1D;
+	}
+	.background{
+		background-color: #F2F2F2;
+	}
+	.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+		border-color: black!important;
+	}
+}
+
+.dark{
+	.text{
+		color: #F2F2F2;
+	}
+	.background{
+		background-color: #0B0E1D;
+	}
+	.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+		border-color: red!important;
+	}
+}
+
+
+
 html, body,#root, .App {
-	overflow: hidden;
+	overflow-x: hidden;
+
   height: 100%;
   width:100%;
-  /* background-color: #0B0E1D; */
-  background-color: #F2F2F2;
 }
 
 .App{

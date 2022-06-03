@@ -1,3 +1,17 @@
+@use '../styles/Colors.scss' as *;
+
+.textfield{
+	border-color: aquamarine;
+}
+
+#username-label{
+	color: #73B0D3;
+}
+
+#password-label{
+	color: #73B0D3;
+}
+
 .Title {
     display: inherit;
     align-items: center;

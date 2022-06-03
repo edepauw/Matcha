@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import "../styles/BackAnimation.css";
+import "../styles/BackAnimation.scss";
 
 
 
@@ -25,16 +25,16 @@ const BackAnimation = () => {
 
 	return (
 		<div id="Back_Anime">
-			<div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left:img1}}></img></div>
-			<div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left: img2}}></img></div>
-			{/* // <div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left:img3}}></img></div>
-			<div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left:img4}}></img></div>
-			<div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left:img5}}></img></div>
-			<div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left:img6}}></img></div>
-			<div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left:img7}}></img></div>
-			<div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left:img8}}></img></div>
-			<div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left:img9}}></img></div>
-			<div><img id= "BackPic" src="../edep.jpg" View style={{position: 'relative',left:img10}}></img></div> */}
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left: img2}}></img></div>
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left:img4}}></img></div>
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left:img1}}></img></div>
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left:img3}}></img></div>
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left:img5}}></img></div>
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left:img6}}></img></div>
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left:img7}}></img></div>
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left:img8}}></img></div>
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left:img9}}></img></div>
+			<div><img id= "BackPic" src="../coeur_etoile.gif" View style={{position: 'relative',left:img10}}></img></div>
 		</div>
 	);
 };

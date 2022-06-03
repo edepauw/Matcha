@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import "./styles/App.css";
+import React, { Component, useContext } from "react";
+import { ThemeContext } from "./context/ThemeContext.tsx";
+import "./styles/App.scss";
 import LoginForm from "./page/SignInForm";
 import MainPage from "./page/MainPage";
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
@@ -16,11 +17,12 @@ class App extends Component {
         super(props);
         this.state = {
             token: window.localStorage.getItem('token') ? true : false,
-            apiResponse: ""
+            apiResponse: "",
         }
     }
 
     componentDidMount() {
+		const {theme, setTheme} = this.context;
         console.log(this.state.token);
         console.log(localStorage.getItem('expires' + "<" + Date.now()));
         if (localStorage.getItem('expires') && localStorage.getItem('expires') < Date.now()) {
@@ -31,8 +33,11 @@ class App extends Component {
         }
     }
 
+
     render() {
-        console.log(this.state.token)
+		const {theme, setTheme} = this.context;
+		// console.log(theme)
+		
         return (
             // <BrowserRouter>
             //     <Routes>
@@ -42,6 +47,7 @@ class App extends Component {
             //         </Route>
             //     </Routes>
             // </BrowserRouter>
+			<nav className={theme}>
 
             <BrowserRouter>
             {/* { this.state.token ?  */}
@@ -53,12 +59,13 @@ class App extends Component {
                 </Grid>
                 {/* : <></> */}
             {/* } */}
-                <nav>
-                    <ul>
+                <nav className={theme}>
+                    <ul className="background">
                         <li><Link to="/">1</Link></li>
                         <li><Link to="/create/account">2</Link></li>
                         <li><Link to="/subscription">3</Link></li>
                         <li><Link to="/signin">4</Link></li>
+						<button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>DarkMode</button>
                     </ul>
                 </nav>
                 <Routes>
@@ -68,9 +75,12 @@ class App extends Component {
                     <Route path="/signin" element={<SignIn />} />
                 </Routes>
             </BrowserRouter>
+			</nav>
         );
     }
 }
+
+App.contextType = ThemeContext
 
 export default App;
 

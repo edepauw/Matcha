@@ -23,6 +23,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "safe-buffer": "*",
+    "sass": "^1.52.1",
     "webpack": "^5.72.0"
   },
   "scripts": {
