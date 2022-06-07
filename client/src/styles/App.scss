@@ -1,17 +1,10 @@
 @use 'Colors.scss' as *;
 
-#big_block{
-	position: absolute;
-	height: 100vh;
-	width: 100vw;
-	overflow: hidden;
-}
-
-html, body, #root, .App, .test {
+html, body,#root, .App {
 	height: 100%;
 	width:100%;
-	/* background-color: #0B0E1D; */
-	background-color:  $white_back;
+	background-color: var(--Back_Color);
+	// background-color:  $white_back;
 }
 
 .light {
@@ -28,6 +21,7 @@ html, body, #root, .App, .test {
 
 .dark{
 	.text{
+		$test: #3b4b9b !global;
 		color: #F2F2F2;
 	}
 	.background {
@@ -45,7 +39,7 @@ html, body, #root, .App, .test {
 
 body{
 	background-color: $white_back;
-	overflow: hidden;
+	// overflow: hidden;
 	overflow-x: hidden;
   	height: 100%;
   	width:100%;
@@ -115,4 +109,8 @@ body{
 
 .TitlePart2 {
   color: #FFADD5!important;
+}
+
+#liste {
+	position: absolute;
 }

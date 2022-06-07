@@ -33,6 +33,14 @@ class App extends Component {
         }
     }
 
+	componentDidUpdate() {
+		const {theme, setTheme} = this.context;
+		if (theme === "dark")
+			document.documentElement.style.setProperty("--Back_Color", "#0B0E1D");
+		if (theme === "light")
+			document.documentElement.style.setProperty("--Back_Color", "#F2F2F2");
+	}
+
 
 
     render() {
@@ -60,7 +68,7 @@ class App extends Component {
                 {/* : <></> */}
             {/* } */}
                 <nav>
-                    <ul>
+                    <ul id="liste">
                         <li><Link to="/">1</Link></li>
                         <li><Link to="/create/account">2</Link></li>
                         <li><Link to="/subscription">3</Link></li>

@@ -1,15 +1,35 @@
 @use '../styles/Colors.scss' as *;
 
-.textfield{
-	border-color: aquamarine;
-}
+.dark{
+	.GeeTitlePart1{
+		text-shadow: 0 0 20px rgb(255, 0, 0);
+	}
+	.CoeurTitlePart2 {
+		text-shadow: 0 0 20px rgb(52, 52, 255);
+	}
+	#username-label{
+		color: $white_back;
+	}
+	
+	#password-label{
+		color: $white_back;
+	}
 
-#username-label{
-	color: #73B0D3;
-}
+	.ButtonConnexion {
+		border: 2px solid $bleu_fonce;
+		background-color: rgba(255, 122, 89, .0)!important;
+		box-shadow: 0 0 5px rgb(52, 52, 255);
+		cursor: pointer;
 
-#password-label{
-	color: #73B0D3;
+	}
+	
+	.ButtonInscription {
+		border: 2px solid $rose_fonce;
+		background-color: rgba(255, 122, 89, .0)!important;
+		box-shadow: 0 0 5px rgb(255, 0, 0);
+		cursor: pointer;
+	}
+
 }
 
 .Title {
@@ -32,7 +52,7 @@
 
     /* color: #FFADD5; */
     color: #FFADD5!important;
-    text-shadow: 0 0 20px rgb(255, 0, 0);
+    // text-shadow: 0 0 20px rgb(255, 0, 0);
     font-family: 'Arial Rounded MT Bold'!important;
 }
 
@@ -45,7 +65,7 @@
 
     /* color: #73B0D3; */
     color: #73B0D3!important;
-    text-shadow: 0 0 20px rgb(52, 52, 255);
+    // text-shadow: 0 0 20px rgb(52, 52, 255);
     font-family: 'Arial Rounded MT Bold'!important;
 }
 

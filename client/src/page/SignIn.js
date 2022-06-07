@@ -35,7 +35,8 @@ function SignIn() {
 	console.log(theme);
 
     return (
-        <Container maxWidth={false} className={`${styles[theme]}`}>
+		<div className={`${styles[theme]}`}>
+        <Container maxWidth={false}>
 			<BackAnimation/>
             <Grid container columns={12} spacing={3} >
                 <Grid item xs={12} sm={12} md={12} className={'Title'}>
@@ -120,6 +121,7 @@ function SignIn() {
             }
 
         </Container>
+		</div>
 
     );
 
