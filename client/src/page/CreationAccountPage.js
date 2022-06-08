@@ -147,7 +147,6 @@ function CreationAccountPage() {
         const body = {
             genre: valueGender,
             interested: state,
-            imgs: JSON.parse(images),
             tags: JSON.parse(tagsjson),
             bio: bio
         }
@@ -158,11 +157,18 @@ function CreationAccountPage() {
         body: JSON.stringify(body),
         credentials: 'include'
         };
-        
-        /* On effectue la requête */
         fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options)
             .then(function(response) {
                 console.log(response);
+            })
+        const imagees = JSON.parse(images);
+        imagees.forEach(async (element) => {
+            await fetch(element).then(res => res.blob()).then(blob => {
+                var file = new File([blob], uuidv4() + '.jpg', {type:"image/jpeg", lastModified:new Date()});
+                setFiles(files => [...files, file]);
+            });
+        }).then(() => {
+                axios.post('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/photos/upload', images, { headers: { 'x-xsrf-token': window.location.search.split('=')[1] } })
             })
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
