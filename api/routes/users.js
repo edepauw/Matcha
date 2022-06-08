@@ -1,16 +1,11 @@
 var express = require('express');
 const { auth } = require('../services/AuthMiddleware');
 var router = express.Router();
-const multer = require('multer');
-const upload = multer({ dest: './public/uploads/' });
+const path = require('path');
 var { getUserByPseudo, completeUser} = require('../services/UsersServices');
 
 /* GET users listing. */
 router.post('/completeProfile', (req, res) => auth(req, res, completeUser));
-
-router.post('/photos/upload', upload.array('photos', 6), (req, res) => {
-  console.log(req.files);
-});
 
 router.get('/:pseudo', async (req, res, next) => {
   const {username, genre, orientation, description, age, locationX, locationY, tags, image, meLikeUsers, userLikesMe, recentProfile, recentVisit, matchs} = await getUserByPseudo(req.params.pseudo);

@@ -6,7 +6,6 @@ const jwtKey = fs.readFileSync(__dirname + '/../config/private.pem');
 const auth = async (req, res, next) => {
 	try {
 	  const { cookies, headers } = req;
-		console.log(req.body)
 	  if (!cookies || !cookies.access_token) {
 		return res.status(401).json({ message: 'Missing token in cookie' });
 	  }
@@ -31,12 +30,10 @@ const auth = async (req, res, next) => {
 	  console.log(decodedToken)
 	  const {userId} = decodedToken;
 	  const user = await getUserById(userId);
-		  console.log('sisi')
 		if (!user) {
 		  return res.status(401).json({ message: `User ${userId} not exists` });
 		}
 		req.user = user;
-		console.log('ici')
 		next(req, res)
 		
 	} catch (err) {

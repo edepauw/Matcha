@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/CreationAccountPage.css";
+import { v4 as uuidv4 } from 'uuid';
 import {
     Radio,
     RadioGroup,
@@ -34,7 +35,7 @@ function CreationAccountPage() {
 
     const { handleSubmit } = useForm();
     const steps = ['Informations Personnel', 'Photos', 'Tags', 'Bio'];
-    const [activeStep, setActiveStep] = useState(2);
+    const [activeStep, setActiveStep] = useState(0);
     const [canNext, setCanNext] = useState(false);
     const [valueGender, setValueGender] = useState('');
     const [valueDate, setValueDate] = useState('');
@@ -138,7 +139,7 @@ function CreationAccountPage() {
         setValueGender(value);
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         if(activeStep === 3) {
 
         const headers = new Headers();
@@ -147,6 +148,7 @@ function CreationAccountPage() {
         const body = {
             genre: valueGender,
             interested: state,
+            images: JSON.parse(images),
             tags: JSON.parse(tagsjson),
             bio: bio
         }
@@ -160,15 +162,6 @@ function CreationAccountPage() {
         fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options)
             .then(function(response) {
                 console.log(response);
-            })
-        const imagees = JSON.parse(images);
-        imagees.forEach(async (element) => {
-            await fetch(element).then(res => res.blob()).then(blob => {
-                var file = new File([blob], uuidv4() + '.jpg', {type:"image/jpeg", lastModified:new Date()});
-                setFiles(files => [...files, file]);
-            });
-        }).then(() => {
-                axios.post('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/photos/upload', images, { headers: { 'x-xsrf-token': window.location.search.split('=')[1] } })
             })
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);

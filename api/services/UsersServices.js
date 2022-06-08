@@ -1,5 +1,6 @@
 const {v4 : uuidv4} = require("uuid")
 var {db} = require('../db')
+var fs = require('fs');
 const path = require('path');
 // const uploadPath = path.join(__dirname , '/public/uploads');
 
@@ -33,8 +34,17 @@ const createUser = async (pseudo, lastname, firstname, email, password, tokenSub
 }
 
 const completeUser = async (req, res) => {
-	const {genre , interested, imgs, tags, bio} = req.body;
-	console.log(genre , interested, imgs, tags, bio);
+	const {genre , interested, images, tags, bio} = req.body;
+	for (element of images)
+	{
+		if(element === null)
+			continue
+		console.log("",element)
+		var data = element.replace(/^data:image\/\w+;base64,/, "");
+		var buf = Buffer.from(data, 'base64');
+		fs.writeFile(uuidv4() + '.png', buf, () => {});
+	}
+	console.log(genre , interested, tags, bio);
 	var orientationId = genre === 0 ? 0 : genre === 1 ? 7 : genre === 2? 14 : -1;
 	if(interested.homme && interested.femme && interested.nonBinaire)
 		orientationId += 6;
@@ -51,7 +61,6 @@ const completeUser = async (req, res) => {
 	else if(interested.nonBinaire)
 		orientationId += 2;
 	var tab = []
-	console.log('fefef')
 	// imgs.forEach( async (elem) =>{
 	// console.log('fefe')
 	// // var id = uuidv4();
@@ -59,9 +68,7 @@ const completeUser = async (req, res) => {
 	// 	// fs.writeFileSync(uploadPath+ "/" + id + ".jpg", elem);
 	// 	await db.promise().query('INSERT INTO MatchaBDD.images (uuid, path) VALUES (?, ?);', [id, id + ".jpg"]);
 	// })
-	console.log('fefef')
-	await db.promise().query('UPDATE MatchaBDD.Users SET orientationId=?, image=?, tags=?, bio=? WHERE id=?;', [orientationId, JSON.stringify(imgs), JSON.stringify(tags), bio, req.user.id])
-	console.log('fefef')
+	await db.promise().query('UPDATE MatchaBDD.Users SET orientationId=?, image=?, tags=?, bio=? WHERE id=?;', [orientationId, JSON.stringify(images), JSON.stringify(tags), bio, req.user.id])
 }
 
 
