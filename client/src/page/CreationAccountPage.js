@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/CreationAccountPage.css";
+import { v4 as uuidv4 } from 'uuid';
 import {
     Radio,
     RadioGroup,
@@ -46,6 +47,7 @@ function CreationAccountPage() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [me, setMe] = useState();
 
     var user = {
         gender: null,
@@ -112,6 +114,23 @@ function CreationAccountPage() {
         }
     }
 
+    const getMe = () => {
+        const headers = new Headers();
+        headers.append('x-xsrf-token', window.location.search.split('=')[1]);
+        headers.append('Content-Type', 'application/json');
+        const options = {
+        method: 'GET',
+        mode: 'cors',
+        headers,
+        credentials: 'include'
+        };
+        fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/me', options)
+            .then(function(response) {
+                setMe(response.body);
+                console.log(me);
+            })
+        }
+
     const handleChangeDate = (value) => {
         setValueDate(value);
     };
@@ -120,22 +139,36 @@ function CreationAccountPage() {
         setValueGender(value);
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         if(activeStep === 3) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                console.log("Latitude is :", position.coords.latitude);
+                console.log("Longitude is :", position.coords.longitude);
+
+              });
 
         const headers = new Headers();
         headers.append('x-xsrf-token', window.location.search.split('=')[1]);
-        
+        headers.append('Content-Type', 'application/json');
+
+        const body = {
+            genre: valueGender,
+            interested: state,
+            images: JSON.parse(images),
+            tags: JSON.parse(tagsjson),
+            bio: bio
+        }
         const options = {
         method: 'POST',
         mode: 'cors',
         headers,
-        body: '{}',
+        body: JSON.stringify(body),
         credentials: 'include'
         };
-        
-        /* On effectue la requête */
-        const response = fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options);
+        fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options)
+            .then(function(response) {
+                console.log(response);
+            })
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         // setCanNext(false);
@@ -199,7 +232,7 @@ function CreationAccountPage() {
                         </Grid>
                     }
                     <Grid item xs={12} sm={12} md={12} className={'ButtonNextDiv'}>
-                        {canNext ?
+                        {/* {canNext ?
                             <Button onClick={() => { handleNext(), updateProfil() }} className={"ButtonNextEnable"} >
                                 {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
                             </Button>
@@ -207,7 +240,13 @@ function CreationAccountPage() {
                             <Button disabled onClick={() => { handleNext(), updateProfil() }} className={"ButtonNextDisable"} >
                                 {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
                             </Button>
-                        }
+                        } */}
+                        <Button onClick={() => { handleNext(), updateProfil() }} className={"ButtonNextEnable"} >
+                                {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
+                            </Button>
+                        <Button onClick={() => { getMe() }} className={"ButtonNextEnable"} >
+                            {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
+                        </Button>
                     </Grid>
                 </Grid>
 
