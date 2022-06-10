@@ -165,6 +165,7 @@ const signInBySubToken = async (req, res) => {
 	maxAge: 24 * 60 * 60 * 1000,
 	path: '/auth/token'
 	});
+
 	res.redirect('http://'+ process.env.IP +':3000/create/account?xsrf='+xsrfToken);
 	/* On envoie une reponse JSON contenant les durées de vie des tokens et le token CSRF */
 	res.end()

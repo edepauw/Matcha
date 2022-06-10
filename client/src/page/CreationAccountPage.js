@@ -141,10 +141,16 @@ function CreationAccountPage() {
 
     const handleNext = async () => {
         if(activeStep === 3) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                console.log("Latitude is :", position.coords.latitude);
+                console.log("Longitude is :", position.coords.longitude);
+
+              });
 
         const headers = new Headers();
         headers.append('x-xsrf-token', window.location.search.split('=')[1]);
         headers.append('Content-Type', 'application/json');
+
         const body = {
             genre: valueGender,
             interested: state,

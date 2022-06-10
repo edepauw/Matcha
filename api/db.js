@@ -70,8 +70,9 @@ const initTables = async () => {
 			);"
 		await db.promise().query(sublink);
 		const images = "CREATE TABLE IF NOT EXISTS MatchaBDD.images (\
-			`uuid` INT NOT NULL,\
-			`path` TEXT NULL);"
+			`id` INT NOT NULL AUTO_INCREMENT,\
+			`path` TEXT NULL,\
+			PRIMARY KEY (`id`));"
 		await db.promise().query(images);
 		console.log("Table Refresh crée!");
 }

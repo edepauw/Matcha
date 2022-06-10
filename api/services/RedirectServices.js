@@ -8,5 +8,6 @@ const redirectSub = async (req, res) => {
         return
     }
     await signInBySubToken(req, res);
+    
 }
 module.exports = {redirectSub}

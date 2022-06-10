@@ -12,8 +12,5 @@ router.get('/:pseudo', async (req, res, next) => {
   res.json({username:username, genre:genre, orientation:orientation, description:description, age:age, locationX:locationX, locationY:locationY, tags:tags, image:image, meLikeUsers:meLikeUsers, userLikesMe:userLikesMe, recentProfile:recentProfile, recentVisit:recentVisit, matchs:matchs});
 });
 
-router.get('/me', (req, res) => auth(req, res, (req) => {
-  console.log(req.user)
-}));
 
 module.exports = router;
