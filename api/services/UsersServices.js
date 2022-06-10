@@ -49,6 +49,10 @@ const completeUser = async (req, res) => {
 	}
 	console.log(genre , interested, tags, bio);
 	var orientationId = genre === 'homme' ? 0 : genre === 'femme' ? 7 : genre === 'nonBinaire' ? 14 : -1;
+	if (orientationId === -1){
+		res.sendStatus(400);
+		return
+	}
 	if (interested.homme && interested.femme && interested.nonBinaire)
 		orientationId += 6;
 	else if(interested.femme && interested.homme)
@@ -72,7 +76,6 @@ const completeUser = async (req, res) => {
 
 
 const CreateRefresh = async (userId, token, expiresAt) => {
-		//update token where userId = userId
 	const refreesh = await db.promise().query("UPDATE MatchaBDD.Refresh SET token = ? WHERE userId = ?", [token, userId]);
 	console.log(refreesh[0].affectedRows)
 	if(refreesh[0].affectedRows == 0)
