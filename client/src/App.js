@@ -10,6 +10,7 @@ import {
     Typography
 } from '@mui/material';
 import Subscription from "./page/Subscription";
+import Home from "./page/Home";
 
 class App extends Component {
     constructor(props) {
@@ -49,23 +50,25 @@ class App extends Component {
                     <Grid item xs={12} sm={12} md={12} className={'MainTitle'}>
                         <div className={'fakeLogo'}></div>
                         <Typography variant="h2" className={'TitlePart1'}> Gee</Typography><Typography className={'TitlePart2'} variant="h2"> Coeur</Typography>
-                    </Grid>
-                </Grid>
-                {/* : <></> */}
-            {/* } */}
                 <nav>
                     <ul>
                         <li><Link to="/">1</Link></li>
                         <li><Link to="/create/account">2</Link></li>
                         <li><Link to="/subscription">3</Link></li>
                         <li><Link to="/signin">4</Link></li>
+                        <li><Link to="/home">5</Link></li>
                     </ul>
                 </nav>
+                    </Grid>
+                </Grid>
+                {/* : <></> */}
+            {/* } */}
                 <Routes>
                     <Route path="/" element={<MainPage />} />
                     <Route path="/create/account" element={<CreationAccountPage />} />
                     <Route path="/subscription" element={<Subscription />} />
                     <Route path="/signin" element={<SignIn />} />
+                    <Route path="/home" element={<Home />} />
                 </Routes>
             </BrowserRouter>
         );
