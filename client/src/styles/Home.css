@@ -1,0 +1,96 @@
+.GridMainCard {
+	display: flex;
+    justify-content: center;
+	align-items: center;
+}
+
+.MainCard {
+	background-color: #D4DCE2!important;
+	box-shadow: 1px 4px 2px 3px rgba(0, 0, 0, 0.3)!important;
+	border-radius: 20px!important;
+	width: 40vh;
+    height: 50vh;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.MainCardMedia {
+	margin-top: 1em;
+	height: 383px;
+	width: 424px!important;
+	border-radius: 20px!important;	
+}
+
+.TypoCard {
+	margin: 1em 0 1em 0!important;
+	color: #484848;
+	text-align: center;
+}
+
+.GridTypoSecond {
+	display: flex;
+	flex-direction: column!important;
+	text-align: left;
+}
+
+.GridTypoMain {
+	display: inline-flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.IconButtonCardTrash {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 60px;
+	height: 60px;
+	border-radius: 54px!important;
+	box-shadow: 0px 6px 0px 0px #7a9db1;
+	background-color: #73B0D3!important;
+	border: solid 1px #beccd4!important;
+	transition: all 0.2s!important;
+	transform:translateY(0px);
+}
+
+.IconButtonCardTrash:hover {
+	transform:translateY(4px);
+	box-shadow: 0px 2px 0px 0px #7a9db1;
+	transition: all 0.2s;
+}
+
+.IconButtonCardValid {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 60px;
+	height: 60px;
+	border-radius: 54px!important;
+	box-shadow: 0px 6px 0px 0px #b898a8;
+	border: solid 1px #fcd1e6!important;
+	background-color: #FFADD5!important;
+	margin-left: 1em;
+	transition: all 0.2s!important;
+	transform:translateY(0px);
+}
+
+.IconButtonCardValid:hover {
+	transform:translateY(4px);
+	box-shadow: 0px 2px 0px 0px #b898a8;
+	transition: all 0.2s;
+}
+
+.IconCard {
+	font-size: 40px;
+	color: #484848;
+}
+
+.ActionCardMain {
+	width: 100%;
+	display: flex!important;
+	justify-content: center;
+	align-items: center!important;
+}
