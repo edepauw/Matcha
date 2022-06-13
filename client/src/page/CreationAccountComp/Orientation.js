@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
 import {
     Radio,
     RadioGroup,
@@ -16,6 +17,9 @@ import { useForm } from "react-hook-form";
 import AvatarEditor from 'react-avatar-editor';
 
 function Orientation(props) {
+
+	const [startDate, setStartDate] = useState(new Date());
+	console.log(startDate.getDate())
 
     const handleChangeInteressted = (event) => {
 		props.interesstedChange(event.target.name, event.target.checked);
@@ -67,8 +71,8 @@ function Orientation(props) {
 					<TextField
 						id="outlined-basic"
 						variant="outlined"
-						defaultValue={props.date?? ''}
 						type="date"
+						InputProps={{inputProps: { min: (startDate.getFullYear() - 100) + "-01-01", max: (startDate.getFullYear() - 18) + "-01-01"} }}
 						onChange={handleChangeDate}
 					/>
 				</Grid>

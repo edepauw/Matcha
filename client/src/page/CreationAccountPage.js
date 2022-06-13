@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from "react";
-import "../styles/CreationAccountPage.css";
+import React, { useEffect, useContext, useState } from "react";
+
+import "../styles/CreationAccountPage.scss";
+import { ThemeContext } from "../context/ThemeContext.tsx";
+import styles from "../styles/SignIn.scss"
+
 import { v4 as uuidv4 } from 'uuid';
 import {
     Radio,
@@ -203,8 +207,11 @@ function CreationAccountPage() {
         }
         console.log(user);
     }
+	const { theme } = useContext(ThemeContext)
+	console.log(theme)
 
     return (
+		<div className={`${styles[theme]}`}>
         <Container maxWidth={false}>
             <Grid container columns={12} spacing={3} >
                 {activeStep === 0 &&
@@ -267,6 +274,7 @@ function CreationAccountPage() {
                 </Grid>
             </Grid>
         </Container>
+		</div>
 
     );
 }

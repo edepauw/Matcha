@@ -1,7 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useContext, useState } from "react";
 import axios from 'axios';
 
-import "../styles/Subscription.css";
+import "../styles/Subscription.scss";
+import { ThemeContext } from "../context/ThemeContext.tsx";
+import styles from "../styles/SignIn.scss"
+import BackAnimation from "./BackAnimation";
 import {
 	TextField,
 	Button,
@@ -36,8 +39,13 @@ function Subscription() {
 			})
     }
 
+	const { theme } = useContext(ThemeContext)
+	console.log(theme)
+
 	return (
 
+		<div className={`${styles[theme]}`}>
+			<BackAnimation/>
 		<Container maxWidth={false}>
 			<Grid container columns={12} spacing={3} >
 				<Grid item xs={12} sm={12} md={12} className={'Title'}>
@@ -147,6 +155,7 @@ function Subscription() {
 			/>
 
 		</Container>
+		</div>
 
 	);
 }
