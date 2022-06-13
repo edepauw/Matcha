@@ -71,7 +71,8 @@ const completeUser = async (req, res) => {
 	console.log(orientationId)
 
 	await db.promise().query('UPDATE MatchaBDD.Users SET orientationId=?, image=?, tags=?, bio=? WHERE id=?;', [orientationId, JSON.stringify(tab), JSON.stringify(tags), bio, req.user.id])
-	res.redirect('http://'+ process.env.IP +':3000/home');
+	res.sendStatus(200)
+	// res.redirect('http://'+ process.env.IP +':3000/home');
 }
 
 
@@ -124,6 +125,16 @@ const getAllMatchableUsers = async (userId, token, expiresAt) => {
 	return ret;
 }
 
+const toPublic = () => {
+}
+
+const getMe = (req, res) =>{
+	console.log(req.user);
+	const { username, lastname, email, orientationId, bio, dms, age, tags, image, meLikeUsers, userLikesMe, matchs} = req.user
+	res.json({username, lastname, email, orientationId, bio, dms, age, tags, image, meLikeUsers, userLikesMe, matchs})
+	res.end()
+}
+
 const matchableByTag = async (userId, tag) => {
 	const users = await getAllMatchableUsers(userId);
 	users.forEach((user) => {
@@ -135,6 +146,7 @@ const matchableByTag = async (userId, tag) => {
 module.exports = {
 	getUserByPseudo,
 	getUserByEMail,
+	getMe,
 	getUserById,
 	createUser,
 	delSubToken,

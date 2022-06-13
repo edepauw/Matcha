@@ -68,6 +68,11 @@ function CreationAccountPage() {
         setState(cpy);
     };
 
+
+    useEffect(() => {
+        localStorage.setItem('xsrf', window.location.search.split('=')[1])
+    },[]);
+
     useEffect(() => {
         checkCanNext();
         console.log('salut');
@@ -117,7 +122,6 @@ function CreationAccountPage() {
     const getMe = () => {
         const headers = new Headers();
         headers.append('x-xsrf-token', window.location.search.split('=')[1]);
-        headers.append('Content-Type', 'application/json');
         const options = {
         method: 'GET',
         mode: 'cors',
@@ -168,6 +172,7 @@ function CreationAccountPage() {
         fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options)
             .then(function(response) {
                 console.log(response);
+                window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000/home'
             })
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
