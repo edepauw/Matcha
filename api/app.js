@@ -12,7 +12,10 @@ const corsOptions = {
 var bodyParser = require('body-parser');
 var {initTables} =  require("./db");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e6a706a194dc4a3dddc097222faf52e9b80d4ab8
 initTables();
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");

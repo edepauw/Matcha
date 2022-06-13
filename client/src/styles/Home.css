@@ -8,8 +8,8 @@
 	background-color: #D4DCE2!important;
 	box-shadow: 1px 4px 2px 3px rgba(0, 0, 0, 0.3)!important;
 	border-radius: 20px!important;
-	width: 40vh;
-    height: 50vh;
+	/* width: 40vh; */
+    height: 100%;
 	display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,8 +17,8 @@
 
 .MainCardMedia {
 	margin-top: 1em;
-	height: 383px;
-	width: 424px!important;
+	height: 300px;
+	width: 300px!important;
 	border-radius: 20px!important;	
 }
 
