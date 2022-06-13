@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../styles/Home.css";
 import {
 	Grid,
@@ -17,6 +17,20 @@ import Chat from "./Chat";
 
 
 function Home(props) {
+	useEffect(() => {
+			const headers = new Headers();
+			headers.append('x-xsrf-token', localStorage.getItem('xsrf'));
+			const options = {
+			method: 'GET',
+			mode: 'cors',
+			headers,
+			credentials: 'include'
+			};
+			fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/me', options)
+				.then(function(response) {
+					console.log(response.body);
+				})
+    },[]);
 	return (
 		<Container maxWidth={false} >
 			<Grid container columns={12} spacing={3}>
