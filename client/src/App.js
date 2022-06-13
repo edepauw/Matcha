@@ -64,7 +64,7 @@ class App extends Component {
                     <Grid item xs={12} sm={12} md={12} className={'MainTitle'}>
                         <div className={'fakeLogo'}></div>
                         <Typography variant="h2" className={'TitlePart1'}> Gee</Typography><Typography className={'TitlePart2'} variant="h2"> Coeur</Typography>
-                {/* <nav>
+                <nav>
                     <ul id="liste">
                         <li><Link to="/">1</Link></li>
                         <li><Link to="/create/account">2</Link></li>
@@ -74,7 +74,7 @@ class App extends Component {
                         <li><Link to="/chat">6</Link></li>
 						<button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>{theme}_Mode</button>
                     </ul>
-                </nav> */}
+                </nav>
                     </Grid>
                 </Grid>
                 {/* : <></> */}
