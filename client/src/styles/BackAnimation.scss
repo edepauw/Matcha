@@ -1,0 +1,38 @@
+@import "App.scss";
+
+#Back_Anime div{
+	position: absolute;
+	top: -10%;
+	left: 0;
+}
+
+@for $i from 1 through 10{
+	#Back_Anime div:nth-child(#{$i}){
+		$rand: 7 + random(10);
+		$rand_delay: random(20);
+		$rand_left_end: 10 + random(20);
+		$rand_left_ini: 0 + random(10);
+		--left-ini: -#{$rand_left_ini}vw;
+		--left-end: #{$rand_left_end}vw;
+		animation: animate $rand +  s linear infinite;
+		animation-delay: #{$rand_delay}s;
+	}
+}
+
+#BackPic{
+	z-index: -1;
+	// background-image: url("edep.jpg");
+	height: 4vh;
+	aspect-ratio: 1/1;
+}
+
+@keyframes animate{
+	0%{
+		top: -10%;
+		transform: translate3d(var(--left-ini), 0, 0);
+	}
+	100%{
+		// top: 110%;
+		transform: translate3d(var(--left-end), 110vh, 0);
+	}
+}

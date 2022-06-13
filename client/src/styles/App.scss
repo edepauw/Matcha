@@ -1,9 +1,51 @@
+@use 'Colors.scss' as *;
+
 html, body,#root, .App {
-  height: 100%;
-  width:100%;
-  /* background-color: #0B0E1D; */
-  background-color: #F2F2F2;
+	height: 100%;
+	width:100%;
+	background-color: var(--Back_Color);
+	// background-color:  $white_back;
 }
+
+.light {
+	.text{
+		color: #0B0E1D;
+	}
+	.background{
+		background-color: $white_back;
+	}
+	.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+		border-color: black!important;
+	}
+}
+
+.dark{
+	.text{
+		$test: #3b4b9b !global;
+		color: #F2F2F2;
+	}
+	.background {
+		background-color: $dark_back;
+	}
+	.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+		border-color: $rose_fonce!important;
+		box-shadow: 0 0 0.5vw rgb(255, 52, 52);
+	}
+	.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+		color: $white_back;
+	}
+}
+
+
+body{
+	background-color: $white_back;
+	// overflow: hidden;
+	overflow-x: hidden;
+  	height: 100%;
+  	width:100%;
+}
+
+
 
 .App{
   height:100%;
@@ -67,4 +109,8 @@ html, body,#root, .App {
 
 .TitlePart2 {
   color: #FFADD5!important;
+}
+
+#liste {
+	position: absolute;
 }

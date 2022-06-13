@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import "../styles/SignIn.css";
+import React, { useContext, useState } from "react";
+import "../styles/SignIn.scss";
 import {
     TextField,
     Button,
@@ -11,8 +11,13 @@ import {
 from '@mui/material';
 import { Link } from "react-router-dom";
 import { Controller, useForm } from 'react-hook-form';
+import BackAnimation from "./BackAnimation";
+import { ThemeContext } from "../context/ThemeContext.tsx";
+import styles from "../styles/SignIn.scss"
 
 function SignIn() {
+
+	const { theme } = useContext(ThemeContext)
 
     const { control: controlLogin, handleSubmit: handleSubmitLogin } = useForm();
     const { control: controlForgetPassword, handleSubmit: handleSubmitForgetPassword } = useForm();
@@ -31,8 +36,12 @@ function SignIn() {
         console.log(dataForget);
     }
 
+	console.log(theme);
+
     return (
-        <Container maxWidth={false} >
+		<div className={`${styles[theme]}`}>
+        <Container maxWidth={false}>
+			<BackAnimation/>
             <Grid container columns={12} spacing={3} >
                 <Grid item xs={12} sm={12} md={12} className={'Title'}>
                     <Typography variant="h1" className={'GeeTitlePart1'}> Gee</Typography><Typography className={'CoeurTitlePart2'} variant="h1"> Coeur</Typography>
@@ -47,7 +56,8 @@ function SignIn() {
                                 control={controlLogin}
                                 render={({ field: { onChange, value } }) => (
                                     <TextField
-                                        sx={{ width: '25ch' }}
+										className = "textfield"
+                                        sx={{ width: '25ch'}}
                                         id="username"
                                         label="Pseudo"
                                         onChange={onChange}
@@ -61,7 +71,7 @@ function SignIn() {
                                     control={controlLogin}
                                     render={({ field: { onChange, value } }) => (
                                         <TextField
-                                            sx={{ width: '25ch' }}
+                                            sx={{ width: '25ch' , marginTop: "10px"}}
                                             id="password"
                                             label="Mot de passe"
                                             type="password"
@@ -115,6 +125,7 @@ function SignIn() {
             }
 
         </Container>
+		</div>
 
     );
 

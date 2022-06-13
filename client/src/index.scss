@@ -1,0 +1,15 @@
+@use './styles/Colors.scss' as *;
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial Rounded MT Bold'!important;
+}
+
+.light {
+	background-color: $white_back;
+}
+
+.dark {
+	background-color: $dark_back;
+}
