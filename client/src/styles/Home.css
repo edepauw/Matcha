@@ -1,37 +1,95 @@
+.Main {
+	display: inline-flex;
+	height: 100%;
+}
+
 .GridMainCard {
-	display: flex;
+	display: flex!important;
+	flex-direction: column!important;
     justify-content: center;
 	align-items: center;
+	height: 100%;
 }
 
 .MainCard {
 	background-color: #D4DCE2!important;
 	box-shadow: 1px 4px 2px 3px rgba(0, 0, 0, 0.3)!important;
 	border-radius: 20px!important;
-	/* width: 40vh; */
-    height: 100%;
 	display: flex;
     flex-direction: column;
     align-items: center;
+    height: 72vh;
+    text-align: center;
+    aspect-ratio: 10/12;
+	text-align: center;
+}
+@media (min-width: 1920px) { 
+	.MainCard {
+		/* height: 85vh!important; */
+		aspect-ratio: 10/10!important;
+	}
+	.MainCardMedia {
+		max-width: 65%!important;
+	}
+
+	.BioCard {
+		font-size: larger;
+		margin-bottom: 2em!important;
+		margin-top: 2em!important;
+	}
+}
+@media (max-width: 750px) {
+	.MainCard {
+		min-width: 90%;
+		max-width: 90%;
+	}
+
+	.MainCardMedia {
+		height: 465px!important;
+		width: 606px!important;
+	}
 }
 
 .MainCardMedia {
 	margin-top: 1em;
-	height: 300px;
-	width: 300px!important;
-	border-radius: 20px!important;	
+    /* height: 60%; */
+    width: 75%!important;
+    border-radius: 20px!important;
+    aspect-ratio: 1/1;
 }
 
 .TypoCard {
-	margin: 1em 0 1em 0!important;
+	margin-right: 3em;
 	color: #484848;
 	text-align: center;
+	font-family: 'Arial Rounded MT Bold'!important
+}
+
+
+.TypoCardAge {
+	margin-right: 3em;
+	color: #48484886;
+	text-align: center;
+	font-family: 'Arial Rounded MT Bold'!important
 }
 
 .GridTypoSecond {
 	display: flex;
 	flex-direction: column!important;
 	text-align: left;
+	font-family: 'Arial Rounded MT Bold'!important;
+}
+
+.BioCard {
+	font-family: 'Arial Rounded MT Bold'!important;
+	display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+	padding-left: 2.5em;
+	padding-right: 2.5em;
+	margin-bottom: 1em;
+	color: #484848db;
 }
 
 .GridTypoMain {
@@ -39,21 +97,23 @@
 	text-align: center;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
+	width: 80%;
+	margin-bottom: 1em!important;
 }
 
 .IconButtonCardTrash {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 60px;
-	height: 60px;
+	width: 71px;
+    height: 71px;
 	border-radius: 54px!important;
 	box-shadow: 0px 6px 0px 0px #7a9db1;
 	background-color: #73B0D3!important;
 	border: solid 1px #beccd4!important;
 	transition: all 0.2s!important;
 	transform:translateY(0px);
+	margin-right: 5em!important;
 }
 
 .IconButtonCardTrash:hover {
@@ -66,8 +126,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 60px;
-	height: 60px;
+	width: 71px;
+    height: 71px;
 	border-radius: 54px!important;
 	box-shadow: 0px 6px 0px 0px #b898a8;
 	border: solid 1px #fcd1e6!important;
@@ -84,7 +144,7 @@
 }
 
 .IconCard {
-	font-size: 40px;
+	font-size: 50px;
 	color: #484848;
 }
 
@@ -93,4 +153,26 @@
 	display: flex!important;
 	justify-content: center;
 	align-items: center!important;
+	margin-top: 2em!important;
+}
+
+.TitleCard {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: flex;
+    justify-content: space-between!important;
+    align-items: center;
+    width: 100%;
+	padding-left: 4em;
+	padding-right: 4em;
+}
+
+.Tags {
+	font-family: 'Arial Rounded MT Bold'!important;
+	border-radius: 25px;
+	border: 1px solid #000000;
+	background-color: #F2F2F2;
+	text-align: center;
+	width: 30%;
+	margin-left: 1em!important;
 }
