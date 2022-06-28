@@ -1,6 +1,12 @@
 @use '../styles/Colors.scss' as *;
 
 .dark{
+	.TitlePart1{
+		text-shadow: 0 0 20px rgb(255, 0, 0);
+	}
+	.TitlePart2 {
+		text-shadow: 0 0 20px rgb(52, 52, 255);
+	}
 	#email-subscription-label{
 		color: $white_back;
 	}
@@ -105,3 +111,17 @@
     background-color: #FFADD5!important;
 }
 
+@media screen and (max-width:500px) {
+	.TitlePart1 {
+		font-size: 70px!important;
+	}
+	
+	.TitlePart2 {
+		font-size: 70px!important;
+	}
+
+	.TextFieldSubscription{
+		width: 33vh;
+	}
+	
+}

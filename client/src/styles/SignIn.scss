@@ -45,7 +45,7 @@
 .GeeTitlePart1 {
     font-style: normal;
     font-weight: 700;
-    font-size: 96px;
+    font-size: 96px!important;
     /* identical to box height */
 
     letter-spacing: -0.05em;
@@ -59,7 +59,7 @@
 .CoeurTitlePart2 {
     font-style: normal;
     font-weight: 700;
-    font-size: 96px;
+    font-size: 96px !important;
 
     letter-spacing: -0.05em;
 
@@ -137,4 +137,15 @@
 .LinkSubscription {
 	text-decoration: none;
     color: white;
+}
+
+@media screen and (max-width:500px) {
+	.GeeTitlePart1 {
+		font-size: 70px!important;
+	}
+	
+	.CoeurTitlePart2 {
+		font-size: 70px!important;
+	}
+	
 }

@@ -63,7 +63,7 @@ class App extends Component {
                 <Grid container columns={12} spacing={3} >
                     <Grid item xs={12} sm={12} md={12} className={'MainTitle'}>
                         <div className={'fakeLogo'}></div>
-                        <Typography variant="h2" className={'TitlePart1'}> Gee</Typography><Typography className={'TitlePart2'} variant="h2"> Coeur</Typography>
+                        <Typography variant="h2" className={'LogoTitlePart1'}> Gee</Typography><Typography className={'LogoTitlePart2'} variant="h2"> Coeur</Typography>
                 <nav>
                     <ul id="liste">
                         <li><Link to="/">1</Link></li>
