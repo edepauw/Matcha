@@ -17,12 +17,10 @@ const auth = async (req, res, next) => {
 	  }
 
 	  const xsrfToken = headers['x-xsrf-token'];
-
 	  const decodedToken = jwt.verify(accessToken, jwtKey, {
 		algorithms: "ES256"
-
 	  });
-
+	  console.log(xsrfToken, decodedToken.xsrfToken)
 	  if (xsrfToken !== decodedToken.xsrfToken) {
 		return res.status(401).json({ message: 'Bad xsrf token' });
 	  }
@@ -35,9 +33,9 @@ const auth = async (req, res, next) => {
 		}
 		req.user = user;
 		next(req, res)
-		
+
 	} catch (err) {
-	  return res.status(400).json({ message: err });
+	  return res.status(400).json({ message: 'biteenfeu' });
 	}
   }
 

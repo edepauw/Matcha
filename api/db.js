@@ -42,19 +42,19 @@ const initTables = async () => {
 		`orientationId` INT NULL,\
 		`bio` VARCHAR(400) NULL,\
 		`dms` JSON NULL,\
-		`age` INT NULL,\
-		`locationX` FLOAT NULL,\
-		`locationY` FLOAT NULL,\
+		`bd` VARCHAR(100) NULL,\
+		`longitude` FLOAT NULL,\
+		`latitude` FLOAT NULL,\
 		`tags` JSON NULL,\
 		`image` JSON NULL,\
 		`score` INT NULL,\
 		`meLikeUsers` JSON NULL,\
 		`userLikesMe` JSON NULL,\
+		`sawUsers` JSON NULL,\
 		`matchs` JSON NULL,\
 		`subToken` VARCHAR(255) DEFAULT NULL,\
 		PRIMARY KEY (`id`));"
-//INSERT INTO `MatchaBDD`.`Users` (`username`, `lastname`, `firstname`, `email`, `password`, `orientationId`, `bio`, `dms`, `age`, `locationX`, `locationY`, `tags`, `image`, `score`, `meLikeUsers`, `userLikesMe`) VALUES ('ede', 'dede', 'dede', 'dedde', 'ddd', '4', 'ddddfdfddd', '\"[]\"', '0', '4', '55', '\"[]\"', '\"[]\"', '54', '\"[]\"', '\"[]\"');
-//INSERT INTO MatchaBDD.Users (username, lastname, firstname, email ,password, orientationId, bio, dms, age, locationX, locationY, tags, image, score, meLikeUsers, userLikesMe, matchs) VALUES ("Charlotte","Charlotte","Charlotte","Charlotte@gmail.com","Charlottepasswd",7,"This is a third description","[]",21,1.51441,46.3118,"["day","sport","savage","food","summer"]","http://localhost:667/uploads/edepauw0.jpg",65,"["Claudelle","Norval","Shontal"]","["Norval","Shontal"]","["Norval","Shontal"]");
+		//{id,username,lastname,firstname,email,password,orientationId,bio,dms,bd,longitude,latitude,tags,image,score,meLikeUsers,userLikesMe,sawUsers,matchs,subToken}
 		await db.promise().query(users);
 		const res = await db.promise().query("SELECT COUNT(*) FROM MatchaBDD.Users;");
 		if(res[0][0]['COUNT(*)'] == 0)

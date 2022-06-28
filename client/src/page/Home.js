@@ -7,17 +7,24 @@ import {
 	CardMedia,
 	CardContent,
 	Typography,
-	Button,
-	CardActions,
+	Slider,
 	IconButton,
 } from "@mui/material";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CloseIcon from '@mui/icons-material/Close';
-import Chat from "./Chat";
+import Chat from "./ChatComponent/Chat";
 
 
 function Home(props) {
+	const [user, setUser] = useState(null);
+	const [viewUser, setViewUser] = useState(null);
+	const [value, setValue] = useState([18, 28]);
+	const [dist, setDist] = useState(50);
+	const distRef = useRef(10);
+	const aRangeRef = useRef(null);
+
 	useEffect(() => {
+
 			const headers = new Headers();
 			headers.append('x-xsrf-token', localStorage.getItem('xsrf'));
 			const options = {
@@ -28,16 +35,80 @@ function Home(props) {
 			};
 			fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/me', options)
 				.then(function(response) {
-					console.log(response.body);
+					console.log(response);
+						if(response.status === 200 && user === null)
+							setUser(response);
+						else{
+							window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000';
+							console.log("error");
+						}
 				})
-    },[]);
+				fetch("https://geolocation-db.com/json/").then(res => {return (res.json()) }).then(function(data) {
+				// `data` is the parsed version of the JSON returned from the above endpoint.
+				console.log(data);  // { "userId": 1, "id": 1, "title": "...", "body": "..." }
+				fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/search?lat=' + data.latitude + '&long=' + data.longitude + '&dmax=' +  dist + '&amin=' +value[0] + '&amax=' + value[1], options)
+				.then(function(response) {
+					console.log(response);
+					// if(response.status === 200 && user === null)
+					// 	setUser(response);
+					// else{
+						// 	window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000';
+						// 	console.log("error");
+						// }
+					})
+				});
+				},[]);
+	const handlenext = () =>{
+		const headers = new Headers();
+		headers.append('x-xsrf-token', localStorage.getItem('xsrf'));
+		const options = {
+		method: 'GET',
+		mode: 'cors',
+		headers,
+		credentials: 'include'
+		};
+		fetch("https://geolocation-db.com/json/").then(res => {return (res.json()) }).then(function(data) {
+			// `data` is the parsed version of the JSON returned from the above endpoint.
+			console.log(aRangeRef.current);  // { "userId": 1, "id": 1, "title": "...", "body": "..." }
+			fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/search?lat=' + data.latitude + '&long=' + data.longitude + '&dmax=' +  dist + '&amin=' +value[0] + '&amax=' + value[1], options)
+			.then(function(response) {
+				console.log(response);
+				// if(response.status === 200 && user === null)
+				// 	setUser(response);
+				// else{
+					// 	window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000';
+					// 	console.log("error");
+					// }
+				})
+			});
+	}
 	return (
 		<Container maxWidth={false} >
+		{user &&
 			<Grid container columns={12} spacing={3}>
 				<Grid item xs={12} sm={12} md={12} className={'Main'}>
 					<Grid item xs={12} sm={3} md={2}>
-						{/* <Chat /> */}
+						<Typography>
+							Distance
+						</Typography>
+						<Slider
+						onChange={(e, value) => setDist(value)}
+						 defaultValue={50} aria-label="Default"
+						valueLabelFormat={(value) => <div>{value}Km</div>}
+						valueLabelDisplay="auto" />
+						<Typography>
+							Age
+						</Typography>
+						<Slider
+						onChange={(e, value) => setValue(value)}
+						getAriaLabel={() => 'Minimum distance shift'}
+						defaultValue={[18, 28]}
+						min={18}
+						valueLabelDisplay="auto"
+						disableSwap
+						/>
 					</Grid>
+					{viewUser &&
 					<Grid item xs={12} sm={6} md={8} className={'GridMainCard'}>
 						<Card className={'MainCard'}>
 							<CardMedia
@@ -46,7 +117,7 @@ function Home(props) {
 								alt="ken kaneki defonce"
 								component="img"
 							/>
-							<CardContent>
+								<CardContent>
 								<Grid className="TitleCard">
 									<Typography gutterBottom variant="h5" component="div" className={'TypoCard'}>
 										Eliott Depauw
@@ -74,20 +145,22 @@ function Home(props) {
 								</Grid>
 							</CardContent>
 						</Card>
+					</Grid>
+					}
 						<Grid item xs={12} sm={12} md={12} className={'ActionCardMain'}>
 							<IconButton aria-label="trash" color="primary" className={'IconButtonCardTrash'}>
 								<CloseIcon fontSize='40' className={'IconCard'} />
 							</IconButton>
-							<IconButton aria-label="valid" color="primary" className={'IconButtonCardValid'}>
+							<IconButton onClick={handlenext} aria-label="valid" color="primary" className={'IconButtonCardValid'}>
 								<FavoriteBorderIcon fontSize='40' className={'IconCard'} />
 							</IconButton>
 						</Grid>
-					</Grid>
 					<Grid item xs={12} sm={3} md={2}>
-						<Chat />
+					<Chat />
 					</Grid>
 				</Grid>
 			</Grid>
+			}
 		</Container>
 	);
 }

@@ -136,6 +136,7 @@ function CreationAccountPage() {
         }
 
     const handleChangeDate = (value) => {
+        console.log(value)
         setValueDate(value);
     };
 
@@ -145,17 +146,13 @@ function CreationAccountPage() {
 
     const handleNext = async () => {
         if(activeStep === 3) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                console.log("Latitude is :", position.coords.latitude);
-                console.log("Longitude is :", position.coords.longitude);
-
-              });
 
         const headers = new Headers();
         headers.append('x-xsrf-token', window.location.search.split('=')[1]);
         headers.append('Content-Type', 'application/json');
 
         const body = {
+            date: valueDate,
             genre: valueGender,
             interested: state,
             images: JSON.parse(images),

@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { Controller, useForm } from 'react-hook-form';
 import BackAnimation from "./BackAnimation";
 import { ThemeContext } from "../context/ThemeContext.tsx";
+import axios from "axios"
 import styles from "../styles/SignIn.scss"
 
 function SignIn() {
@@ -24,11 +25,13 @@ function SignIn() {
     const [activeStep, setActiveStep] = useState(0);
 
 
+
     const onSubmitLogin = (dataLogin) => {
         console.log(dataLogin);
-        axios.post('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/auth/signup', dataSubscription ,{withCredentials: true}).then(res => {
+        axios.post('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/auth/login', dataLogin, {withCredentials:true}).then(res => {
 				const {xsrfToken} = res.data;
-				localStorage.setItem('xsrfToken', JSON.stringify(xsrfToken));
+                console.log(xsrfToken)
+				localStorage.setItem('xsrf', xsrfToken);
 			})
     }
 
