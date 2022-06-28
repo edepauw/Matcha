@@ -46,14 +46,14 @@ const formatAndStockImage = async (img) => {
 	return ret[0].insertId;
 }
 
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, './public/uploads')
-	}
-	, filename: function (req, file, cb) {
-		cb(null, file.name)
-	}
-})
+// var storage = multer.diskStorage({
+// 	destination: function (req, file, cb) {
+// 		cb(null, './public/uploads')
+// 	}
+// 	, filename: function (req, file, cb) {
+// 		cb(null, file.name)
+// 	}
+// })
 
 const completeUser = async (req, res) => {
 	const {date, genre , interested, images, tags, bio} = req.body;

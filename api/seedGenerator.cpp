@@ -116,6 +116,8 @@ int main(int ac, char **av, char **envp)
 		users[i].age = std::to_string(2022 - randomInt(18, 50)).append("-01-01");
 		users[i].locationX = randomFloat(1, 3.55);
 		users[i].locationY = randomFloat(49.5, 47.5);
+		// users[i].locationX = randomFloat(4.1, 5.5);// lyon
+        // users[i].locationY = randomFloat(46.2, 45.2);// lyon
 		users[i].sizeTags = randomInt(3, 7);
 		users[i].image = image[randomInt(0, 1)];
 		std::string userTags[users[i].sizeTags];
