@@ -61,6 +61,12 @@
     color : #7A7A7A;
 }
 
+.TitleBio {
+    font-size: 2em!important;
+    color : #7A7A7A;
+    margin-left: 5em!important;
+}
+
 .TitleInteressePar {
     font-size: 2em!important;
     width: 6em;
@@ -101,7 +107,7 @@
     margin: auto; */
 }
 
-.PhotoGridTitle, .TagsGridTitle {
+.PhotoGridTitle, .TagsGridTitle, .BioGridTitle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -209,12 +215,27 @@
     border-color: #BABABA!important;
     box-shadow: none!important;
     margin-bottom: 2em;
+    margin-right: 1em;
     max-width: 20vh;
 }
 
 .Grid { 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 20px;
-    align-items: stretch;
+    display: inline-flex;
 }
+
+@media (max-width: 899px) {
+    .Grid {
+        display: contents;
+    }
+    .CardTagsCheckBox {
+        margin-left: 2em;
+    }
+}
+
+.BioGridMain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+

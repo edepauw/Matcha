@@ -37,7 +37,7 @@ function Chat(props) {
 							</Grid>
 							<Grid >
 								<Typography gutterBottom variant="body" component="div" className={'TypoCardChatBody'}>
-									Lorem Ipsum mes couilles Lorem Ipsum mes couilles...
+									Lorem Ipsum couilles ...
 								</Typography>
 							</Grid>
 						</Grid>
@@ -61,7 +61,7 @@ function Chat(props) {
 							</Grid>
 							<Grid >
 								<Typography gutterBottom variant="body" component="div" className={'TypoCardChatBody'}>
-									Lorem Ipsum mes couilles Lorem Ipsum mes couilles...
+									Lorem Ipsum couilles ...
 								</Typography>
 							</Grid>
 						</Grid>
@@ -85,7 +85,7 @@ function Chat(props) {
 							</Grid>
 							<Grid >
 								<Typography gutterBottom variant="body" component="div" className={'TypoCardChatBody'}>
-									Lorem Ipsum mes couilles Lorem Ipsum mes couilles...
+									Lorem Ipsum couilles ...
 								</Typography>
 							</Grid>
 						</Grid>
@@ -109,7 +109,7 @@ function Chat(props) {
 							</Grid>
 							<Grid >
 								<Typography gutterBottom variant="body" component="div" className={'TypoCardChatBody'}>
-									Lorem Ipsum mes couilles Lorem Ipsum mes couilles...
+									Lorem Ipsum couilles ...
 								</Typography>
 							</Grid>
 						</Grid>

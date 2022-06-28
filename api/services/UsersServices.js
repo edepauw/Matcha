@@ -2,6 +2,7 @@ const {v4 : uuidv4} = require("uuid")
 var {db} = require('../db')
 var fs = require('fs');
 const path = require('path');
+const multer = require("multer");
 // const uploadPath = path.join(__dirname , '/public/uploads');
 
 
@@ -33,45 +34,69 @@ const createUser = async (pseudo, lastname, firstname, email, password, tokenSub
 	(?, ?, ?, ? ,?, ?);", [pseudo, lastname, firstname, email, password, tokenSub]);
 }
 
+const formatAndStockImage = async (img) => {
+	console.log(img.type);
+	var ext = img.type.split('/')[1];
+	var name = uuidv4() + '.'+ ext;
+	var ret = await db.promise().query('INSERT INTO MatchaBDD.images (path) VALUES (?);', [name]);
+	img.name = name;
+	return ret[0].insertId;
+}
+
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, './public/uploads')
+	}
+	, filename: function (req, file, cb) {
+		cb(null, file.name)
+	}
+})
+
 const completeUser = async (req, res) => {
-	const {genre , interested, images, tags, bio} = req.body;
+	console.log(req.body);
+	const {genre, tags, bio, femme, homme, nonBinaire} = req.fields;
+	const { imgs0, imgs1, imgs2, imgs3, imgs4, imgs5 } = req.files;
 	var tab = []
-	for await (element of images)
-	{
-		if(element === null)
-			continue
-		var name = uuidv4() + '.png';
-		var data = element.replace(/^data:image\/\w+;base64,/, "");
-		var buf = Buffer.from(data, 'base64');
-		fs.writeFile("public/uploads/" + name, buf, () => {});
-		var ret = await db.promise().query('INSERT INTO MatchaBDD.images (path) VALUES (?);', [name]);
-		tab.push(ret[0].insertId);
-	}
-	console.log(genre , interested, tags, bio);
+	if (imgs0) 
+		tab.push(await formatAndStockImage(imgs0));
+	if (imgs1) 
+		tab.push(await formatAndStockImage(imgs1));
+	if (imgs2) 
+		tab.push(await formatAndStockImage(imgs2));
+	if (imgs3) 
+		tab.push(await formatAndStockImage(imgs3));
+	if (imgs4) 
+		tab.push(await formatAndStockImage(imgs4));
+	if (imgs5) 
+		tab.push(await formatAndStockImage(imgs5));
 	var orientationId = genre === 'homme' ? 0 : genre === 'femme' ? 7 : genre === 'nonBinaire' ? 14 : -1;
-	if (orientationId === -1){
-		res.sendStatus(400);
-		return
-	}
-	if (interested.homme && interested.femme && interested.nonBinaire)
-		orientationId += 6;
-	else if(interested.femme && interested.homme)
-		orientationId += 3;
-	else if(interested.femme && interested.nonBinaire)
-		orientationId += 4;
-	else if(interested.homme && interested.nonBinaire)
-		orientationId += 5;
-	else if(interested.homme)
-		orientationId += 0;
-	else if(interested.femme)
-		orientationId += 1;
-	else if(interested.nonBinaire)
-		orientationId += 2;
-	console.log(interested.femme)
+    if (orientationId === -1){
+        res.sendStatus(400);
+        return
+    }
+    if (homme === 'true' && femme === 'true'&& nonBinaire === 'true')
+	orientationId += 6;
+    else if(femme  === 'true' && homme === 'true')
+        orientationId += 3;
+    else if(femme === 'true' && nonBinaire === 'true')
+        orientationId += 4;
+    else if(homme === 'true' && nonBinaire === 'true')
+        orientationId += 5;
+    else if(homme === 'true')
+        orientationId += 0;
+    else if(femme === 'true')
+        orientationId += 1;
+    else if(nonBinaire === 'true')
+        orientationId += 2;
+	console.log(femme)
 	console.log(orientationId)
 
 	await db.promise().query('UPDATE MatchaBDD.Users SET orientationId=?, image=?, tags=?, bio=? WHERE id=?;', [orientationId, JSON.stringify(tab), JSON.stringify(tags), bio, req.user.id])
+
+	var upload = multer({ storage: storage }).array('imgs0', 1);
+	console.log(upload);
 	res.sendStatus(200)
+
 	// res.redirect('http://'+ process.env.IP +':3000/home');
 }
 

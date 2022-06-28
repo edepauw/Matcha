@@ -30,6 +30,7 @@ import ImageChoose from "./CreationAccountComp/ImageChoose";
 import TagChoice from "./CreationAccountComp/TagsChoice";
 import Bio from "./CreationAccountComp/Bio";
 import axios from "axios";
+import FormData from 'form-data'
 
 function CreationAccountPage() {
 
@@ -71,49 +72,46 @@ function CreationAccountPage() {
 
     useEffect(() => {
         localStorage.setItem('xsrf', window.location.search.split('=')[1])
-    },[]);
+    }, []);
 
     useEffect(() => {
         checkCanNext();
-        console.log('salut');
-    },[activeStep, valueDate, valueGender, state, images, tagsjson, bio]);
+    }, [activeStep, valueDate, valueGender, state, images, tagsjson, bio]);
 
     const checkCanNext = () => {
-        if(activeStep === 0) {
-            if(valueGender != '' && valueDate != '' && error) {
+        if (activeStep === 0) {
+            if (valueGender != '' && valueDate != '' && error) {
                 setCanNext(true);
             }
-            else if(canNext) {
+            else if (canNext) {
                 setCanNext(false);
             }
         }
-        if(activeStep === 1) {
+        if (activeStep === 1) {
             var cpy = JSON.parse(images);
             var a = 0;
-            console.log(a);
-            if(cpy[0] != null && (cpy[1] != null || cpy[2] != null || cpy[3] != null || cpy[4] != null || cpy[5] != null)) {
+            if (cpy[0] != null && (cpy[1] != null || cpy[2] != null || cpy[3] != null || cpy[4] != null || cpy[5] != null)) {
                 setCanNext(true);
             }
-            else if(canNext) {
+            else if (canNext) {
                 setCanNext(false);
             }
         }
-        if(activeStep === 2) {
+        if (activeStep === 2) {
             var cpy = JSON.parse(tagsjson);
             var a = 0;
-            console.log(a);
-            if(cpy.length > 2 && cpy.length < 8) {
+            if (cpy.length > 2 && cpy.length < 8) {
                 setCanNext(true);
             }
-            else if(canNext) {
+            else if (canNext) {
                 setCanNext(false);
             }
         }
-        if(activeStep === 3) {
-            if(bio.length > 4 && bio.length < 100) {
+        if (activeStep === 3) {
+            if (bio.length > 4 && bio.length < 100) {
                 setCanNext(true);
             }
-            else if(canNext) {
+            else if (canNext) {
                 setCanNext(false);
             }
         }
@@ -121,19 +119,18 @@ function CreationAccountPage() {
 
     const getMe = () => {
         const headers = new Headers();
-        headers.append('x-xsrf-token', window.location.search.split('=')[1]);
+        headers.append('x-xsrf-token', localStorage.getItem('xsrf'));
         const options = {
-        method: 'GET',
-        mode: 'cors',
-        headers,
-        credentials: 'include'
+            method: 'GET',
+            mode: 'cors',
+            headers,
+            credentials: 'include'
         };
         fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/me', options)
-            .then(function(response) {
+            .then(function (response) {
                 setMe(response.body);
-                console.log(me);
             })
-        }
+    }
 
     const handleChangeDate = (value) => {
         setValueDate(value);
@@ -143,37 +140,81 @@ function CreationAccountPage() {
         setValueGender(value);
     };
 
+    const urltoFile = async (url, filename, mimeType) => {
+        mimeType = mimeType || (url.match(/^data:([^;]+);/) || '')[1];
+        return (await fetch(url)
+            .then(function (res) { return res.arrayBuffer(); })
+            .then(function (buf) {
+                return new File([buf], filename, { type: mimeType });
+            })
+        );
+    }
+
     const handleNext = async () => {
-        if(activeStep === 3) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+        if (activeStep === 3) {
+            navigator.geolocation.getCurrentPosition(function (position) {
                 console.log("Latitude is :", position.coords.latitude);
                 console.log("Longitude is :", position.coords.longitude);
-
-              });
-
-        const headers = new Headers();
-        headers.append('x-xsrf-token', window.location.search.split('=')[1]);
-        headers.append('Content-Type', 'application/json');
-
-        const body = {
-            genre: valueGender,
-            interested: state,
-            images: JSON.parse(images),
-            tags: JSON.parse(tagsjson),
-            bio: bio
-        }
-        const options = {
-        method: 'POST',
-        mode: 'cors',
-        headers,
-        body: JSON.stringify(body),
-        credentials: 'include'
-        };
-        fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options)
-            .then(function(response) {
-                console.log(response);
-                window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000/home'
-            })
+            });
+            var files = []
+            const headers = new Headers();
+            headers.append('x-xsrf-token', localStorage.getItem('xsrf'));
+            console.log(window.location.search.split('=')[1]);
+            console.log(localStorage.getItem('xsrf'));
+            // headers.append('Content-Type', 'multipart/form-data; boundary=------WebKitFormBoundaryuNV21uHBQKetGs6R');
+            const form = new FormData();
+            var cpy = JSON.parse(images)
+            console.log(cpy.length);
+            for ( var i = 0; i < cpy.length ; i++) {
+                if (cpy[i] !== null)
+                    files.push(await urltoFile(cpy[i]))
+                if (i == cpy.length - 1) {
+                    console.log(files);
+                    if (files[0]) {
+                        form.append('imgs0', files[0]);
+                    }
+                    if (files[1]) {
+                        form.append('imgs1', files[1]);
+                    }
+                    if (files[2]) {
+                        form.append('imgs2', files[2]);
+                    }
+                    if (files[3]) {
+                        form.append('imgs3', files[3]);
+                    }
+                    if (files[4]) {
+                        form.append('imgs4', files[4]);
+                    }
+                    if (files[5]) {
+                        form.append('imgs5', files[5]);
+                    }
+                    form.append('genre', valueGender)
+                    form.append('homme', state.homme)
+                    form.append('femme', state.femme)
+                    form.append('nonBinaire', state.nonBinaire)
+                    form.append('tags', tagsjson)
+                    form.append('bio', bio)
+                    const options = {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers,
+                        body: form,
+                        credentials: 'include'
+                    };
+                    fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options)
+                        .then(function (response) {
+                            console.log(response)
+                            if (response.ok) {
+                                // window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000/home'
+                            }
+                            else {
+                                // window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000/'
+                            }
+                        })
+                }
+            }
+            // for ( var i = 0; i < files.length; i++ ) {
+            //     form.append('files', files[i]);
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         // setCanNext(false);
@@ -189,7 +230,6 @@ function CreationAccountPage() {
     };
 
     const updateProfil = () => {
-        console.log(valueGender);
         if (activeStep === 0) {
             user.gender = valueGender;
             user.birthday_date = valueDate;
@@ -206,16 +246,15 @@ function CreationAccountPage() {
                 user.gender = 2;
             }
         }
-        console.log(user);
     }
 
     return (
-        <Container maxWidth={false}>
+        <Container maxWidth={false} sx={{ marginTop: '10em' }}>
             <Grid container columns={12} spacing={3} >
                 {activeStep === 0 &&
-                    <Orientation interesstedChange={handleChangeInteressted} genderChange={handleChangeGender} dateChange={handleChangeDate} gender={valueGender} h={state.homme} f={state.femme} n={state.nonBinaire} date={valueDate}/>}
+                    <Orientation interesstedChange={handleChangeInteressted} genderChange={handleChangeGender} dateChange={handleChangeDate} gender={valueGender} h={state.homme} f={state.femme} n={state.nonBinaire} date={valueDate} />}
                 {activeStep === 1 &&
-                    <ImageChoose onChange={handleChangeImage} images={JSON.parse(images)}/>}
+                    <ImageChoose onChange={handleChangeImage} images={JSON.parse(images)} />}
                 {activeStep === 2 &&
                     <TagChoice onChange={setTagsjson} />
                 }
@@ -247,8 +286,8 @@ function CreationAccountPage() {
                             </Button>
                         } */}
                         <Button onClick={() => { handleNext(), updateProfil() }} className={"ButtonNextEnable"} >
-                                {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
-                            </Button>
+                            {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
+                        </Button>
                         <Button onClick={() => { getMe() }} className={"ButtonNextEnable"} >
                             {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
                         </Button>

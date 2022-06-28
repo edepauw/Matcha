@@ -3,6 +3,8 @@ const { auth } = require('../services/AuthMiddleware');
 var router = express.Router();
 const path = require('path');
 var { getUserByPseudo, completeUser, getMe} = require('../services/UsersServices');
+const multer = require ('multer');
+const upload = multer({ dest: './public/uploads/' })
 
 /* GET users listing. */
 router.post('/completeProfile', (req, res) => auth(req, res, completeUser));

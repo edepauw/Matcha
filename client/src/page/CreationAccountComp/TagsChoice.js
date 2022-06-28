@@ -53,39 +53,63 @@ function TagChoice(props) {
 				<Typography variant='h5' id="demo-radio" className={'TitleTags'}>Tags</Typography>
 			</Grid>
 			<Grid item xs={12} sm={12} md={12} className={'TagsGridCheckbox'}>
-				<Grid item xs={12} sm={6} md={6} className={'Grid'}>
-					{/* <FormGroup
-						aria-labelledby="demo-radio-buttons-group-label"
-						defaultValue=""
-						name="radio-buttons-group"
-						sx={{ textAlign: 'center' }}
-					> */}
-						{tags.map((tag, index) => {
-							return (
-								<Grid key={'box' + index}>
-									<Card className={'CardTagsCheckBox'}>
-										<FormControlLabel control={<Checkbox sx={{marginLeft: '1em'}} onChange={(event) => { handleCheck(tag.id, event.target.checked) }} name={tag.value} />} label={tag.value} />
-									</Card>
-								</Grid>
-							);
-						})}
-						{/* <Card className={'CardTagsCheckBox'}>
-							<FormControlLabel control={<Checkbox name="femme" />} label="Lorem ipsum dolor" />
+				{ tags[0] ?
+				<Grid item xs={12} sm={6} md={6} className={'Grid'} >
+					<Grid item xs={6} sm={4} md={4}>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[0].id, event.target.checked) }} name={tags[0].value} />} label={tags[0].value} />
 						</Card>
 						<Card className={'CardTagsCheckBox'}>
-							<FormControlLabel control={<Checkbox checked={homme} onChange={handleChangeInteressted} name="homme" />} label="Lorem ipsum dolor" />
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[1].id, event.target.checked) }} name={tags[1].value} />} label={tags[1].value} />
 						</Card>
 						<Card className={'CardTagsCheckBox'}>
-							<FormControlLabel control={<Checkbox checked={nonBinaire} onChange={handleChangeInteressted} name="nonBinaire" />} label="Lorem ipsum dolor" />
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[2].id, event.target.checked) }} name={tags[2].value} />} label={tags[2].value} />
 						</Card>
 						<Card className={'CardTagsCheckBox'}>
-							<FormControlLabel control={<Checkbox checked={nonBinaire} onChange={handleChangeInteressted} name="nonBinaire" />} label="Lorem ipsum dolor" />
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[3].id, event.target.checked) }} name={tags[3].value} />} label={tags[3].value} />
 						</Card>
 						<Card className={'CardTagsCheckBox'}>
-							<FormControlLabel control={<Checkbox checked={nonBinaire} onChange={handleChangeInteressted} name="nonBinaire" />} label="Lorem ipsum dolor" />
-						</Card> */}
-					{/* </FormGroup> */}
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[4].id, event.target.checked) }} name={tags[4].value} />} label={tags[4].value} />
+						</Card>
+					</Grid>
+					<Grid item xs={6} sm={4} md={4}>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[5].id, event.target.checked) }} name={tags[5].value} />} label={tags[5].value} />
+						</Card>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[6].id, event.target.checked) }} name={tags[6].value} />} label={tags[6].value} />
+						</Card>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[7].id, event.target.checked) }} name={tags[7].value} />} label={tags[7].value} />
+						</Card>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[8].id, event.target.checked) }} name={tags[8].value} />} label={tags[8].value} />
+						</Card>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[9].id, event.target.checked) }} name={tags[9].value} />} label={tags[9].value} />
+						</Card>
+					</Grid>
+					<Grid item xs={12} sm={4} md={4}>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[10].id, event.target.checked) }} name={tags[10].value} />} label={tags[10].value} />
+						</Card>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[11].id, event.target.checked) }} name={tags[11].value} />} label={tags[11].value} />
+						</Card>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[12].id, event.target.checked) }} name={tags[12].value} />} label={tags[12].value} />
+						</Card>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[13].id, event.target.checked) }} name={tags[13].value} />} label={tags[13].value} />
+						</Card>
+						<Card className={'CardTagsCheckBox'}>
+							<FormControlLabel control={<Checkbox sx={{ marginLeft: '1em' }} onChange={(event) => { handleCheck(tags[14].id, event.target.checked) }} name={tags[14].value} />} label={tags[14].value} />
+						</Card>
+					</Grid>
 				</Grid>
+					:
+					<></>
+				}
 			</Grid>
 		</Grid>
 	);
