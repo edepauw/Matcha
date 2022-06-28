@@ -1,8 +1,11 @@
 const {v4 : uuidv4} = require("uuid")
-var {db} = require('../db')
-var fs = require('fs');
+const {db} = require('../db')
+const fs = require('fs');
+const sortBy = require('sort-by');
+
+const DistanceCalculator = require('distance-calculator-js');
 const path = require('path');
-const multer = require("multer");
+const { randomInt } = require("crypto");
 // const uploadPath = path.join(__dirname , '/public/uploads');
 
 
@@ -53,104 +56,198 @@ var storage = multer.diskStorage({
 })
 
 const completeUser = async (req, res) => {
-	console.log(req.body);
-	const {genre, tags, bio, femme, homme, nonBinaire} = req.fields;
-	const { imgs0, imgs1, imgs2, imgs3, imgs4, imgs5 } = req.files;
+	const {date, genre , interested, images, tags, bio} = req.body;
 	var tab = []
-	if (imgs0) 
-		tab.push(await formatAndStockImage(imgs0));
-	if (imgs1) 
-		tab.push(await formatAndStockImage(imgs1));
-	if (imgs2) 
-		tab.push(await formatAndStockImage(imgs2));
-	if (imgs3) 
-		tab.push(await formatAndStockImage(imgs3));
-	if (imgs4) 
-		tab.push(await formatAndStockImage(imgs4));
-	if (imgs5) 
-		tab.push(await formatAndStockImage(imgs5));
+	for await (element of images)
+	{
+		if(element === null)
+			continue
+		var name = uuidv4() + '.png';
+		var data = element.replace(/^data:image\/\w+;base64,/, "");
+		var buf = Buffer.from(data, 'base64');
+		fs.writeFile("public/uploads/" + name, buf, () => {});
+		var ret = await db.promise().query('INSERT INTO MatchaBDD.images (path) VALUES (?);', [name]);
+		tab.push(ret[0].insertId);
+	}
 	var orientationId = genre === 'homme' ? 0 : genre === 'femme' ? 7 : genre === 'nonBinaire' ? 14 : -1;
-    if (orientationId === -1){
-        res.sendStatus(400);
-        return
-    }
-    if (homme === 'true' && femme === 'true'&& nonBinaire === 'true')
-	orientationId += 6;
-    else if(femme  === 'true' && homme === 'true')
-        orientationId += 3;
-    else if(femme === 'true' && nonBinaire === 'true')
-        orientationId += 4;
-    else if(homme === 'true' && nonBinaire === 'true')
-        orientationId += 5;
-    else if(homme === 'true')
-        orientationId += 0;
-    else if(femme === 'true')
-        orientationId += 1;
-    else if(nonBinaire === 'true')
-        orientationId += 2;
-	console.log(femme)
-	console.log(orientationId)
+	if (orientationId === -1){
+		res.sendStatus(400);
+		return
+	}
+	if (interested.homme && interested.femme && interested.nonBinaire)
+		orientationId += 6;
+	else if(interested.femme && interested.homme)
+		orientationId += 3;
+	else if(interested.femme && interested.nonBinaire)
+		orientationId += 4;
+	else if(interested.homme && interested.nonBinaire)
+		orientationId += 5;
+	else if(interested.homme)
+		orientationId += 0;
+	else if(interested.femme)
+		orientationId += 1;
+	else if(interested.nonBinaire)
+		orientationId += 2;
 
-	await db.promise().query('UPDATE MatchaBDD.Users SET orientationId=?, image=?, tags=?, bio=? WHERE id=?;', [orientationId, JSON.stringify(tab), JSON.stringify(tags), bio, req.user.id])
-
-	var upload = multer({ storage: storage }).array('imgs0', 1);
-	console.log(upload);
+	await db.promise().query('UPDATE MatchaBDD.Users SET bd=?, orientationId=?, image=?, tags=?, bio=? WHERE id=?;', [date, orientationId, JSON.stringify(tab), JSON.stringify(tags), bio, req.user.id])
 	res.sendStatus(200)
 
 	// res.redirect('http://'+ process.env.IP +':3000/home');
 }
 
-
+const getAllUsers = async () =>
+{
+	const all = await db.promise().query('SELECT * FROM MatchaBDD.Users')
+	return all[0]
+}
 const CreateRefresh = async (userId, token, expiresAt) => {
 	const refreesh = await db.promise().query("UPDATE MatchaBDD.Refresh SET token = ? WHERE userId = ?", [token, userId]);
-	console.log(refreesh[0].affectedRows)
 	if(refreesh[0].affectedRows == 0)
 		await db.promise().query("INSERT INTO MatchaBDD.Refresh (userId, token, expiresAt) VALUES (?, ?, ?);", [userId, token, expiresAt]);
 }
-const getAllMatchableUsers = async (userId, token, expiresAt) => {
-	var MatchMap = ["110101",
-					"111010",
-					"010100",
-					"101000",
-					"010010",
-					"100001"];
-	const user = await getUserById(userId);
-	if(user.genre == "Homme" && user.orientation == "Bi")
-		intone = 0;
-	if(user.genre == "Femme" && user.orientations == "Bi")
-		intone = 1;
-	if(user.genre == "Homme" && user.orientations == "Hetero")
-		intone = 2;
-	if(user.genre == "Femme" && user.orientations == "Hetero")
-		intone = 3;
-	if(user.orientations == "Lesbian")
-		intone = 4;
-	if(user.orientations == "Gay")
-		intone = 5;
-	const all = await db.promise().query('SELECT * FROM MatchaBDD.Users')
-	console.log(all[0])
+const filter = (array ,user, query) => {
+	const { lat, long, dmax, amin, amax} = query;
 	var ret = [];
-	all[0].forEach((cur) => {
-		var inttwo;
-		if(cur.genre == "Homme" && cur.orientation == "Bi")
-			inttwo = 0;
-		if(cur.userGenre == "Femme" && cur.orientations == "Bi")
-			inttwo = 1;
-		if(cur.userGenre == "Homme" && cur.orientations == "Hetero")
-			inttwo = 2;
-		if(cur.userGenre == "Femme" && cur.orientations == "Hetero")
-			inttwo = 3;
-		if(cur.orientations == "Lesbian")
-			inttwo = 4;
-		if(cur.orientations == "Gay")
-			inttwo = 5;
-		if(MatchMap[intone][inttwo])
-			ret.push(cur)
+	const MatchMap = [[1,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,1,0,0,1,0,1,1,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,1],
+					[1,0,0,1,0,1,1,1,0,0,1,0,1,1,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,1,0,0,1,0,1,1,1,0,0,1,0,1,1],
+					[1,0,0,1,0,1,1,0,0,0,0,0,0,0,1,0,0,1,0,1,1],
+					[1,0,0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,1,0,1,1],
+					[0,1,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1],
+					[0,1,0,1,1,0,1,0,1,0,1,1,0,1,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,1,0,1,1,0,1],
+					[0,1,0,1,1,0,1,0,0,0,0,0,0,0,0,1,0,1,1,0,1],
+					[0,1,0,1,1,0,1,0,1,0,1,1,0,1,0,1,0,1,1,0,1],
+					[0,0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1],
+					[0,0,1,0,1,1,1,0,0,1,0,1,1,1,0,0,0,0,0,0,0],
+					[0,0,0,0,0,0,0,0,0,1,0,1,1,1,0,0,1,0,1,1,1],
+					[0,0,1,0,1,1,1,0,0,0,0,0,0,0,0,0,1,0,1,1,1],
+					[0,0,1,0,1,1,1,0,0,1,0,1,1,1,0,0,1,0,1,1,1]];
+
+		array.forEach((elem) => {
+		if(MatchMap[elem.orientationId][user.orientationId])
+		{
+			if(dateToAge(elem.bd)> amin && dateToAge(elem.bd) < amax)
+			{
+			console.log(DistanceCalculator.calculate({ lat: lat, long: long }, { lat: elem.latitude, long: elem.longitude }) / 1000)
+			if(dmax > (DistanceCalculator.calculate({ lat: lat, long: long }, { lat: elem.latitude, long: elem.longitude }) / 1000))
+				{
+					console.log('non')
+					ret.push(elem)
+				}
+			}
+		}
 	})
 	return ret;
 }
+const AddSawUser = async (id, toAdd) => {
+	const user = await getUserById(id);
+	var {sawUsers} = user;
+	if(!sawUsers)
+		sawUsers = [];
+	sawUsers.push(toAdd);
+	await db.promise().query("UPDATE MatchaBDD.Users SET sawUsers = ? WHERE id = ?", [JSON.stringify(sawUsers), id]);
+}
 
-const toPublic = () => {
+const dateToAge = (date) => {
+	var year = new Date().getFullYear();
+	return year - parseInt(date.split('-')[0])
+}
+const tagsScore = (user, elem) => {
+	var common = 0;
+	var x = 0;
+	var y = 0;
+	while (user.tags[x])
+	{
+		while(elem.tags[y])
+		{
+			if(user.tags[x] === elem.tags[y])
+			{
+				common++;
+				break;
+			}
+			y++;
+		}
+		x++;
+		y = 0;
+	}
+	return ((common / user.tags.length) * 100);
+}
+const sort = (array, user, coords, dmax) => {
+	var score = [];
+	var i = 0;
+	while(array[i])
+	{
+		var dist = DistanceCalculator.calculate({ lat: coords.lat, long: coords.long }, { lat: array[i].latitude, long: array[i].longitude }) / 1000
+		var distscore = (dist / dmax) * 100;
+		var tagssc = tagsScore(user, array[i]);
+		var agescore = 100 - (Math.abs(dateToAge(user.bd) - dateToAge(user.bd)) * 2)
+		score.push({id:i,
+				score: ((distscore + tagssc + agescore)/300)*100
+			})
+		i++;
+	}
+	var ret = [];
+	i = 0
+	score.sort(sortBy('-score'))
+	while(score[i])
+	{
+		ret.push(array[score[i].id])
+		i++;
+	}
+	return ret
+}
+const updateCoords = async (id, coords) =>{
+	 await db.promise().query("UPDATE MatchaBDD.Users SET longitude = ?, latitude = ? WHERE id = ?", [coords.long, coords.lat, id]);
+}
+const toPublic = (user) => {
+	return ({id: user.id,username:user.username,lastname:user.lastname,firstname:user.firstname, orientationId:user.orientationId, bio:user.bio, bd:user.bd, tags:user.tags, images:user.image})
+}
+const Matchmaking = async (req, res) => {
+	console.log(req.user)
+	updateCoords(req.user.id, {lat:req.query.lat, long: req.query.long} )
+	const all = await getAllUsers()
+	const notDiscovered = getNotDiscovered(req.user.sawUsers, all);
+	const filtered = filter(notDiscovered, req.user, req.query);
+	const sorted = sort(filtered, req.user, {lat:req.query.lat, long: req.query.long}, req.query.dmax)
+	const random = sorted[0] // pas random pour l'instant meilleur score first
+	if(!random)
+	{
+		res.json({message: "no more match possible, change your filter or come back later!"})
+		return
+	}
+	await AddSawUser(req.user.id, random.id)
+	res.json(toPublic(random))
+}
+
+const getNotDiscovered = (restrictArray ,array) => {
+	if(!restrictArray)
+		return array;
+	var ret = [];
+	var x = 0;
+	var y = 0;
+	var ok = true;
+	while (array[x])
+	{
+		ok = true;
+		while(restrictArray[y])
+		{
+			if(restrictArray[y] === array[x].id)
+				ok = false
+			y++;
+		}
+		if (ok)
+			ret.push(array[x])
+		y = 0;
+		x++;
+	}
+	return ret;
 }
 
 const getMe = (req, res) =>{
@@ -177,5 +274,6 @@ module.exports = {
 	delSubToken,
 	getUserBySubToken,
 	completeUser,
-	CreateRefresh
+	CreateRefresh,
+	Matchmaking
 }

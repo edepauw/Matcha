@@ -27,7 +27,7 @@ const comparePassword = function (plainPass, hashword, callback) {
 	});
 };
 
-const authenticate = async (username,email, password, callback) => {
+const authenticate = async (username, email, password, callback) => {
 	const user = await getUserByPseudo(username ?? email) ?? await getUserByEMail(email) ?? null
 	if (!user)
 		return callback(null)
@@ -87,8 +87,8 @@ const signIn = async (req, res) => {
 	//get cookie
 	console.log(req.cookies);
 	console.log(req.body);
-	const { email, password } = req.body
-	authenticate(req.body.username , email, password, (user) => {
+	const { email, password, username } = req.body
+	authenticate(username , email, password, (user) => {
 		if (!user) {
 			res.status(400).json({
 				error: 'Bad Request',
@@ -127,6 +127,8 @@ const signIn = async (req, res) => {
 		maxAge: 24 * 60 * 60 * 1000,
 		path: '/auth/token'
 		});
+		res.json({xsrfToken:xsrfToken})
+
 
 		/* On envoie une reponse JSON contenant les durées de vie des tokens et le token CSRF */
 		res.end()

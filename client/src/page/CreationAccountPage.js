@@ -133,6 +133,7 @@ function CreationAccountPage() {
     }
 
     const handleChangeDate = (value) => {
+        console.log(value)
         setValueDate(value);
     };
 
@@ -151,70 +152,32 @@ function CreationAccountPage() {
     }
 
     const handleNext = async () => {
-        if (activeStep === 3) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                console.log("Latitude is :", position.coords.latitude);
-                console.log("Longitude is :", position.coords.longitude);
-            });
-            var files = []
-            const headers = new Headers();
-            headers.append('x-xsrf-token', localStorage.getItem('xsrf'));
-            console.log(window.location.search.split('=')[1]);
-            console.log(localStorage.getItem('xsrf'));
-            // headers.append('Content-Type', 'multipart/form-data; boundary=------WebKitFormBoundaryuNV21uHBQKetGs6R');
-            const form = new FormData();
-            var cpy = JSON.parse(images)
-            console.log(cpy.length);
-            for ( var i = 0; i < cpy.length ; i++) {
-                if (cpy[i] !== null)
-                    files.push(await urltoFile(cpy[i]))
-                if (i == cpy.length - 1) {
-                    console.log(files);
-                    if (files[0]) {
-                        form.append('imgs0', files[0]);
-                    }
-                    if (files[1]) {
-                        form.append('imgs1', files[1]);
-                    }
-                    if (files[2]) {
-                        form.append('imgs2', files[2]);
-                    }
-                    if (files[3]) {
-                        form.append('imgs3', files[3]);
-                    }
-                    if (files[4]) {
-                        form.append('imgs4', files[4]);
-                    }
-                    if (files[5]) {
-                        form.append('imgs5', files[5]);
-                    }
-                    form.append('genre', valueGender)
-                    form.append('homme', state.homme)
-                    form.append('femme', state.femme)
-                    form.append('nonBinaire', state.nonBinaire)
-                    form.append('tags', tagsjson)
-                    form.append('bio', bio)
-                    const options = {
-                        method: 'POST',
-                        mode: 'cors',
-                        headers,
-                        body: form,
-                        credentials: 'include'
-                    };
-                    fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options)
-                        .then(function (response) {
-                            console.log(response)
-                            if (response.ok) {
-                                // window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000/home'
-                            }
-                            else {
-                                // window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000/'
-                            }
-                        })
-                }
-            }
-            // for ( var i = 0; i < files.length; i++ ) {
-            //     form.append('files', files[i]);
+        if(activeStep === 3) {
+
+        const headers = new Headers();
+        headers.append('x-xsrf-token', window.location.search.split('=')[1]);
+        headers.append('Content-Type', 'application/json');
+
+        const body = {
+            date: valueDate,
+            genre: valueGender,
+            interested: state,
+            images: JSON.parse(images),
+            tags: JSON.parse(tagsjson),
+            bio: bio
+        }
+        const options = {
+        method: 'POST',
+        mode: 'cors',
+        headers,
+        body: JSON.stringify(body),
+        credentials: 'include'
+        };
+        fetch('http://' + window.location.href.split('/')[2].split(':')[0] + ':667/users/completeProfile', options)
+            .then(function(response) {
+                console.log(response);
+                window.location = 'http://' + window.location.href.split('/')[2].split(':')[0] + ':3000/home'
+            })
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         // setCanNext(false);
