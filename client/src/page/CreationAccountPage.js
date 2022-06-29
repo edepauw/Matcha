@@ -218,9 +218,8 @@ function CreationAccountPage() {
 	console.log(theme)
 
     return (
-        <Container maxWidth={false} sx={{ marginTop: '10em' }}>
 		<div className={`${styles[theme]}`}>
-        <Container maxWidth={false}>
+        <Container maxWidth={false} sx={{ marginTop: '10em' }}>
             <Grid container columns={12} spacing={3} >
                 {activeStep === 0 &&
                     <Orientation interesstedChange={handleChangeInteressted} genderChange={handleChangeGender} dateChange={handleChangeDate} gender={valueGender} h={state.homme} f={state.femme} n={state.nonBinaire} date={valueDate} />}
