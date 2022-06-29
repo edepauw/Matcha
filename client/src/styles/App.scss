@@ -141,10 +141,42 @@ body{
 	position: absolute;
 }
 
+@media screen and (max-width:1200px) {
+	.fakeLogo {
+	width  : 45px;
+	height : 45px;
+  }
+  
+  .LogoTitlePart1 {
+	font-size: 2.8rem !important;
+	
+  }
+  
+  .LogoTitlePart2 {
+	font-size: 2.8rem !important;
+  }
+}
+
+@media screen and (max-width:900px) {
+	.fakeLogo {
+	width  : 35px;
+	height : 35px;
+  }
+  
+  .LogoTitlePart1 {
+	font-size: 2.3rem !important;
+	
+  }
+  
+  .LogoTitlePart2 {
+	font-size: 2.3rem !important;
+  }
+}
+
 @media screen and (max-width:500px) {
 	.fakeLogo {
-		width  : 15px;
-		height : 15px;
+		width  : 20px;
+		height : 20px;
 		background : #FFADD5;
 		margin: 0 2em 0 2em;
 	  }

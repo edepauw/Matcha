@@ -2,6 +2,15 @@
 
 
 .dark{
+	.CardTagsCheckBox{
+		background-color: $dark_back !important;
+		border-color:  #f2f2f2 !important;;
+	}
+	.css-bhp9pd-MuiPaper-root-MuiCard-root{
+		color: #F2F2F2;
+	}
+
+	
 	.AddIcon{
 		color: #7A7A7A!important;
 	}
@@ -68,21 +77,21 @@
 .ButtonNextEnable {
     color: white!important;
     background-color: #73B0D3!important;
-    margin-right: 11em!important;
+    margin-right: 8vw!important;
     height: 3em;
 }
 
 .ButtonNextDisable {
     color: white!important;
     background-color: #a8a8a8!important;
-    margin-right: 11em!important;
+    margin-right: 1vw!important;
     height: 3em;
 }
 
 .ButtonBack {
     color: white!important;
     background-color: #FFADD5!important;
-    margin-left: 10em!important;
+    margin-left: 7vw!important;
     height: 3em;
 }
 
@@ -283,4 +292,39 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 20px;
     align-items: stretch;
+}
+
+
+@media screen and (max-width:750px) {
+	.css-1877c6e-MuiGrid-root{
+		margin-right: 8em!important;
+	}
+}
+
+@media screen and (max-width:550px) {
+	.css-1877c6e-MuiGrid-root{
+		margin-right: 5em!important;
+	}
+}
+
+
+@media screen and (max-width:500px) {
+	.css-1877c6e-MuiGrid-root{
+		margin-right: 0!important;
+	}
+	.GenreInteresse {
+		display: flex;
+
+		margin: auto;
+		flex-direction: column!important;
+	}
+	
+}
+
+
+@media screen and (max-width:500px) {
+	.MuiStepLabel-labelContainer{
+		display: none;
+	}
+	
 }
