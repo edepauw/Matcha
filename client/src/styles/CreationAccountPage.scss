@@ -1,21 +1,97 @@
+@use '../styles/Colors.scss' as *;
+
+
+.dark{
+	.CardTagsCheckBox{
+		background-color: $dark_back !important;
+		border-color:  #f2f2f2 !important;;
+	}
+	.css-bhp9pd-MuiPaper-root-MuiCard-root{
+		color: #F2F2F2;
+	}
+
+	
+	.AddIcon{
+		color: #7A7A7A!important;
+	}
+	.ButtonPhotoPP {
+		background-color: transparent;
+		border: 4px solid $bleu_fonce;
+		box-shadow: 0 0 5px rgb(52, 52, 255);
+	}
+	
+	.ButtonPhoto {
+		background-color: transparent;
+		border: 4px solid $white_back;
+	}
+	.css-1hbvpl3-MuiSvgIcon-root{
+		color: $bleu_fonce;
+	}
+	.css-i4bv87-MuiSvgIcon-root{
+		color: $rose_fonce;
+	}
+
+	.css-vj1n65-MuiGrid-root{
+		color: $white_back;
+	}
+
+	#demo-radio-buttons-group-label{
+		color: $white_back;
+	}
+	.css-qivjh0-MuiStepLabel-label {
+		color: $white_back;
+	}
+	.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active {
+		// color: #d900ff;
+		border-radius: 100%;
+		border: 1.5px solid transparent;
+	}
+	.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed{
+		// color: #d900ff;
+		border-radius: 100%;
+		border: 1.5px solid transparent;
+	}
+	.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root{
+		// color: #d900ff;
+		border-radius: 100%;
+		border: 1.5px solid $white_back;
+	}
+
+	.ButtonNextEnable {
+		border: 2px solid $bleu_fonce;
+		background-color: rgba(255, 122, 89, .0)!important;
+		box-shadow: 0 0 5px rgb(52, 52, 255);
+		cursor: pointer;
+
+	}
+
+	.ButtonBack {
+		border: 2px solid $rose_fonce;
+		background-color: rgba(255, 122, 89, .0)!important;
+		box-shadow: 0 0 5px rgb(255, 52, 52);
+		cursor: pointer;
+	}
+
+}
+
 .ButtonNextEnable {
     color: white!important;
     background-color: #73B0D3!important;
-    margin-right: 11em!important;
+    margin-right: 8vw!important;
     height: 3em;
 }
 
 .ButtonNextDisable {
     color: white!important;
     background-color: #a8a8a8!important;
-    margin-right: 11em!important;
+    margin-right: 1vw!important;
     height: 3em;
 }
 
 .ButtonBack {
     color: white!important;
     background-color: #FFADD5!important;
-    margin-left: 10em!important;
+    margin-left: 7vw!important;
     height: 3em;
 }
 
@@ -130,22 +206,22 @@
 }
 
 .ButtonPhotoPP {
-    background-color: #73B0D3!important;
+    background-color: #73B0D3;
     width: 120px;
     height: 104px;
     margin-bottom: 2em!important;
 }
 
 .ButtonPhoto {
-    background-color: #D9D9D9!important;
+    background-color: #D9D9D9;
     width: 120px;
     height: 104px;
-    border: none!important;
+    border: none;
     margin-bottom: 2em!important;
 }
 
 .AddIcon {
-    color: white!important;
+    color: white;
     width: 78px!important;
     height: 70px!important;
 }
@@ -155,8 +231,6 @@
     /* margin-top: 4em;
     margin-left: 2em; */
     margin: 4em 0 8em 3em;
-}
-.columnModal{
 }
 
 .ModalPhoto {
@@ -216,7 +290,8 @@
     box-shadow: none!important;
     margin-bottom: 2em;
     margin-right: 1em;
-    max-width: 20vh;
+    width: 12vw;
+	min-width: 130px;
 }
 
 .Grid { 
@@ -238,4 +313,44 @@
     align-items: center;
 }
 
+.Grid { 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+    align-items: stretch;
+}
 
+
+@media screen and (max-width:750px) {
+	.css-1877c6e-MuiGrid-root{
+		margin-right: 8em!important;
+	}
+}
+
+@media screen and (max-width:550px) {
+	.css-1877c6e-MuiGrid-root{
+		margin-right: 5em!important;
+	}
+}
+
+
+@media screen and (max-width:500px) {
+	.css-1877c6e-MuiGrid-root{
+		margin-right: 0!important;
+	}
+	.GenreInteresse {
+		display: flex;
+
+		margin: auto;
+		flex-direction: column!important;
+	}
+	
+}
+
+
+@media screen and (max-width:500px) {
+	.MuiStepLabel-labelContainer{
+		display: none;
+	}
+	
+}

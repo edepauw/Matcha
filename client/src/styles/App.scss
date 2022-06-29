@@ -20,6 +20,12 @@ html, body,#root, .App {
 }
 
 .dark{
+	.LogoTitlePart1{
+		text-shadow: 0 0 20px rgb(255, 0, 0);
+	}
+	.LogoTitlePart2 {
+		text-shadow: 0 0 20px rgb(52, 52, 255);
+	}
 	.text{
 		$test: #3b4b9b !global;
 		color: #F2F2F2;
@@ -96,21 +102,91 @@ body{
 }
 
 .fakeLogo {
-  width  : 60px;
-  height : 60px;
+  width  : 50px;
+  height : 50px;
   background : #FFADD5;
   margin: 0 2em 0 2em;
 }
 
-.TitlePart1 {
-  color: #73B0D3!important;
+.LogoTitlePart1 {
+	font-style: normal;
+    font-weight: 700;
+    font-size: 3.25rem !important;
+    /* identical to box height */
+
+    letter-spacing: -0.05em;
+
+    /* color: #FFADD5; */
+    color: #FFADD5!important;
+    /* text-shadow: 0 0 3vw rgb(255, 52, 52); */
+    font-family: 'Arial Rounded MT Bold'!important;
+    /* color: #73B0D3 !important; */
   
 }
 
-.TitlePart2 {
-  color: #FFADD5!important;
+.LogoTitlePart2 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 3.25rem !important;
+
+    letter-spacing: -0.05em;
+
+    /* color: #73B0D3; */
+    color: #73B0D3!important;
+    /* text-shadow: 0 0 3vw rgb(52, 52, 255); */
+    font-family: 'Arial Rounded MT Bold'!important;
 }
 
 #liste {
 	position: absolute;
+}
+
+@media screen and (max-width:1200px) {
+	.fakeLogo {
+	width  : 45px;
+	height : 45px;
+  }
+  
+  .LogoTitlePart1 {
+	font-size: 2.8rem !important;
+	
+  }
+  
+  .LogoTitlePart2 {
+	font-size: 2.8rem !important;
+  }
+}
+
+@media screen and (max-width:900px) {
+	.fakeLogo {
+	width  : 35px;
+	height : 35px;
+  }
+  
+  .LogoTitlePart1 {
+	font-size: 2.3rem !important;
+	
+  }
+  
+  .LogoTitlePart2 {
+	font-size: 2.3rem !important;
+  }
+}
+
+@media screen and (max-width:500px) {
+	.fakeLogo {
+		width  : 20px;
+		height : 20px;
+		background : #FFADD5;
+		margin: 0 2em 0 2em;
+	  }
+	  .LogoTitlePart1{
+		font-size: 30px!important;
+		
+	  }
+	  
+	  .LogoTitlePart2 {
+		font-size: 30px!important;
+	  }
+	
 }
