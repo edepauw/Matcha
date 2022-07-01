@@ -1,0 +1,42 @@
+.MainTitle {
+	display: inherit;
+	align-items: center;
+	margin-bottom: 2em !important;
+	margin-top: 2em !important;
+}
+
+.fakeLogo {
+	width: 60px;
+	height: 60px;
+	background: #FFADD5;
+	margin: 0 2em 0 2em;
+}
+
+
+.TitlePart1 {
+	color: #73B0D3 !important;
+
+}
+
+.TitlePart2 {
+	color: #FFADD5 !important;
+}
+
+.MainProfil {
+	display: flex;
+    flex-direction: row-reverse!important;
+}
+
+.ProfilePicture {
+	width: 80px!important;
+	height: 80px;
+	border-radius: 50px;
+	margin-right: 4em;
+}
+
+.ButtonProfil {
+	border-radius: 50px;
+	width: 80px;
+	height: 80px;
+	
+}

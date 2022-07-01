@@ -87,8 +87,8 @@ const completeUser = async (req, res) => {
 		var data = element.replace(/^data:image\/\w+;base64,/, "");
 		var buf = Buffer.from(data, 'base64');
 		fs.writeFile("public/uploads/" + name, buf, () => {});
-		var ret = await db.promise().query('INSERT INTO MatchaBDD.images (path) VALUES (?);', [name]);
-		tab.push(ret[0].insertId);
+		// var ret = await db.promise().query('INSERT INTO MatchaBDD.images (path) VALUES (?);', [name]);
+		tab.push(name);
 	}
 	var orientationId = genre === 'homme' ? 0 : genre === 'femme' ? 7 : genre === 'nonBinaire' ? 14 : -1;
 	if (orientationId === -1){
@@ -156,10 +156,10 @@ const filter = (array ,user, query) => {
 		{
 			if(dateToAge(elem.bd)> amin && dateToAge(elem.bd) < amax)
 			{
-			console.log(DistanceCalculator.calculate({ lat: lat, long: long }, { lat: elem.latitude, long: elem.longitude }) / 1000)
+			// console.log(DistanceCalculator.calculate({ lat: lat, long: long }, { lat: elem.latitude, long: elem.longitude }) / 1000)
 			if(dmax > (DistanceCalculator.calculate({ lat: lat, long: long }, { lat: elem.latitude, long: elem.longitude }) / 1000))
 				{
-					console.log('non')
+					// console.log('non')
 					ret.push(elem)
 				}
 			}
@@ -238,6 +238,8 @@ const Matchmaking = async (req, res) => {
 	const filtered = filter(notDiscovered, req.user, req.query);
 	const sorted = sort(filtered, req.user, {lat:req.query.lat, long: req.query.long}, req.query.dmax)
 	const random = sorted[0] // pas random pour l'instant meilleur score first
+	console.log('IIIICCCCIIII');
+	console.log(filtered);
 	if(!random)
 	{
 		res.json({message: "no more match possible, change your filter or come back later!"})
@@ -275,7 +277,6 @@ const getMe = (req, res) =>{
 	console.log(req.user);
 	const { username, lastname, email, orientationId, bio, dms, age, tags, image, meLikeUsers, userLikesMe, matchs} = req.user
 	res.json({username, lastname, email, orientationId, bio, dms, age, tags, image, meLikeUsers, userLikesMe, matchs})
-	res.end()
 }
 
 const matchableByTag = async (userId, tag) => {

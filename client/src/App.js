@@ -13,6 +13,7 @@ import {
 import Subscription from "./page/Subscription";
 import Home from "./page/Home";
 import Chat from "./page/Chat";
+import Header from "./page/Header";
 
 class App extends Component {
     constructor(props) {
@@ -43,42 +44,16 @@ class App extends Component {
 			document.documentElement.style.setProperty("--Back_Color", "#F2F2F2");
 	}
 
-
-
     render() {
 		const {theme, setTheme} = this.context;
 		
         return (
-            // <BrowserRouter>
-            //     <Routes>
-            //         <Route path="/CreationAccount" element={<CreationAccountPage token={this.state.token} />}>
-            //             {/* : <LoginForm onChange={(token) => {this.setState({token: token})}}/>}> */}
-            //             <Route path="CreationAccount" element={<CreationAccountPage />} />
-            //         </Route>
-            //     </Routes>
-            // </BrowserRouter>
 			<div className={theme} id="big_block" >
             <BrowserRouter >
-            {/* { this.state.token ?  */}
-                <Grid container columns={12} spacing={3} >
-                    <Grid item xs={12} sm={12} md={12} className={'MainTitle'}>
-                        <div className={'fakeLogo'}></div>
-                        <Typography variant="h2" className={'LogoTitlePart1'}> Gee</Typography><Typography className={'LogoTitlePart2'} variant="h2"> Coeur</Typography>
-                <nav>
-                    <ul id="liste">
-                        <li><Link to="/">1</Link></li>
-                        <li><Link to="/create/account">2</Link></li>
-                        <li><Link to="/subscription">3</Link></li>
-                        <li><Link to="/signin">4</Link></li>
-                        <li><Link to="/home">5</Link></li>
-                        <li><Link to="/chat">6</Link></li>
-						<button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>{theme}_Mode</button>
-                    </ul>
-                </nav>
-                    </Grid>
-                </Grid>
-                {/* : <></> */}
-            {/* } */}
+                <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>{theme}_Mode</button>
+
+                <Header />
+
                 <Routes>
                     <Route path="/" element={<MainPage />} />
                     <Route path="/create/account" element={<CreationAccountPage />} />
