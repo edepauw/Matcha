@@ -8,6 +8,27 @@ const path = require('path');
 const { randomInt } = require("crypto");
 // const uploadPath = path.join(__dirname , '/public/uploads');
 
+const addMessage = async (roomId, msg) =>{
+	const room = await db.promise().query('SELECT * FROM MatchaBDD.rooms WHERE id = ?', [roomId])
+	if(!room[0][0].msgs)
+		room[0][0].msgs = []
+	room[0][0].msgs.push(msg)
+	await db.promise().query("UPDATE MatchaBDD.rooms SET msgs = ? WHERE id = ?", [room.msgs, room[0][0].id]);
+}
+const roomExist = async (one, two) => {
+	const room = await db.promise().query('SELECT * FROM MatchaBDD.rooms WHERE userOne = ? AND userTwo = ?', [one.id, two.id])
+	if(room[0][0])
+		return true
+	else
+		return false
+}
+
+const createRoom = async (userOne, userTwo) =>{
+	await db.promise().query("INSERT INTO MatchaBDD.rooms (userOne, userTwo, msgs)", [userOne.id, userTwo.id, []]);
+}
+
+const getMessageByRoomId = (userId, id) => {
+}
 
 const getUserById = async (id) => {
 	const user = await db.promise().query('SELECT * FROM MatchaBDD.Users WHERE id = ?', [id])

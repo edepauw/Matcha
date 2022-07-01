@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import "../../styles/Chat.css";
 
-import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
     MainContainer,
     ChatContainer,
@@ -11,12 +11,52 @@ import {
 
 
 import { io} from "socket.io-client";
+import ChatCard from './ChatCard.js'
 const ENDPOINT = window.location.href.split('/')[2].split(':')[0] + ':667';
 
 
 function Chat(props) {
-    useEffect(() => {
+    const room = {
+        id:1,
+        userOne:{
+            id: 1,
+            username:'edepauw'
+        },
+        userTwo:{
+            id:2,
+            username:'jdel-rossa'
+        },
+        messages:[[1, 'salut toi', '1655988634'],[2, 'wesh', '1655988635']]
+    }
+    const room2 = {
+        id:2,
+        userOne:{
+            id: 1,
+            username:'edepauw'
+        },
+        userTwo:{
+            id:2,
+            username:'jdel-rossa'
+        },
+        messages:[[1, 'salut toi', '1655988634'],[2, 'wesh', '1655988635']]
+    }
+    const room3 = {
+        id:3,
+        userOne:{
+            id: 1,
+            username:'edepauw'
+        },
+        userTwo:{
+            id:2,
+            username:'jdel-rossa'
+        },
+        messages:[[1, 'salut toi', '1655988634'],[2, 'wesh', '1655988635']]
+    }
+    const [rooms, setRooms] = useState([room, room2])
+    const [current, setCurrent] = useState(null)
+    const cardRefs = useRef(new Array());
 
+    useEffect(() => {
         //connect to socket
         const socket = io(ENDPOINT, {
         });
@@ -37,24 +77,20 @@ function Chat(props) {
             })
     }, []);
 
+    const OpenChat = (id) => {
+        cardRefs.current.forEach(ref => ref.hide())
+    }
+    const CloseChat = (id) => {
+        cardRefs.current.forEach(ref => ref.show())
+    }
 
     return (
-        <div style={{ position: "relative", height: "500px" }}>
-            <MainContainer>
-            <ChatContainer>
-                <MessageList>
-                <Message
-                    model={{
-                    message: "Hello my friend",
-                    sentTime: "just now",
-                    sender: "Joe",
-                    }}
-                />
-                </MessageList>
-                <MessageInput placeholder="Type message here" />
-            </ChatContainer>
-            </MainContainer>
-      </div>
+        <>
+           {rooms.map((room, index) =>( <ChatCard ref={(element) =>{ cardRefs.current.push(element)}} key={room.id} onClick={OpenChat} room={room} id={1} px={(index * 100 - (rooms.length * 100) / 2) + 10}/>))}
+            <div className="ChatGrid">
+
+            </div>
+        </>
     );
 }
 

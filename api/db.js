@@ -74,6 +74,13 @@ const initTables = async () => {
 			`path` TEXT NULL,\
 			PRIMARY KEY (`id`));"
 		await db.promise().query(images);
+		const room = "CREATE TABLE IF NOT EXISTS MatchaBDD.rooms (\
+			`id` INT NOT NULL AUTO_INCREMENT,\
+			`userOne` TEXT NULL,\
+			`userTwo` TEXT NULL,\
+			`msgs` JSON NULL,\
+			PRIMARY KEY (`id`));"
+		await db.promise().query(room);
 		console.log("Table Refresh crée!");
 }
 
