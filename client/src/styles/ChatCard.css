@@ -1,0 +1,73 @@
+.ChatCard{
+	background-color:blue;
+	position:fixed;
+	border-radius: 10px;
+    left: calc(100vw - 80px);
+	width: 300px;
+	height: 80px;
+	display: grid;
+    grid-template-columns: 80px 220px;
+	grid-template-rows: 20px 60px;
+	gap: 0px 0px;
+	grid-template-areas:
+    "img userName"
+    "img last";
+	transition: all 1s;
+}
+
+.ChatCard:hover{
+	background-color:blue;
+	border-radius: 10px;
+	position:fixed;
+    left: calc(100vw - 310px);
+	width: 300px;
+	height: 80px;
+	transition: all 0.7s;
+}
+
+.ChatCardHide{
+	background-color:blue;
+	border-radius: 10px;
+	position:fixed;
+	top: calc(50% - 40px);
+    left: 110%;
+	width: 300px;
+	height: 80px;
+	display: grid;
+    grid-template-columns: 80px 220px;
+	grid-template-rows: 20px 60px 0px 0px;
+	gap: 0px 0px;
+	grid-template-areas:
+    "img userName"
+    "img last"
+    "messages messages"
+    "input input";
+	transition: all 1s;
+}
+
+
+.imgChat{
+	grid-area: img;
+	height: 70px;
+	border-radius: 999px;
+	margin: 5px 0 0 5px;
+}
+
+.userName {
+	grid-area: userName;
+	font-size: 18px;
+	transition:all 2s;
+ }
+
+.last {
+	grid-area: last;
+	background-color:grey;
+	overflow:hidden;
+	margin:7px 7px 7px 0;
+	border-radius:5px 5px 5px 0px;
+}
+.msgs{
+	grid-area: messages;
+	overflow:hidden;
+	background-color:green;
+}

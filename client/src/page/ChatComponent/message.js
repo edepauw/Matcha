@@ -1,37 +1,9 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
-import "../../styles/ChatCard.css";
-
-import {
-    MainContainer,
-    ChatContainer,
-    MessageList,
-    Message,
-    MessageInput,
-} from "@chatscope/chat-ui-kit-react";
+import "../../styles/message.css";
 
 
-import { io} from "socket.io-client";
-const ENDPOINT = window.location.href.split('/')[2].split(':')[0] + ':667';
-
-
-function ChatCard(props, ref) {
-    const cardRef = useRef(null);
-
-    useImperativeHandle(ref, () => ({
-        hide: () => {
-            cardRef.current.className = 'ChatCardHide';
-        },
-        show: () => {
-            cardRef.current.className = 'ChatCard';
-        }
-      }));
-
-	const resizeObserver = new ResizeObserver(entries =>
-		cardRef.current.style.top = (document.documentElement.clientHeight * 0.5 + props.px) + 'px'
-	)
-
-    const handleClick = () =>{
-        props.onClick(props.id);
+function mesage(props, ref) {
+    const cardRef = useRef(null););
     }
 	useEffect(() => {
 		console.log( 'calc(50% ' + props.px +'px)')

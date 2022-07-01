@@ -7,7 +7,6 @@ var user = [];
 var userIds = [];
 const addUser = async (socket) =>
 {
-
     var userObj = {
         socket: socket,
         id: null

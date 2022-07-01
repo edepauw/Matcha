@@ -2,7 +2,7 @@ var express = require('express');
 const { auth } = require('../services/AuthMiddleware');
 var router = express.Router();
 const path = require('path');
-var { getUserByPseudo, completeUser, getMe, Matchmaking} = require('../services/UsersServices');
+var { getUserByPseudo, completeUser, getMe, Matchmaking, getMatchs} = require('../services/UsersServices');
 
 /* GET users listing. */
 router.post('/completeProfile', (req, res) => auth(req, res, completeUser));
@@ -10,6 +10,7 @@ router.post('/completeProfile', (req, res) => auth(req, res, completeUser));
 router.get('/me', (req, res) => auth(req, res, getMe));
 
 router.get('/search', (req, res) => auth(req, res, Matchmaking));
+router.get('/matchs', (req, res) => auth(req, res, getMatchs));
 
 router.get('/:pseudo', async (req, res, next) => {
   const {username, genre, orientation, description, age, locationX, locationY, tags, image, meLikeUsers, userLikesMe, recentProfile, recentVisit, matchs} = await getUserByPseudo(req.params.pseudo);

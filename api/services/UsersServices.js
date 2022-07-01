@@ -22,7 +22,40 @@ const roomExist = async (one, two) => {
 	else
 		return false
 }
-
+const addLike= async (roomId, msg) =>{
+	const user = await db.promise().query('SELECT * FROM MatchaBDD.Users WHERE id = ?', [req.user.id])
+	if(!room[0][0].msgs)
+		room[0][0].msgs = []
+	room[0][0].msgs.push(msg)
+	await db.promise().query("UPDATE MatchaBDD.Users SET rooms = ? WHERE id = ?", [room.msgs, room[0][0].id]);
+}
+const addUnlike= async (roomId, msg) =>{
+	const room = await db.promise().query('SELECT * FROM MatchaBDD.rooms WHERE id = ?', [roomId])
+	if(!room[0][0].msgs)
+		room[0][0].msgs = []
+	room[0][0].msgs.push(msg)
+	await db.promise().query("UPDATE MatchaBDD.rooms SET msgs = ? WHERE id = ?", [room.msgs, room[0][0].id]);
+}
+const Vote = async (req, res) => {
+	console.log(req.user)
+	updateCoords(req.user.id, {lat:req.query.lat, long: req.query.long} )
+	const all = await getAllUsers()
+	const notDiscovered = getNotDiscovered(req.user.sawUsers, all);
+	const filtered = filter(notDiscovered, req.user, req.query);
+	const sorted = sort(filtered, req.user, {lat:req.query.lat, long: req.query.long}, req.query.dmax)
+	const random = sorted[0] // pas random pour l'instant meilleur score first
+	if(!random)
+	{
+		res.json({message: "no more match possible, change your filter or come back later!"})
+		return
+	}
+	await AddSawUser(req.user.id, random.id)
+	res.json(toPublic(random))
+}
+const getMatchs = async (req,res) => {
+	const rooms = await db.promise().query('SELECT * FROM MatchaBDD.rooms WHERE userOne = ? OR userTwo = ?', [req.user.id, req.user.id])
+	res.json(rooms[0])
+}
 const createRoom = async (userOne, userTwo) =>{
 	await db.promise().query("INSERT INTO MatchaBDD.rooms (userOne, userTwo, msgs)", [userOne.id, userTwo.id, []]);
 }
