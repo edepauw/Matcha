@@ -14,6 +14,7 @@ import Subscription from "./page/Subscription";
 import Home from "./page/Home";
 import Chat from "./page/Chat";
 import Header from "./page/Header";
+import Profile from "./page/Profile";
 
 class App extends Component {
     constructor(props) {
@@ -46,21 +47,23 @@ class App extends Component {
 
     render() {
 		const {theme, setTheme} = this.context;
+		console.log(this.context.theme);
 		
         return (
 			<div className={theme} id="big_block" >
             <BrowserRouter >
-                <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>{theme}_Mode</button>
 
                 <Header />
+				<button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>{theme}_Mode</button>
 
                 <Routes>
-                    <Route path="/" element={<MainPage />} />
-                    <Route path="/create/account" element={<CreationAccountPage />} />
-                    <Route path="/subscription" element={<Subscription />} />
-                    <Route path="/signin" element={<SignIn />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/chat" element={<Chat />} />
+                    <Route path="/" element={<MainPage />}/>
+                    <Route path="/create/account" element={<CreationAccountPage />}/>
+                    <Route path="/subscription" element={<Subscription />}/>
+                    <Route path="/signin" element={<SignIn />}/>
+                    <Route path="/home" element={<Home />}/>
+                    <Route path="/chat" element={<Chat />}/>
+					<Route path="/profile" element={<Profile />}/>
                 </Routes>
             </BrowserRouter>
 			</div>

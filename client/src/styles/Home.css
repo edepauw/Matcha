@@ -166,3 +166,7 @@
 	padding-left: 4em;
 	padding-right: 4em;
 }
+
+.css-zow5z4-MuiGrid-root>.MuiGrid-item {
+    margin-top: 24px;
+}

@@ -59,15 +59,16 @@ function Header() {
 		<Grid container columns={12} spacing={3} sx={{ display: 'inline-flex' }} >
 			<Grid item xs={12} sm={12} md={12} className={'MainTitle'}>
 				<div className={'fakeLogo'}></div>
-				<Typography variant="h2" className={'TitlePart1'}> Gee</Typography><Typography className={'TitlePart2'} variant="h2"> Coeur</Typography>
+				<Typography variant="h2" className={'LogoTitlePart1'}> Gee</Typography><Typography className={'LogoTitlePart2'} variant="h2"> Coeur</Typography>
 				<nav>
 					<ul id="liste">
-						<li><Link to="/">1</Link></li>
-						<li><Link to="/create/account">2</Link></li>
-						<li><Link to="/subscription">3</Link></li>
-						<li><Link to="/signin">4</Link></li>
-						<li><Link to="/home">5</Link></li>
-						<li><Link to="/chat">6</Link></li>
+						<li><Link to="/">vide</Link></li>
+						<li><Link to="/create/account">create</Link></li>
+						<li><Link to="/subscription">subscription</Link></li>
+						<li><Link to="/signin">signin</Link></li>
+						<li><Link to="/home">home</Link></li>
+						<li><Link to="/chat">chat</Link></li>
+						<li><Link to="/Profile">profile</Link></li>
 
 					</ul>
 				</nav>

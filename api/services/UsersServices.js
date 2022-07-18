@@ -308,8 +308,8 @@ const getNotDiscovered = (restrictArray ,array) => {
 
 const getMe = (req, res) =>{
 	console.log(req.user);
-	const { username, lastname, email, orientationId, bio, dms, age, tags, image, meLikeUsers, userLikesMe, matchs} = req.user
-	res.json({username, lastname, email, orientationId, bio, dms, age, tags, image, meLikeUsers, userLikesMe, matchs})
+	const { username, lastname, email, orientationId, bio, dms, age, tags, image, meLikeUsers, userLikesMe, matchs, bd} = req.user
+	res.json({username, lastname, email, orientationId, bio, dms, age, tags, image, meLikeUsers, userLikesMe, matchs, bd})
 }
 
 const matchableByTag = async (userId, tag) => {
